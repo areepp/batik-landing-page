@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     houses: House;
     products: Product;
+    carts: Cart;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -81,6 +82,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     houses: HousesSelect<false> | HousesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    carts: CartsSelect<false> | CartsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -206,6 +208,25 @@ export interface Product {
   createdAt: string;
 }
 /**
+ * Users' shopping carts.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carts".
+ */
+export interface Cart {
+  id: number;
+  user: number | User;
+  items?:
+    | {
+        product: number | Product;
+        quantity: number;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -227,6 +248,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'products';
         value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'carts';
+        value: number | Cart;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -340,6 +365,22 @@ export interface ProductsSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carts_select".
+ */
+export interface CartsSelect<T extends boolean = true> {
+  user?: T;
+  items?:
+    | T
+    | {
+        product?: T;
+        quantity?: T;
         id?: T;
       };
   updatedAt?: T;

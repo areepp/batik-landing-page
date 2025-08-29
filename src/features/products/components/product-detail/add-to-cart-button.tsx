@@ -1,22 +1,30 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Product } from '@/payload-types'
 import { Check, ShoppingCart } from 'lucide-react'
+import { useCartStore } from '@/store/cart-store'
 
 export function AddToCartButton({ product }: { product: Product }) {
-  const [added, setAdded] = useState(false)
+  const addItem = useCartStore((state) => state.addItem)
+  const items = useCartStore((state) => state.items)
 
-  const handleAddToCart = () => {
-    console.log(`Added ${product.name} to cart!`)
-    setAdded(true)
-    setTimeout(() => setAdded(false), 2000)
-  }
+  const [isAdded, setIsAdded] = useState(false)
+
+  const itemInCart = items.some((item) => item.product.id === product.id)
+
+  useEffect(() => {
+    if (itemInCart) {
+      setIsAdded(true)
+      const timer = setTimeout(() => setIsAdded(false), 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [itemInCart, items])
 
   return (
-    <Button onClick={handleAddToCart} size="lg" className="w-full" disabled={added}>
-      {added ? (
+    <Button onClick={() => addItem(product)} size="lg" className="w-full" disabled={isAdded}>
+      {isAdded ? (
         <>
           <Check className="mr-2 h-5 w-5" /> Added!
         </>
