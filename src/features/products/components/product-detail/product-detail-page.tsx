@@ -46,7 +46,7 @@ export default async function ProductDetailPage({ params }: Props) {
   }
 
   return (
-    <main className="container py-8">
+    <main className="container p-8">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         <div>
           <ProductImageGallery images={product.images || []} />

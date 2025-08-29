@@ -23,6 +23,7 @@
     "@payloadcms/payload-cloud": "3.53.0",
     "@payloadcms/richtext-lexical": "3.53.0",
     "@payloadcms/ui": "3.53.0",
+    "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/postcss": "^4.1.12",
     "class-variance-authority": "^0.7.1",

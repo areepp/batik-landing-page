@@ -10,7 +10,7 @@ export type CartItem = {
 type CartState = {
   items: CartItem[]
   addItem: (product: Product, quantity?: number) => void
-  removeItem: (productId: string) => void
+  removeItem: (productId: number) => void
   clearCart: () => void
   totalItems: () => number
 }
@@ -37,7 +37,7 @@ export const useCartStore = create<CartState>()(
 
       removeItem: (productId) => {
         set({
-          items: get().items.filter((item) => item.product.id !== Number(productId)),
+          items: get().items.filter((item) => item.product.id !== productId),
         })
       },
 
