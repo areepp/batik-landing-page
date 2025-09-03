@@ -2,6 +2,7 @@ import React from 'react'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import { Navbar } from '@/features/layout/navbar'
+import { Footer } from '@/features/layout/footer'
 
 export const metadata = {
   description:
@@ -20,6 +21,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <main>{children}</main>
         <Toaster />
         {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   )
