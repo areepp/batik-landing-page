@@ -1,22 +1,20 @@
-'use client' // Komponen ini menggunakan state/interaksi, jadi kita tandai sebagai Client Component
+'use client'
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { Input } from '@/components/ui/input'
-import { Search, UserCircle, Menu } from 'lucide-react'
-import { SearchBar } from '@/components/searchBar'
-import { UserProfileDropdown } from '@/components/UserProfileDropdown'
 
-// Komponen Logo untuk konsistensi
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
+import { Menu } from 'lucide-react'
+import { SearchBar } from '@/components/searchBar'
+import { UserProfileDropdown } from '@/components/userProfileDropdown'
+
 function Logo() {
   return (
     <Link href="/" className="flex items-center space-x-2">
@@ -28,7 +26,6 @@ function Logo() {
   )
 }
 
-// Komponen Navigasi untuk desktop
 function DesktopNav() {
   return (
     <nav className="flex items-center gap-4 lg:gap-6">
@@ -48,19 +45,13 @@ function DesktopNav() {
   )
 }
 
-// Komponen utama Header
-export function Header() {
+export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm">
       <div className="container flex h-16 items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ==================== */}
-        {/* Layout Desktop (md dan lebih besar) */}
-        {/* ==================== */}
         <div className="hidden md:flex w-full items-center justify-between">
-          {/* Sisi Kiri: Logo */}
           <Logo />
 
-          {/* Sisi Kanan: Search, Navigasi, Profil */}
           <div className="flex items-center gap-4 lg:gap-6">
             <div className="w-64">
               <SearchBar />
@@ -70,11 +61,7 @@ export function Header() {
           </div>
         </div>
 
-        {/* ==================== */}
-        {/* Layout Mobile (di bawah md) */}
-        {/* ==================== */}
         <div className="md:hidden flex w-full items-center justify-between gap-4">
-          {/* Kiri: Hamburger Menu */}
           <div>
             <Sheet>
               <SheetTrigger asChild>
@@ -83,8 +70,15 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
-                <Logo />
-                <nav className="grid gap-6 text-lg font-medium mt-8">
+                <SheetHeader>
+                  <SheetTitle>
+                    <Logo />
+                  </SheetTitle>
+                  <SheetDescription className="sr-only">
+                    Navigasi utama untuk website Batik Sragen.
+                  </SheetDescription>
+                </SheetHeader>
+                <nav className="grid gap-6 text-lg font-medium pl-10">
                   <Link href="/" className="hover:text-foreground/80">
                     Beranda
                   </Link>
@@ -96,12 +90,10 @@ export function Header() {
             </Sheet>
           </div>
 
-          {/* Tengah: Search Bar */}
           <div className="flex-1">
             <SearchBar />
           </div>
 
-          {/* Kanan: Profil */}
           <div>
             <UserProfileDropdown />
           </div>
