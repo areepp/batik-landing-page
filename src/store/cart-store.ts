@@ -11,6 +11,8 @@ type CartState = {
   items: CartItem[]
   addItem: (product: Product, quantity?: number) => void
   removeItem: (productId: number) => void
+  increaseQuantity: (productId: number) => void
+  decreaseQuantity: (productId: number) => void
   clearCart: () => void
   totalItems: () => number
 }
@@ -39,6 +41,28 @@ export const useCartStore = create<CartState>()(
         set({
           items: get().items.filter((item) => item.product.id !== productId),
         })
+      },
+
+      increaseQuantity: (productId) => {
+        const { items } = get()
+        const updatedItems = items.map((item) =>
+          item.product.id === productId ? { ...item, quantity: item.quantity + 1 } : item,
+        )
+        set({ items: updatedItems })
+      },
+
+      decreaseQuantity: (productId) => {
+        const { items } = get()
+        const existingItem = items.find((item) => item.product.id === productId)
+        // If quantity is more than 1, decrease it. Otherwise, remove the item.
+        if (existingItem && existingItem.quantity > 1) {
+          const updatedItems = items.map((item) =>
+            item.product.id === productId ? { ...item, quantity: item.quantity - 1 } : item,
+          )
+          set({ items: updatedItems })
+        } else {
+          set({ items: items.filter((item) => item.product.id !== productId) })
+        }
       },
 
       clearCart: () => {

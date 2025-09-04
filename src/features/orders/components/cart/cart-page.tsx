@@ -38,49 +38,39 @@ export default function CartPage() {
   }
 
   return (
-    <main className="container p-8">
-      <h1 className="text-3xl font-bold tracking-tight mb-8">Keranjang Belanja</h1>
+    <div className="container mx-auto p-8">
+      <h1 className="text-xl font-bold tracking-tight mb-8">Keranjang Belanja</h1>
       <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-start">
-        {/* Cart Items List */}
         <div className="lg:col-span-2">
-          <Card>
-            <CardContent className="divide-y">
-              {items.map((item) => (
-                <CartItem key={item.product.id} item={item} />
-              ))}
-            </CardContent>
-          </Card>
+          <div>
+            {items.map((item) => (
+              <CartItem key={item.product.id} item={item} />
+            ))}
+          </div>
         </div>
 
-        {/* Order Summary */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle>Ringkasan Pesanan</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>{formatPrice(subtotal)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Pengiriman</span>
-                <span className="text-muted-foreground">Dihitung saat checkout</span>
-              </div>
-              <Separator />
-              <div className="flex justify-between font-bold text-lg">
-                <span>Total</span>
-                <span>{formatPrice(subtotal)}</span>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button size="lg" className="w-full">
-                Lanjutkan ke Checkout
-              </Button>
-            </CardFooter>
-          </Card>
+        <div className="lg:col-span-1 lg:border-l lg:pl-8">
+          <h2 className="text-xl font-semibold mb-6">Ringkasan Pesanan</h2>
+          <div className="grid gap-4">
+            <div className="flex justify-between">
+              <span>Subtotal</span>
+              <span>{formatPrice(subtotal)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Pengiriman</span>
+              <span className="text-muted-foreground">Dihitung saat checkout</span>
+            </div>
+            <Separator />
+            <div className="flex justify-between font-bold text-lg">
+              <span>Total</span>
+              <span>{formatPrice(subtotal)}</span>
+            </div>
+          </div>
+          <Button size="lg" className="w-full mt-6" asChild>
+            <Link href="/checkout">Lanjutkan ke Checkout</Link>
+          </Button>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
