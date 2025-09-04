@@ -16,14 +16,12 @@ export default async function ProductsPage() {
   }
 
   return (
-    <main className="container p-8">
-      <h1 className="text-3xl font-bold tracking-tight mb-8">Semua Produk</h1>
-
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="max-w-11/12 mx-auto px-4">
+      <div className="mt-12 grid grid-cols-2 gap-8 sm:grid-cols-3 gap-y-14">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-    </main>
+    </div>
   )
 }

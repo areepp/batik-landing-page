@@ -1,6 +1,7 @@
 import React from 'react'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
+import Navbar from '@/components/navbar'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -13,7 +14,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <main>{children}</main>
+        <Navbar />
+
+        <main className="pb-12">{children}</main>
         <Toaster />
       </body>
     </html>
