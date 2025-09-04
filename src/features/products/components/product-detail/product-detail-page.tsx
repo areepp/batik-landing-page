@@ -4,6 +4,12 @@ import { notFound } from 'next/navigation'
 import { ProductImageGallery } from './product-image-gallery'
 import { AddToCartButton } from './add-to-cart-button'
 import { formatPrice } from '@/lib/utils'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 const RichText = ({ content }: { content: any[] }) => {
   if (!content) return null
@@ -45,30 +51,46 @@ export default async function ProductDetailPage({ params }: Props) {
     return notFound()
   }
 
+  const house = typeof product.house === 'object' ? product.house : null
+
   return (
-    <main className="container p-8">
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        <div>
-          <ProductImageGallery images={product.images || []} />
-        </div>
+    <div className="max-w-11/12 mx-auto px-4">
+      <div className="mt-12 flex gap-8 lg:gap-12">
+        <ProductImageGallery images={product.images || []} />
 
-        {/* Right Column: Product Details */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 flex-1 max-w-[30rem]">
           <div>
-            <h1 className="text-3xl lg:text-4xl font-bold tracking-tight">{product.name}</h1>
-            <p className="text-2xl mt-2 text-muted-foreground">{formatPrice(product.price)}</p>
+            <div>
+              <p className="text-xs">{house?.name}</p>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">{product.name}</h1>
+              <p className="text-muted-foreground">{formatPrice(product.price)}</p>
+            </div>
           </div>
 
-          <div className="mt-4">
-            <h2 className="text-lg font-semibold mb-2">Deskripsi</h2>
-            <div className="prose dark:prose-invert max-w-none">{product.description}</div>
-          </div>
+          <div className="mt-4 prose dark:prose-invert max-w-none">{product.description}</div>
 
-          <div className="mt-auto">
-            <AddToCartButton product={product} />
-          </div>
+          <AddToCartButton product={product} />
+
+          {product.details && product.details.length > 0 && (
+            <div className="mt-6">
+              <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-base font-semibold">
+                    Detail Produk
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="space-y-2 text-muted-foreground">
+                      {product.details.map((detail, index) => (
+                        <li key={index}>{detail.detailItem}</li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          )}
         </div>
       </div>
-    </main>
+    </div>
   )
 }

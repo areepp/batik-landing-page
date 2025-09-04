@@ -11,7 +11,7 @@ type Props = {
   }[]
 }
 
-export function ProductImageGallery({ images }: Props) {
+export function ProductImageGallery({ images }: Readonly<Props>) {
   const validImages = images
     .map(({ image }) => (typeof image === 'object' ? image : null))
     .filter(Boolean) as Media[]
@@ -29,23 +29,14 @@ export function ProductImageGallery({ images }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="aspect-square relative bg-secondary rounded-lg overflow-hidden">
-        <Image
-          src={selectedImage.url!}
-          alt={selectedImage.alt || 'Product Image'}
-          fill
-          className="object-cover transition-all duration-300"
-        />
-      </div>
-
-      <div className="grid grid-cols-5 gap-4">
+    <div className="w-full sm:w-4/7 flex gap-4 col-span-2">
+      <div className="flex flex-col gap-4 w-32">
         {validImages.map((image) => (
           <button
             key={image.id}
             onClick={() => setSelectedImage(image)}
             className={cn(
-              'aspect-square relative rounded-md overflow-hidden transition-all',
+              'aspect-square relative transition-all',
               'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
               {
                 'ring-2 ring-ring ring-offset-2': selectedImage.id === image.id,
@@ -61,6 +52,14 @@ export function ProductImageGallery({ images }: Props) {
             />
           </button>
         ))}
+      </div>
+      <div className="aspect-3/4 relative bg-secondary overflow-hidden w-full">
+        <Image
+          src={selectedImage.url!}
+          alt={selectedImage.alt || 'Product Image'}
+          fill
+          className="object-cover transition-all duration-300"
+        />
       </div>
     </div>
   )

@@ -6,7 +6,7 @@ import { Product } from '@/payload-types'
 import { Check, ShoppingCart } from 'lucide-react'
 import { useCartStore } from '@/store/cart-store'
 
-export function AddToCartButton({ product }: { product: Product }) {
+export function AddToCartButton({ product }: Readonly<{ product: Product }>) {
   const addItem = useCartStore((state) => state.addItem)
   const items = useCartStore((state) => state.items)
 
@@ -23,7 +23,7 @@ export function AddToCartButton({ product }: { product: Product }) {
   }, [itemInCart, items])
 
   return (
-    <Button onClick={() => addItem(product)} size="lg" className="w-full" disabled={isAdded}>
+    <Button onClick={() => addItem(product)} disabled={isAdded}>
       {isAdded ? (
         <>
           <Check className="mr-2 h-5 w-5" /> Added!

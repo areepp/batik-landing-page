@@ -166,7 +166,7 @@ export interface Media {
   focalY?: number | null;
 }
 /**
- * Rumah adalah lini merek.
+ * Rumah adalah lini merek atau nama toko.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "houses".
