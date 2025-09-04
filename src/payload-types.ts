@@ -72,6 +72,7 @@ export interface Config {
     houses: House;
     products: Product;
     carts: Cart;
+    orders: Order;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     houses: HousesSelect<false> | HousesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     carts: CartsSelect<false> | CartsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -125,6 +127,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  roles: ('admin' | 'customer')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -227,6 +230,36 @@ export interface Cart {
   createdAt: string;
 }
 /**
+ * A collection to store customer orders.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: number;
+  orderNumber?: string | null;
+  user?: (number | null) | User;
+  customerEmail: string;
+  items: {
+    product?: (number | null) | Product;
+    productName: string;
+    price: number;
+    quantity: number;
+    id?: string | null;
+  }[];
+  total: number;
+  status: 'pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled';
+  shippingAddress: {
+    recipientName: string;
+    phoneNumber: string;
+    fullAddress: string;
+    postalCode: string;
+  };
+  paymentTransactionId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
@@ -252,6 +285,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'carts';
         value: number | Cart;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: number | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -300,6 +337,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -383,6 +421,37 @@ export interface CartsSelect<T extends boolean = true> {
         quantity?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  orderNumber?: T;
+  user?: T;
+  customerEmail?: T;
+  items?:
+    | T
+    | {
+        product?: T;
+        productName?: T;
+        price?: T;
+        quantity?: T;
+        id?: T;
+      };
+  total?: T;
+  status?: T;
+  shippingAddress?:
+    | T
+    | {
+        recipientName?: T;
+        phoneNumber?: T;
+        fullAddress?: T;
+        postalCode?: T;
+      };
+  paymentTransactionId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
