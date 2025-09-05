@@ -8,8 +8,12 @@ export const metadata = {
   description:
     'Website resmi untuk para pengrajin Batik Sragen, menampilkan karya otentik dan cerita di baliknya.',
   title: 'Batik Sragen - Warisan Budaya Indonesia',
+  description:
+    'Website resmi untuk para pengrajin Batik Sragen, menampilkan karya otentik dan cerita di baliknya.',
+  title: 'Batik Sragen - Warisan Budaya Indonesia',
 }
 
+export default function RootLayout(props: { children: React.ReactNode }) {
 export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
