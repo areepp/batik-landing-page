@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
+import Link from 'next/link'
 
 export function UserProfileDropdown() {
   return (
@@ -27,7 +28,9 @@ export function UserProfileDropdown() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Akun Saya</DropdownMenuItem>
-        <DropdownMenuItem>Pesanan</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href={'/cart'}>Pesanan</Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Logout</DropdownMenuItem>
       </DropdownMenuContent>

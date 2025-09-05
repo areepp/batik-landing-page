@@ -30,7 +30,7 @@ function DesktopNav() {
   return (
     <nav className="flex items-center gap-4 lg:gap-6">
       <Link
-        href="/"
+        href="/home"
         className="text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
       >
         Beranda
@@ -79,7 +79,7 @@ export function Navbar() {
                   </SheetDescription>
                 </SheetHeader>
                 <nav className="grid gap-6 text-lg font-medium pl-10">
-                  <Link href="/" className="hover:text-foreground/80">
+                  <Link href="/home" className="hover:text-foreground/80">
                     Beranda
                   </Link>
                   <Link href="/products" className="text-muted-foreground hover:text-foreground/80">
