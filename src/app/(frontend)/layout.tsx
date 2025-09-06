@@ -1,23 +1,26 @@
 import React from 'react'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
-import Navbar from '@/components/navbar'
+import { Navbar } from '@/features/layout/navbar'
+import { Footer } from '@/features/layout/footer'
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description:
+    'Website resmi untuk para pengrajin Batik Sragen, menampilkan karya otentik dan cerita di baliknya.',
+  title: 'Batik Sragen - Warisan Budaya Indonesia',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
     <html lang="en">
+      <head />
       <body>
         <Navbar />
-
-        <main className="pb-12">{children}</main>
+        <main>{children}</main>
         <Toaster />
+        <Footer />
       </body>
     </html>
   )
