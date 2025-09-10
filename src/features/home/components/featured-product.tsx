@@ -2,7 +2,7 @@ import Link from 'next/link'
 import config from '@/payload.config'
 import { getPayload } from 'payload'
 import { Product } from '@/payload-types'
-import { ProductCarouselClient } from '@/features/home/components/ProductCarouselClient'
+import { ProductCarouselClient } from '@/features/home/components/product-carousel-client'
 
 export default async function ProductCarousel() {
   const payload = await getPayload({ config })
