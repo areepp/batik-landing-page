@@ -1,8 +1,8 @@
 import React from 'react'
 import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
-import { Navbar } from '@/features/layout/navbar'
-import { Footer } from '@/features/layout/footer'
+import { Navbar } from '@/components/navbar'
+import { Footer } from '@/components/footer'
 
 export const metadata = {
   description:
