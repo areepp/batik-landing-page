@@ -22,3 +22,38 @@ export const isAdminOrSelf: Access = ({ req: { user } }) => {
   // Deny access if the user is not logged in
   return false
 }
+
+export const isHouseOwner: Access = ({ req: { user } }) => {
+  if (user?.house) {
+    return {
+      house: {
+        equals: typeof user.house === 'object' ? user.house.id : user.house,
+      },
+    }
+  }
+
+  return false
+}
+
+export const isHouseOwnerOrPublic: Access = ({ req: { user } }) => {
+  if (user?.house && user?.roles?.includes('store-admin')) {
+    return {
+      house: {
+        equals: typeof user.house === 'object' ? user.house.id : user.house,
+      },
+    }
+  }
+
+  return true
+}
+
+export const isCustomer: Access = ({ req: { user } }) => {
+  if (user) {
+    return {
+      user: {
+        equals: user.id,
+      },
+    }
+  }
+  return false
+}

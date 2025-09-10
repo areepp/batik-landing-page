@@ -1,4 +1,5 @@
-import { formatSlug, generateUniqueSlug } from '@/lib/utils'
+import { isHouseOwner, isHouseOwnerOrPublic } from '@/lib/payload-access-control'
+import { generateUniqueSlug } from '@/lib/utils'
 import type { CollectionConfig } from 'payload'
 
 export const Products: CollectionConfig = {
@@ -8,7 +9,10 @@ export const Products: CollectionConfig = {
     description: 'Produk batik yang akan dijual di situs.',
   },
   access: {
-    read: () => true,
+    read: isHouseOwnerOrPublic,
+    create: isHouseOwner,
+    update: isHouseOwner,
+    delete: isHouseOwner,
   },
   fields: [
     {
@@ -37,6 +41,16 @@ export const Products: CollectionConfig = {
       hasMany: false,
       admin: {
         position: 'sidebar',
+        readOnly: true,
+      },
+      defaultValue: ({ user }) => {
+        if (user && !user.roles?.includes('admin') && user.house) {
+          return typeof user.house === 'object' ? user.house.id : user.house
+        }
+        return null
+      },
+      access: {
+        update: () => false,
       },
     },
     {

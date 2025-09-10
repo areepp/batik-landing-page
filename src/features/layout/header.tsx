@@ -14,7 +14,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'
 import { Search, UserCircle, Menu } from 'lucide-react'
 import { SearchBar } from '@/components/searchBar'
-import { UserProfileDropdown } from '@/components/UserProfileDropdown'
+import { UserProfileDropdown } from '@/components/userProfileDropdown'
 
 // Komponen Logo untuk konsistensi
 function Logo() {

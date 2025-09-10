@@ -1,4 +1,4 @@
-import { isAdmin } from '@/lib/payload-access-control'
+import { isCustomer, isHouseOwner } from '@/lib/payload-access-control'
 import type { CollectionConfig } from 'payload'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -9,10 +9,10 @@ export const Orders: CollectionConfig = {
     description: 'A collection to store customer orders.',
   },
   access: {
-    read: isAdmin,
-    update: isAdmin,
-    delete: isAdmin,
-    create: () => true, // Allow anyone (including guests) to create an order
+    read: isHouseOwner || isCustomer,
+    update: isHouseOwner,
+    delete: isHouseOwner,
+    create: () => true,
   },
   hooks: {
     // This hook runs before a new order is created
@@ -43,6 +43,17 @@ export const Orders: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
       required: false,
+    },
+    {
+      name: 'house',
+      label: 'Rumah Penjual',
+      type: 'relationship',
+      relationTo: 'houses',
+      required: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+      },
     },
     {
       name: 'customerEmail',

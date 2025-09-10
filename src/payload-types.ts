@@ -127,7 +127,8 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  roles: ('admin' | 'customer')[];
+  roles: ('admin' | 'customer' | 'store-admin')[];
+  house?: (number | null) | House;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,6 +148,19 @@ export interface User {
   password?: string | null;
 }
 /**
+ * Rumah adalah lini merek atau nama toko.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "houses".
+ */
+export interface House {
+  id: number;
+  name: string;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -164,19 +178,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * Rumah adalah lini merek atau nama toko.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "houses".
- */
-export interface House {
-  id: number;
-  name: string;
-  description?: string | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * Produk batik yang akan dijual di situs.
@@ -239,6 +240,7 @@ export interface Order {
   id: number;
   orderNumber?: string | null;
   user?: (number | null) | User;
+  house: number | House;
   customerEmail: string;
   items: {
     product?: (number | null) | Product;
@@ -338,6 +340,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   roles?: T;
+  house?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -431,6 +434,7 @@ export interface CartsSelect<T extends boolean = true> {
 export interface OrdersSelect<T extends boolean = true> {
   orderNumber?: T;
   user?: T;
+  house?: T;
   customerEmail?: T;
   items?:
     | T

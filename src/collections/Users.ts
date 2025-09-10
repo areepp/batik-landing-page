@@ -6,6 +6,7 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['email', 'roles', 'createdAt'],
+    hidden: ({ user }) => !user?.roles.includes('admin'),
   },
   access: {
     create: () => true,
@@ -31,7 +32,24 @@ export const Users: CollectionConfig = {
           label: 'Customer',
           value: 'customer',
         },
+        {
+          label: 'Store Admin',
+          value: 'store-admin',
+        },
       ],
+      access: {
+        create: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
+        read: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
+        update: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
+      },
+    },
+    {
+      name: 'house',
+      label: 'Rumah / merk yang Dikelola',
+      type: 'relationship',
+      relationTo: 'houses',
+      required: false,
+      hasMany: false,
       access: {
         create: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
         read: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
