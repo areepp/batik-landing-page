@@ -1,9 +1,9 @@
+import { About } from '@/features/home/components/about'
+import { ArtisanCarousel } from '@/features/home/components/artisan'
+import ProductCarousel from '@/features/home/components/featured-product'
+import { HeroCarousel } from '@/features/home/components/hero'
+import { TestimonialSection } from '@/features/home/components/testimonial'
 import React from 'react'
-import { HeroCarousel } from './hero'
-import ProductCarousel from './featuredProduct'
-import { About } from './about'
-import { TestimonialSection } from './testimonial'
-import { ArtisanCarousel } from './artisan'
 
 const HomePage = () => {
   return (
