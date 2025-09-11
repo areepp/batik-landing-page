@@ -17,7 +17,7 @@ export function AddToCartButton({ product }: Readonly<{ product: Product }>) {
   useEffect(() => {
     if (itemInCart) {
       setIsAdded(true)
-      const timer = setTimeout(() => setIsAdded(false), 2000)
+      const timer = setTimeout(() => setIsAdded(false), 10000)
       return () => clearTimeout(timer)
     }
   }, [itemInCart, items])

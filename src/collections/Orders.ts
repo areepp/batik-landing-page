@@ -14,19 +14,6 @@ export const Orders: CollectionConfig = {
     delete: isHouseOwner,
     create: () => true,
   },
-  hooks: {
-    // This hook runs before a new order is created
-    beforeChange: [
-      async ({ data, operation }) => {
-        if (operation === 'create') {
-          const now = new Date()
-          const datePart = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`
-          const uniqueId = uuidv4().replace(/-/g, '').substring(0, 13).toUpperCase()
-          data.orderNumber = `BTK-${datePart}-${uniqueId}`
-        }
-      },
-    ],
-  },
   fields: [
     {
       name: 'orderNumber',
@@ -36,6 +23,18 @@ export const Orders: CollectionConfig = {
         readOnly: true,
       },
       unique: true,
+      hooks: {
+        beforeChange: [
+          async ({ operation }) => {
+            if (operation === 'create') {
+              const now = new Date()
+              const datePart = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`
+              const uniqueId = uuidv4().replace(/-/g, '').substring(0, 13).toUpperCase()
+              return `BTK-${datePart}-${uniqueId}`
+            }
+          },
+        ],
+      },
     },
     {
       name: 'user',
@@ -53,6 +52,39 @@ export const Orders: CollectionConfig = {
       admin: {
         position: 'sidebar',
         readOnly: true,
+      },
+      hooks: {
+        beforeValidate: [
+          async ({ data, req, operation, value }) => {
+            if (operation === 'create') {
+              if (data?.items && data.items.length > 0) {
+                const firstProductId =
+                  typeof data.items[0].product === 'object'
+                    ? data.items[0].product.id
+                    : data.items[0].product
+
+                if (firstProductId) {
+                  try {
+                    const product = await req.payload.findByID({
+                      collection: 'products',
+                      id: firstProductId,
+                      depth: 1,
+                    })
+
+                    if (product && typeof product.house === 'object' && product.house !== null) {
+                      return product.house.id
+                    }
+                  } catch (error) {
+                    console.error('Error fetching product to set default house:', error)
+                    return null
+                  }
+                }
+              }
+            }
+
+            return data?.house ?? value
+          },
+        ],
       },
     },
     {

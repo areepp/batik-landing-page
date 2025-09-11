@@ -13,6 +13,7 @@ import { Carts } from './collections/Carts'
 import { Houses } from './collections/Houses'
 import { Products } from './collections/Products'
 import { Orders } from './collections/Orders'
+import { midtransWebhook } from './features/orders/api/update-order-status-webhook'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -40,4 +41,5 @@ export default buildConfig({
     payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
+  endpoints: [midtransWebhook],
 })
