@@ -105,7 +105,7 @@ export default function CheckoutPage() {
       }
     } catch (error) {
       console.log(error)
-      toast.error('Terjadi kesalahan yang tidak terduga.')
+      toast.error('Terjadi kesalahan saat memproses checkout.')
       setIsPending(false)
     }
   }
