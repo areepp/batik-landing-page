@@ -25,6 +25,7 @@ import { Media } from '@/payload-types'
 import { formatPrice } from '@/lib/utils'
 import { orderSchema } from '../api/order.schema'
 import { createMidtransTransaction } from '../api/create-midtrans-transaction'
+import { InputSearchLocation } from '@/components/ui/input-search-location'
 
 export default function CheckoutPage() {
   const { items, clearCart } = useCartStore()
@@ -45,7 +46,6 @@ export default function CheckoutPage() {
       recipientName: '',
       phoneNumber: '',
       fullAddress: '',
-      postalCode: '',
       email: '',
     },
   })
@@ -175,19 +175,14 @@ export default function CheckoutPage() {
                   </FormItem>
                 )}
               />
-              <FormField
-                name="postalCode"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Kode Pos</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <FormItem>
+                <FormLabel>Kelurahan / Kode Pos Tujuan</FormLabel>
+                <InputSearchLocation
+                  onSelect={(location) => {
+                    if (location) form.setValue('location', location)
+                  }}
+                />
+              </FormItem>
             </div>
           </div>
 

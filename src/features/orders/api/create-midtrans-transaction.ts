@@ -93,7 +93,7 @@ export async function createMidtransTransaction(
         recipientName: validatedOrderDetails.data.recipientName,
         phoneNumber: validatedOrderDetails.data.phoneNumber,
         fullAddress: validatedOrderDetails.data.fullAddress,
-        postalCode: validatedOrderDetails.data.postalCode,
+        postalCode: validatedOrderDetails.data.location.zip_code,
       },
     },
   })
