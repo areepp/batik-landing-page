@@ -4,6 +4,7 @@ import * as migration_20250829_110331_cart from './20250829_110331_cart';
 import * as migration_20250902_111046_role from './20250902_111046_role';
 import * as migration_20250903_083513_order_fields from './20250903_083513_order_fields';
 import * as migration_20250910_055647_user_relation_to_house from './20250910_055647_user_relation_to_house';
+import * as migration_20250912_072150_product_weight_house_loc_id from './20250912_072150_product_weight_house_loc_id';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20250910_055647_user_relation_to_house.up,
     down: migration_20250910_055647_user_relation_to_house.down,
-    name: '20250910_055647_user_relation_to_house'
+    name: '20250910_055647_user_relation_to_house',
+  },
+  {
+    up: migration_20250912_072150_product_weight_house_loc_id.up,
+    down: migration_20250912_072150_product_weight_house_loc_id.down,
+    name: '20250912_072150_product_weight_house_loc_id'
   },
 ];

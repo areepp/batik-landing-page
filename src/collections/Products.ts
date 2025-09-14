@@ -88,6 +88,19 @@ export const Products: CollectionConfig = {
       ],
     },
     {
+      name: 'weight',
+      label: 'Berat (gram)',
+      type: 'number',
+      required: true,
+      min: 1,
+      defaultValue: 300,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Masukkan berat produk dalam satuan gram. Akan digunakan saat menghitung ongkir.',
+      },
+    },
+    {
       name: 'images',
       label: 'Gambar Produk',
       type: 'array',
