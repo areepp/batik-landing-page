@@ -12,8 +12,8 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
-import { SearchBar } from '@/components/searchBar'
-import { UserProfileDropdown } from '@/components/userProfileDropdown'
+import { SearchBar } from '@/features/products/components/search-bar'
+import { UserProfileDropdown } from '@/components/user-profile-dropdown'
 
 function Logo() {
   return (
@@ -53,9 +53,6 @@ export function Navbar() {
           <Logo />
 
           <div className="flex items-center gap-4 lg:gap-6">
-            <div className="w-64">
-              <SearchBar />
-            </div>
             <DesktopNav />
             <UserProfileDropdown />
           </div>
