@@ -9,4 +9,11 @@ export const orderSchema = z.object({
     zip_code: z.string().min(1, 'Kode pos wajib diisi'),
     id: z.number().min(1),
   }),
+  shippingOption: z
+    .object({
+      service: z.string(),
+      name: z.string(),
+      cost: z.number(),
+    })
+    .nullable(),
 })
