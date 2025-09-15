@@ -6,17 +6,17 @@ import { ProductControls } from './product-controls'
 import { SearchBar } from './search-bar'
 
 type ProductsPageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     [key: string]: string | string[] | undefined
-  }
+  }>
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const payload = await getPayload({ config })
 
-  const searchQuery = searchParams?.search as string
-  const housesQuery = searchParams?.houses as string
-  const sortQuery = searchParams?.sort as string
+  const searchQuery = (await searchParams)?.search as string
+  const housesQuery = (await searchParams)?.houses as string
+  const sortQuery = (await searchParams)?.sort as string
 
   const where: Where = {}
   if (searchQuery) {
