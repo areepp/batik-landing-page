@@ -160,7 +160,7 @@ export interface House {
   /**
    * Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah asal.
    */
-  originCity: string;
+  originCity?: string | null;
   updatedAt: string;
   createdAt: string;
 }
