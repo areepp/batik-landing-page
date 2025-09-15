@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 function useDebounce<T>(value: T, delay?: number): T {
@@ -22,11 +22,16 @@ function useDebounce<T>(value: T, delay?: number): T {
 export function SearchBar() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const pathname = usePathname()
 
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '')
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
 
   useEffect(() => {
+    if (pathname != '/products') {
+      return
+    }
+
     const current = new URLSearchParams(Array.from(searchParams.entries()))
 
     if (debouncedSearchTerm) {
@@ -38,7 +43,7 @@ export function SearchBar() {
     const search = current.toString()
     const query = search ? `?${search}` : ''
 
-    router.push(`/products${query}`)
+    router.replace(`/products${query}`)
   }, [debouncedSearchTerm, router, searchParams])
 
   return (
