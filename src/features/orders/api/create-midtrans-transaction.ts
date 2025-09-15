@@ -66,18 +66,19 @@ export async function createMidtransTransaction(
     limit: productIds.length,
   })
 
-  const total = cartItems.reduce((acc, cartItem) => {
+  const subtotal = cartItems.reduce((acc, cartItem) => {
     const product = products.find((p) => p.id === cartItem.product.id)
     if (!product) throw new Error('Produk tidak ditemukan')
     return acc + product.price * cartItem.quantity
   }, 0)
+  const total = subtotal + (validatedOrderDetails.data.shippingOption?.cost ?? 0)
 
   const order = await payload.create({
     collection: 'orders',
     data: {
       house: houseId,
       user: user?.id,
-      customerEmail: !user ? validatedOrderDetails.data.email : '',
+      customerEmail: validatedOrderDetails.data.email,
       items: cartItems.map((item) => {
         const product = products.find((p) => p.id === item.product.id)!
         return {
@@ -87,6 +88,11 @@ export async function createMidtransTransaction(
           quantity: item.quantity,
         }
       }),
+      subtotal,
+      shippingDetails: {
+        cost: validatedOrderDetails.data.shippingOption?.cost ?? 0,
+        service: `${validatedOrderDetails.data.shippingOption?.name} ${validatedOrderDetails.data.shippingOption?.service}`,
+      },
       total,
       status: 'pending',
       shippingAddress: {

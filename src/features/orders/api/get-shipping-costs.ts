@@ -32,7 +32,7 @@ export async function getShippingCosts(
         key: process.env.RAJAONGKIR_API_KEY!,
         'content-type': 'application/x-www-form-urlencoded',
       },
-      body: `origin=${origin}&destination=${destination}&weight=${weight}&courier=jne`,
+      body: `origin=${origin}&destination=${destination}&weight=${weight}&courier=jne:jnt:lion`,
     })
 
     const result = await response.json()

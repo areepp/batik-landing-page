@@ -29,7 +29,7 @@ export const Houses: CollectionConfig = {
       label: 'ID Kota Asal Pengiriman',
       type: 'text',
       required: true,
-      defaultValue: '5327',
+      defaultValue: '62640',
       admin: {
         readOnly: true,
         description:

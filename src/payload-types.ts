@@ -257,6 +257,11 @@ export interface Order {
     quantity: number;
     id?: string | null;
   }[];
+  subtotal: number;
+  shippingDetails: {
+    service: string;
+    cost: number;
+  };
   total: number;
   status: 'pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled';
   shippingAddress: {
@@ -454,6 +459,13 @@ export interface OrdersSelect<T extends boolean = true> {
         price?: T;
         quantity?: T;
         id?: T;
+      };
+  subtotal?: T;
+  shippingDetails?:
+    | T
+    | {
+        service?: T;
+        cost?: T;
       };
   total?: T;
   status?: T;

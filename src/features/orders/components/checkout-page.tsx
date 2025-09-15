@@ -153,6 +153,7 @@ export default function CheckoutPage() {
   }
 
   const subtotal = items.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
+  const shippingCost = form.watch('shippingOption')?.cost ?? 0
 
   return (
     <main className="mt-12 container mx-auto">
@@ -282,9 +283,19 @@ export default function CheckoutPage() {
             </div>
             <Separator className="my-6" />
             <div className="space-y-2">
-              <div className="flex justify-between font-bold text-lg">
-                <span>Total</span>
+              <div className="flex justify-between">
+                <span>Subtotal</span>
                 <span>{formatPrice(subtotal)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Ongkos kirim</span>
+                <span>
+                  {shippingCost ? formatPrice(shippingCost) : 'Lengkapi alamat pengiriman'}
+                </span>
+              </div>
+              <div className="mt-4 flex justify-between font-bold text-lg">
+                <span>Total</span>
+                <span>{formatPrice(subtotal + shippingCost)}</span>
               </div>
             </div>
             <Button type="submit" size="lg" className="w-full mt-6" disabled={isPending}>

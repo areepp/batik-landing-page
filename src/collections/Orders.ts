@@ -125,10 +125,44 @@ export const Orders: CollectionConfig = {
       ],
     },
     {
+      name: 'subtotal',
+      label: 'Subtotal',
+      type: 'number',
+      required: true,
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: 'shippingDetails',
+      label: 'Detail Pengiriman',
+      type: 'group',
+      fields: [
+        {
+          name: 'service',
+          label: 'Layanan',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'cost',
+          label: 'Biaya',
+          type: 'number',
+          required: true,
+        },
+      ],
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
       name: 'total',
       label: 'Total Pesanan',
       type: 'number',
       required: true,
+      admin: {
+        readOnly: true,
+      },
     },
     {
       name: 'status',
