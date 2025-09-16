@@ -18,7 +18,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <head />
       <body>
         <Navbar />
-        <main className="pb-24">{children}</main>
+        <main className="py-16">{children}</main>
         <Toaster />
         <Footer />
       </body>
