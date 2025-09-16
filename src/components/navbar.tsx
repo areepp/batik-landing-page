@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-
 import {
   Sheet,
   SheetContent,
@@ -12,8 +11,6 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
-import { SearchBar } from '@/features/products/components/search-bar'
-import { UserProfileDropdown } from '@/components/user-profile-dropdown'
 
 function Logo() {
   return (
@@ -54,7 +51,6 @@ export function Navbar() {
 
           <div className="flex items-center gap-4 lg:gap-6">
             <DesktopNav />
-            <UserProfileDropdown />
           </div>
         </div>
 
@@ -85,14 +81,6 @@ export function Navbar() {
                 </nav>
               </SheetContent>
             </Sheet>
-          </div>
-
-          <div className="flex-1">
-            <SearchBar />
-          </div>
-
-          <div>
-            <UserProfileDropdown />
           </div>
         </div>
       </div>

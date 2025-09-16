@@ -157,6 +157,10 @@ export interface House {
   id: number;
   name: string;
   description?: string | null;
+  /**
+   * Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah asal.
+   */
+  originCity?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -204,6 +208,10 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Masukkan berat produk dalam satuan gram. Akan digunakan saat menghitung ongkir.
+   */
+  weight: number;
   images: {
     image: number | Media;
     id?: string | null;
@@ -249,6 +257,11 @@ export interface Order {
     quantity: number;
     id?: string | null;
   }[];
+  subtotal: number;
+  shippingDetails: {
+    service: string;
+    cost: number;
+  };
   total: number;
   status: 'pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled';
   shippingAddress: {
@@ -383,6 +396,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface HousesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
+  originCity?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -402,6 +416,7 @@ export interface ProductsSelect<T extends boolean = true> {
         detailItem?: T;
         id?: T;
       };
+  weight?: T;
   images?:
     | T
     | {
@@ -444,6 +459,13 @@ export interface OrdersSelect<T extends boolean = true> {
         price?: T;
         quantity?: T;
         id?: T;
+      };
+  subtotal?: T;
+  shippingDetails?:
+    | T
+    | {
+        service?: T;
+        cost?: T;
       };
   total?: T;
   status?: T;
