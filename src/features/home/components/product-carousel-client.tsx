@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import { ProductCard } from '@/features/products/components/product-card'
+import { ProductCard } from '@/features/products/components/product-list/product-card'
 import { Product } from '@/payload-types'
 
 type Props = {

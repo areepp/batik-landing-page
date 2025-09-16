@@ -1,6 +1,6 @@
 import { getPayload, Where } from 'payload'
 import config from '@/payload.config'
-import { ProductCard } from '@/features/products/components/product-card'
+import { ProductCard } from '@/features/products/components/product-list/product-card'
 import { House } from '@/payload-types'
 import { ProductControls } from './product-controls'
 import { SearchBar } from './search-bar'
