@@ -135,7 +135,7 @@ export function HeroCarousel() {
         <CarouselContent>
           {carouselSlides.map((slide, index) => (
             <CarouselItem key={index}>
-              <div className="relative h-[95vh] w-full">
+              <div className="relative h-screen w-full">
                 {slide.type === 'image' ? (
                   <img src={slide.src} alt={slide.title} className="w-full h-full object-cover" />
                 ) : (

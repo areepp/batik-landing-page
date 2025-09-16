@@ -54,7 +54,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <div className="max-w-11/12 mx-auto px-4">
-      <div className="mt-12 flex gap-8 lg:gap-12">
+      <div className="mt-20 flex gap-8 lg:gap-12">
         <ProductImageGallery images={product.images || []} />
 
         <div className="flex flex-col gap-6 flex-1 max-w-[30rem]">

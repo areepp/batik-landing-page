@@ -7,7 +7,7 @@ import React from 'react'
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen -mt-16">
       <main>
         <HeroCarousel />
         <div className="md:px-12 px-4">
