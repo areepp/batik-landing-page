@@ -33,11 +33,16 @@ export function SearchBar() {
     }
 
     const current = new URLSearchParams(Array.from(searchParams.entries()))
+    const currentSearchInUrl = current.get('search') || ''
 
     if (debouncedSearchTerm) {
       current.set('search', debouncedSearchTerm)
     } else {
       current.delete('search')
+    }
+
+    if (debouncedSearchTerm !== currentSearchInUrl) {
+      current.delete('page')
     }
 
     const search = current.toString()

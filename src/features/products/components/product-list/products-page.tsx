@@ -1,9 +1,10 @@
 import { getPayload, Where } from 'payload'
 import config from '@/payload.config'
-import { ProductCard } from '@/features/products/components/product-card'
+import { ProductCard } from '@/features/products/components/product-list/product-card'
 import { House } from '@/payload-types'
 import { ProductControls } from './product-controls'
 import { SearchBar } from './search-bar'
+import { PaginationControls } from './products-pagination'
 
 type ProductsPageProps = {
   searchParams?: Promise<{
@@ -17,6 +18,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const searchQuery = (await searchParams)?.search as string
   const housesQuery = (await searchParams)?.houses as string
   const sortQuery = (await searchParams)?.sort as string
+  const page = Number((await searchParams)?.page) || 1
+  const limit = 12
 
   const where: Where = {}
   if (searchQuery) {
@@ -41,12 +44,18 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     sort = order === 'desc' ? `-${field}` : field
   }
 
-  const { docs: products } = await payload.find({
+  const {
+    docs: products,
+    totalPages,
+    hasNextPage,
+    hasPrevPage,
+  } = await payload.find({
     collection: 'products',
     where,
     sort,
     depth: 1,
-    limit: 12,
+    page,
+    limit,
   })
 
   const { docs: houses } = (await payload.find({
@@ -80,11 +89,21 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <div className="mt-12">
+            <PaginationControls
+              totalPages={totalPages}
+              currentPage={page}
+              hasNextPage={hasNextPage}
+              hasPrevPage={hasPrevPage}
+            />
+          </div>
+        </>
       )}
     </div>
   )
