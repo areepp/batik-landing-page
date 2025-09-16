@@ -110,6 +110,31 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'marketplaceLinks',
+      label: 'Link Marketplace',
+      type: 'group',
+      admin: {
+        description: '(Opsional) Tambahkan link jika produk ini dijual di marketplace',
+      },
+      fields: [
+        {
+          name: 'shopeeUrl',
+          label: 'Link produk di Shopee',
+          type: 'text',
+        },
+        {
+          name: 'tokopediaUrl',
+          label: 'Link produk di Tokopedia',
+          type: 'text',
+        },
+        {
+          name: 'tiktokUrl',
+          label: 'Link produk di TikTok',
+          type: 'text',
+        },
+      ],
+    },
+    {
       name: 'weight',
       label: 'Berat (gram)',
       type: 'number',

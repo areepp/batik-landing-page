@@ -250,6 +250,14 @@ export interface Product {
   jenisBatik: (number | JenisBatik)[];
   jenisKain: (number | JenisKain)[];
   /**
+   * (Opsional) Tambahkan link jika produk ini dijual di marketplace
+   */
+  marketplaceLinks?: {
+    shopeeUrl?: string | null;
+    tokopediaUrl?: string | null;
+    tiktokUrl?: string | null;
+  };
+  /**
    * Masukkan berat produk dalam satuan gram. Akan digunakan saat menghitung ongkir.
    */
   weight: number;
@@ -482,6 +490,13 @@ export interface ProductsSelect<T extends boolean = true> {
       };
   jenisBatik?: T;
   jenisKain?: T;
+  marketplaceLinks?:
+    | T
+    | {
+        shopeeUrl?: T;
+        tokopediaUrl?: T;
+        tiktokUrl?: T;
+      };
   weight?: T;
   images?:
     | T
