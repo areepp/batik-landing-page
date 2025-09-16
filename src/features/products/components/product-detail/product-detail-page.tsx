@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import RecomendationProduct from '../recomendation-product'
+import RecomendationProduct from './recomendation-product'
 import { JenisBatik, JenisKain } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'

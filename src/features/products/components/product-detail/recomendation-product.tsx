@@ -68,7 +68,7 @@ export default async function RecomendationProduct({ currentProduct }: IProps) {
     <section className="mt-48 py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto">
         <div className="flex items-center gap-10 justify-between mb-3">
-          <h2 className="text-xl font-bold tracking-tight uppercase">Anda Mungkin Juga Suka</h2>
+          <h2 className="text-xl font-bold tracking-tight">Anda Mungkin Juga Suka</h2>
         </div>
         <ProductCarouselClient products={products} />
       </div>
