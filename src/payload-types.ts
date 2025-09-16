@@ -73,6 +73,8 @@ export interface Config {
     products: Product;
     carts: Cart;
     orders: Order;
+    'jenis-batik': JenisBatik;
+    'jenis-kain': JenisKain;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +87,8 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     carts: CartsSelect<false> | CartsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
+    'jenis-batik': JenisBatikSelect<false> | JenisBatikSelect<true>;
+    'jenis-kain': JenisKainSelect<false> | JenisKainSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -208,6 +212,8 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  jenisBatik: (number | JenisBatik)[];
+  jenisKain: (number | JenisKain)[];
   /**
    * Masukkan berat produk dalam satuan gram. Akan digunakan saat menghitung ongkir.
    */
@@ -216,6 +222,30 @@ export interface Product {
     image: number | Media;
     id?: string | null;
   }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Jenis atau teknik pembuatan batik (misal: Tulis, Cap, Printing).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-batik".
+ */
+export interface JenisBatik {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Jenis kain yang digunakan untuk batik (misal: Katun, Sutra).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-kain".
+ */
+export interface JenisKain {
+  id: number;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -304,6 +334,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'orders';
         value: number | Order;
+      } | null)
+    | ({
+        relationTo: 'jenis-batik';
+        value: number | JenisBatik;
+      } | null)
+    | ({
+        relationTo: 'jenis-kain';
+        value: number | JenisKain;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -416,6 +454,8 @@ export interface ProductsSelect<T extends boolean = true> {
         detailItem?: T;
         id?: T;
       };
+  jenisBatik?: T;
+  jenisKain?: T;
   weight?: T;
   images?:
     | T
@@ -478,6 +518,24 @@ export interface OrdersSelect<T extends boolean = true> {
         postalCode?: T;
       };
   paymentTransactionId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-batik_select".
+ */
+export interface JenisBatikSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-kain_select".
+ */
+export interface JenisKainSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }

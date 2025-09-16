@@ -88,6 +88,28 @@ export const Products: CollectionConfig = {
       ],
     },
     {
+      name: 'jenisBatik',
+      label: 'Jenis Batik',
+      type: 'relationship',
+      relationTo: 'jenis-batik',
+      hasMany: true,
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'jenisKain',
+      label: 'Jenis Kain',
+      type: 'relationship',
+      relationTo: 'jenis-kain',
+      hasMany: true,
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'weight',
       label: 'Berat (gram)',
       type: 'number',

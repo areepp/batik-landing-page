@@ -14,6 +14,8 @@ import { Houses } from './collections/Houses'
 import { Products } from './collections/Products'
 import { Orders } from './collections/Orders'
 import { midtransWebhook } from './features/orders/api/update-order-status-webhook'
+import { JenisBatik } from './collections/JenisBatik'
+import { JenisKain } from './collections/JenisKain'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Houses, Products, Carts, Orders],
+  collections: [Users, Media, Houses, Products, Carts, Orders, JenisBatik, JenisKain],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
