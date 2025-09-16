@@ -65,16 +65,10 @@ export default async function RecomendationProduct({ currentProduct }: IProps) {
   }
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-5 justify-between mb-8">
-          <h2 className="text-xl sm:text-3xl font-bold tracking-tight">Anda Mungkin Juga Suka</h2>
-          <Link
-            href={'/products'}
-            className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
-          >
-            Lihat Semua &rarr;
-          </Link>
+    <section className="mt-48 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto">
+        <div className="flex items-center gap-10 justify-between mb-3">
+          <h2 className="text-xl font-bold tracking-tight uppercase">Anda Mungkin Juga Suka</h2>
         </div>
         <ProductCarouselClient products={products} />
       </div>
