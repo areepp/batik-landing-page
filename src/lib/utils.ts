@@ -12,7 +12,21 @@ export const formatSlug = (val: string): string =>
     .replace(/[^\w-]+/g, '')
     .toLowerCase()
 
-export const generateUniqueSlug: FieldHook = async ({ value, data, req: { payload } }) => {
+export const generateUniqueSlug: FieldHook = async ({
+  value,
+  data,
+  req: { payload },
+  operation,
+  originalDoc,
+}) => {
+  if (operation === 'update' && originalDoc) {
+    // Jika judul tidak berubah DAN slug sudah ada,
+    // langsung kembalikan slug yang ada tanpa perlu menjalankan sisa hook.
+    if (data?.name === originalDoc.name && data?.slug) {
+      return data.slug
+    }
+  }
+
   const baseSlug = formatSlug(data?.name || value || '')
 
   if (baseSlug) {

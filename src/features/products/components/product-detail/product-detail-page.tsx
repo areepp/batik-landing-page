@@ -9,6 +9,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { JenisBatik, JenisKain } from '@/payload-types'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import Image from 'next/image'
+import { WhatsappButton } from './whatsapp-button'
 
 type Props = {
   params: Promise<{
@@ -38,6 +43,14 @@ export default async function ProductDetailPage({ params }: Props) {
   }
 
   const house = typeof product.house === 'object' ? product.house : null
+  const jenisKain =
+    typeof product.jenisKain === 'object'
+      ? (product.jenisKain as JenisKain[]).map((item) => item.name)
+      : null
+  const jenisBatik =
+    typeof product.jenisBatik === 'object'
+      ? (product.jenisBatik as JenisBatik[]).map((item) => item.name)
+      : null
 
   return (
     <div className="max-w-11/12 mx-auto px-4">
@@ -55,6 +68,34 @@ export default async function ProductDetailPage({ params }: Props) {
 
           <div className="mt-4 prose dark:prose-invert max-w-none">{product.description}</div>
 
+          {Object.entries(product.marketplaceLinks as {}).some(([, value]) => value) && (
+            <div className="flex flex-row gap-3 flex-wrap">
+              {product.marketplaceLinks?.shopeeUrl && (
+                <Button variant="outline">
+                  <Link href={product.marketplaceLinks?.shopeeUrl}>
+                    <Image src="/shopee.png" alt="Shopee" width={63} height={20} />
+                  </Link>
+                </Button>
+              )}
+              {product.marketplaceLinks?.tokopediaUrl && (
+                <Button variant="outline">
+                  <Link href={product.marketplaceLinks?.tokopediaUrl}>
+                    <Image src="/tokopedia.png" alt="Tokopedia" width={73} height={16} />
+                  </Link>
+                </Button>
+              )}{' '}
+              {product.marketplaceLinks?.tiktokUrl && (
+                <Button variant="outline">
+                  <Link href={product.marketplaceLinks?.tiktokUrl}>
+                    <Image src="/tiktok.png" alt="TikTok" width={67} height={16} />
+                  </Link>
+                </Button>
+              )}
+            </div>
+          )}
+
+          <WhatsappButton product={product} />
+
           {product.details && product.details.length > 0 && (
             <div className="mt-6">
               <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
@@ -64,6 +105,8 @@ export default async function ProductDetailPage({ params }: Props) {
                   </AccordionTrigger>
                   <AccordionContent>
                     <ul className="space-y-2 text-muted-foreground">
+                      <li>Jenis batik: {jenisBatik?.join(', ')}</li>
+                      <li>Jenis kain: {jenisKain?.join(', ')}</li>
                       {product.details.map((detail, index) => (
                         <li key={index}>{detail.detailItem}</li>
                       ))}
