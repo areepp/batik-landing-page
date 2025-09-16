@@ -27,6 +27,12 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  bin: [
+    {
+      scriptPath: path.resolve(dirname, 'seed.ts'),
+      key: 'seed',
+    },
+  ],
   collections: [Users, Media, Houses, Products, Carts, Orders, JenisBatik, JenisKain],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
