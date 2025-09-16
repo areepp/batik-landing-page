@@ -7,6 +7,7 @@ import * as migration_20250910_055647_user_relation_to_house from './20250910_05
 import * as migration_20250912_072150_product_weight_house_loc_id from './20250912_072150_product_weight_house_loc_id';
 import * as migration_20250915_125737_order_total_subtotal from './20250915_125737_order_total_subtotal';
 import * as migration_20250916_070107_jenis_batik_jenis_kain from './20250916_070107_jenis_batik_jenis_kain';
+import * as migration_20250916_071336_house_details from './20250916_071336_house_details';
 
 export const migrations = [
   {
@@ -52,6 +53,11 @@ export const migrations = [
   {
     up: migration_20250916_070107_jenis_batik_jenis_kain.up,
     down: migration_20250916_070107_jenis_batik_jenis_kain.down,
-    name: '20250916_070107_jenis_batik_jenis_kain'
+    name: '20250916_070107_jenis_batik_jenis_kain',
+  },
+  {
+    up: migration_20250916_071336_house_details.up,
+    down: migration_20250916_071336_house_details.down,
+    name: '20250916_071336_house_details'
   },
 ];

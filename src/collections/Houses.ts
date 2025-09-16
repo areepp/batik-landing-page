@@ -25,6 +25,62 @@ export const Houses: CollectionConfig = {
       required: false,
     },
     {
+      name: 'phoneNumber',
+      label: 'Nomor HP (WhatsApp)',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'availableBatikTypes',
+      label: 'Jenis Batik yang Dijual',
+      type: 'relationship',
+      relationTo: 'jenis-batik',
+      hasMany: true,
+      required: true,
+    },
+    {
+      name: 'availableFabricTypes',
+      label: 'Jenis Kain yang Dijual',
+      type: 'relationship',
+      relationTo: 'jenis-kain',
+      hasMany: true,
+      required: true,
+    },
+    {
+      name: 'socialMedia',
+      label: 'Media Sosial',
+      type: 'group',
+      fields: [
+        {
+          name: 'instagramUrl',
+          label: 'Link Akun Instagram',
+          type: 'text',
+        },
+        {
+          name: 'tiktokUrl',
+          label: 'Link Akun TikTok',
+          type: 'text',
+        },
+      ],
+    },
+    {
+      name: 'marketplaces',
+      label: 'Marketplace',
+      type: 'group',
+      fields: [
+        {
+          name: 'shopeeUrl',
+          label: 'Link Toko Shopee',
+          type: 'text',
+        },
+        {
+          name: 'tokopediaUrl',
+          label: 'Link Toko Tokopedia',
+          type: 'text',
+        },
+      ],
+    },
+    {
       name: 'originCity',
       label: 'ID Kota Asal Pengiriman',
       type: 'text',

@@ -161,10 +161,45 @@ export interface House {
   id: number;
   name: string;
   description?: string | null;
+  phoneNumber: string;
+  availableBatikTypes: (number | JenisBatik)[];
+  availableFabricTypes: (number | JenisKain)[];
+  socialMedia?: {
+    instagramUrl?: string | null;
+    tiktokUrl?: string | null;
+  };
+  marketplaces?: {
+    shopeeUrl?: string | null;
+    tokopediaUrl?: string | null;
+  };
   /**
    * Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah asal.
    */
   originCity?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Jenis atau teknik pembuatan batik (misal: Tulis, Cap, Printing).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-batik".
+ */
+export interface JenisBatik {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Jenis kain yang digunakan untuk batik (misal: Katun, Sutra).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-kain".
+ */
+export interface JenisKain {
+  id: number;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -222,30 +257,6 @@ export interface Product {
     image: number | Media;
     id?: string | null;
   }[];
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Jenis atau teknik pembuatan batik (misal: Tulis, Cap, Printing).
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "jenis-batik".
- */
-export interface JenisBatik {
-  id: number;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Jenis kain yang digunakan untuk batik (misal: Katun, Sutra).
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "jenis-kain".
- */
-export interface JenisKain {
-  id: number;
-  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -434,6 +445,21 @@ export interface MediaSelect<T extends boolean = true> {
 export interface HousesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
+  phoneNumber?: T;
+  availableBatikTypes?: T;
+  availableFabricTypes?: T;
+  socialMedia?:
+    | T
+    | {
+        instagramUrl?: T;
+        tiktokUrl?: T;
+      };
+  marketplaces?:
+    | T
+    | {
+        shopeeUrl?: T;
+        tokopediaUrl?: T;
+      };
   originCity?: T;
   updatedAt?: T;
   createdAt?: T;
