@@ -4,18 +4,25 @@ import { notFound } from 'next/navigation'
 import { House, Product } from '@/payload-types'
 import { ProductCard } from '@/features/products/components/product-list/product-card'
 import { TokoHeader } from './industry-header'
+import { PaginationControls } from '@/features/products/components/product-list/products-pagination'
 
 type Props = {
   params: Promise<{
     slug: string
   }>
+  searchParams?: Promise<{
+    [key: string]: string | string[] | undefined
+  }>
 }
 
-export default async function IndustryDetailPage({ params }: Props) {
+export default async function IndustryDetailPage({ params, searchParams }: Readonly<Props>) {
   const { slug } = await params
   const payload = await getPayload({ config })
 
-  const { docs: houses } = (await payload.find({
+  const searchQuery = (await searchParams)?.search as string
+  const page = Number((await searchParams)?.page) || 1
+
+  const { docs: houses } = await payload.find({
     collection: 'houses',
     where: {
       slug: {
@@ -23,7 +30,7 @@ export default async function IndustryDetailPage({ params }: Props) {
       },
     },
     limit: 1,
-  })) as { docs: House[] }
+  })
 
   const house = houses[0]
 
@@ -31,16 +38,21 @@ export default async function IndustryDetailPage({ params }: Props) {
     return notFound()
   }
 
-  const { docs: products } = (await payload.find({
+  const {
+    docs: products,
+    totalPages,
+    hasNextPage,
+    hasPrevPage,
+  } = await payload.find({
     collection: 'products',
     where: {
       house: {
         equals: house.id,
       },
     },
-    limit: 50,
+    limit: 12,
     depth: 1,
-  })) as { docs: Product[] }
+  })
 
   return (
     <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -53,11 +65,21 @@ export default async function IndustryDetailPage({ params }: Props) {
             <p className="text-muted-foreground">Toko ini belum memiliki produk.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+            <div className="mt-12">
+              <PaginationControls
+                totalPages={totalPages}
+                currentPage={page}
+                hasNextPage={hasNextPage}
+                hasPrevPage={hasPrevPage}
+              />
+            </div>
+          </>
         )}
       </div>
     </div>
