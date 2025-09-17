@@ -1,3 +1,3 @@
-import ListIndustryPage from '@/features/toko/components/list-industry-page'
+import ListIndustryPage from '@/features/toko/components/industry-list/list-industry-page'
 
 export default ListIndustryPage

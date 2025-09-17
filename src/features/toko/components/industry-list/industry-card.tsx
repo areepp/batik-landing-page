@@ -1,18 +1,10 @@
 import { House, JenisBatik, JenisKain, Media } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import { MessageCircle } from 'lucide-react'
+import { ExternalLink, MessageCircle } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
-
-function getInitials(name: string): string {
-  if (!name) return '?'
-  const words = name.replace(/Batik/gi, '').trim().split(' ').filter(Boolean)
-  if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase()
-  if (words.length === 1 && words[0].length > 1) return words[0].substring(0, 2).toUpperCase()
-  if (name.length > 0) return name[0].toUpperCase()
-  return '?'
-}
+import { getInitials } from '@/lib/utils'
 
 type Props = {
   house: House
@@ -90,7 +82,10 @@ export function HouseCard({ house }: Props) {
 
       <div className="p-6 border-t mt-auto flex flex-col gap-3">
         <Link href={`/toko/${house.slug}`} passHref>
-          <Button className="w-full">Lihat Toko</Button>
+          <Button className="w-full h-11 font-semibold transition-all duration-300 hover:scale-[1.02]">
+            <span className="mr-2">Lihat Koleksi</span>
+            <ExternalLink className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </Button>
         </Link>
         <div className="flex justify-center gap-2">
           <a href={`https://wa.me/${house.phoneNumber}`} target="_blank" rel="noopener noreferrer">
