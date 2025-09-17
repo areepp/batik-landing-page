@@ -32,7 +32,7 @@ export function WhatsappButton({ product }: Readonly<Props>) {
     <Button asChild className="w-full">
       <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
         <MessageCircle className="mr-2 h-4 w-4" />
-        Tanyakan tentang produk
+        Tanyakan tentang produk ini
       </a>
     </Button>
   )
