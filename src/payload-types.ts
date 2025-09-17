@@ -96,8 +96,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'home-page': HomePage;
+  };
+  globalsSelect: {
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -615,6 +619,113 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  heroSection: {
+    title: string;
+    subtitle: string;
+    backgroundVideo: number | Media;
+  };
+  aboutSection: {
+    title: string;
+    paragraph: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    image: number | Media;
+  };
+  artisanSection: {
+    title: string;
+    subtitle: string;
+    /**
+     * Masukkan 5 data pengrajin yang akan ditampilkan di carousel halaman beranda.
+     */
+    featuredArtisans: {
+      name: string;
+      specialty: string;
+      image: number | Media;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  testimonialSection: {
+    testimonials: {
+      name: string;
+      location?: string | null;
+      rating: number;
+      comment: string;
+      id?: string | null;
+    }[];
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  heroSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        backgroundVideo?: T;
+      };
+  aboutSection?:
+    | T
+    | {
+        title?: T;
+        paragraph?: T;
+        image?: T;
+      };
+  artisanSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        featuredArtisans?:
+          | T
+          | {
+              name?: T;
+              specialty?: T;
+              image?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  testimonialSection?:
+    | T
+    | {
+        testimonials?:
+          | T
+          | {
+              name?: T;
+              location?: T;
+              rating?: T;
+              comment?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,21 +1,15 @@
-export function About() {
+import { RichText } from '@/components/rich-text'
+import { HomePage, Media } from '@/payload-types'
+
+export function About({ data }: Readonly<{ data: HomePage['aboutSection'] }>) {
   return (
     <section className="py-16 px-4 bg-muted">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl font-bold text-foreground mb-6">Warisan Budaya yang Hidup</h2>
-            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              Batik bukan sekadar kain bermotif, tetapi cerminan jiwa dan filosofi hidup masyarakat
-              Indonesia. Setiap goresan canting mengandung makna mendalam yang diwariskan
-              turun-temurun.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Di Sragen, tradisi membatik telah menjadi bagian tak terpisahkan dari kehidupan
-              sehari-hari. Para pengrajin dengan sabar dan teliti menciptakan karya seni yang
-              memukau, menggabungkan teknik tradisional dengan sentuhan modern.
-            </p>
-            <div className="grid grid-cols-2 gap-6">
+            <h2 className="text-4xl font-bold text-foreground mb-6">{data.title}</h2>
+            <RichText data={data.paragraph} />
+            <div className="grid grid-cols-2 gap-6 mt-8">
               <div className="text-center">
                 <div className="text-3xl font-bold text-primary mb-2">50+</div>
                 <div className="text-sm text-muted-foreground">Pengrajin Berpengalaman</div>
@@ -28,7 +22,7 @@ export function About() {
           </div>
           <div className="relative">
             <img
-              src="/cutting-batik.jpg"
+              src={(data.image as Media).url!}
               alt="Pengrajin Batik"
               className="rounded-lg shadow-lg w-full"
             />
