@@ -29,7 +29,7 @@ export const Products: CollectionConfig = {
         position: 'sidebar',
       },
       hooks: {
-        beforeValidate: [generateUniqueSlug],
+        beforeValidate: [generateUniqueSlug('products')],
       },
     },
     {

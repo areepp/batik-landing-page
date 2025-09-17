@@ -160,6 +160,7 @@ export interface User {
 export interface House {
   id: number;
   name: string;
+  slug?: string | null;
   description?: string | null;
   phoneNumber: string;
   availableBatikTypes: (number | JenisBatik)[];
@@ -452,6 +453,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface HousesSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
   description?: T;
   phoneNumber?: T;
   availableBatikTypes?: T;
