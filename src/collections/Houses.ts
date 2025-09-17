@@ -31,6 +31,14 @@ export const Houses: CollectionConfig = {
       },
     },
     {
+      name: 'logo',
+      label: 'Logo Toko',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+
+    {
       name: 'description',
       label: 'Deskripsi',
       type: 'textarea',

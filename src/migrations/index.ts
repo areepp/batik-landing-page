@@ -9,6 +9,7 @@ import * as migration_20250915_125737_order_total_subtotal from './20250915_1257
 import * as migration_20250916_070107_jenis_batik_jenis_kain from './20250916_070107_jenis_batik_jenis_kain';
 import * as migration_20250916_071336_house_details from './20250916_071336_house_details';
 import * as migration_20250916_074210_add_links_to_products from './20250916_074210_add_links_to_products';
+import * as migration_20250917_050127 from './20250917_050127';
 
 export const migrations = [
   {
@@ -64,6 +65,11 @@ export const migrations = [
   {
     up: migration_20250916_074210_add_links_to_products.up,
     down: migration_20250916_074210_add_links_to_products.down,
-    name: '20250916_074210_add_links_to_products'
+    name: '20250916_074210_add_links_to_products',
+  },
+  {
+    up: migration_20250917_050127.up,
+    down: migration_20250917_050127.down,
+    name: '20250917_050127'
   },
 ];
