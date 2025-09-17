@@ -61,7 +61,9 @@ export default async function ProductDetailPage({ params }: Props) {
         <div className="flex flex-col gap-6 flex-1 max-w-[30rem]">
           <div>
             <div>
-              <p className="text-sm">{house?.name}</p>
+              <Link href={`/${house?.slug}`} className="text-sm">
+                {house?.name}
+              </Link>
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight">{product.name}</h1>
               <p className="text-muted-foreground">{formatPrice(product.price)}</p>
             </div>
