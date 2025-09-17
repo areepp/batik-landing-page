@@ -1,5 +1,5 @@
 {
-  "id": "b5d692f2-9309-44b4-879f-93404947aed5",
+  "id": "e62f8f24-cbe5-46ce-ac2a-ba2a9a2e5339",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -2884,8 +2884,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.home_page_artisan_section_testimonial_section_testimonials": {
-      "name": "home_page_artisan_section_testimonial_section_testimonials",
+    "public.home_page_testimonial_section_testimonials": {
+      "name": "home_page_testimonial_section_testimonials",
       "schema": "",
       "columns": {
         "_order": {
@@ -2933,8 +2933,8 @@
         }
       },
       "indexes": {
-        "home_page_artisan_section_testimonial_section_testimonials_order_idx": {
-          "name": "home_page_artisan_section_testimonial_section_testimonials_order_idx",
+        "home_page_testimonial_section_testimonials_order_idx": {
+          "name": "home_page_testimonial_section_testimonials_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -2948,8 +2948,8 @@
           "method": "btree",
           "with": {}
         },
-        "home_page_artisan_section_testimonial_section_testimonials_parent_id_idx": {
-          "name": "home_page_artisan_section_testimonial_section_testimonials_parent_id_idx",
+        "home_page_testimonial_section_testimonials_parent_id_idx": {
+          "name": "home_page_testimonial_section_testimonials_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -2965,9 +2965,9 @@
         }
       },
       "foreignKeys": {
-        "home_page_artisan_section_testimonial_section_testimonials_parent_id_fk": {
-          "name": "home_page_artisan_section_testimonial_section_testimonials_parent_id_fk",
-          "tableFrom": "home_page_artisan_section_testimonial_section_testimonials",
+        "home_page_testimonial_section_testimonials_parent_id_fk": {
+          "name": "home_page_testimonial_section_testimonials_parent_id_fk",
+          "tableFrom": "home_page_testimonial_section_testimonials",
           "tableTo": "home_page",
           "columnsFrom": [
             "_parent_id"
@@ -2999,13 +2999,15 @@
           "name": "hero_section_title",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'Mahakarya Batik Sragen'"
         },
         "hero_section_subtitle": {
           "name": "hero_section_subtitle",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'Setiap goresan canting menceritakan sebuah kisah warisan budaya.'"
         },
         "hero_section_background_video_id": {
           "name": "hero_section_background_video_id",
@@ -3022,7 +3024,7 @@
         },
         "about_section_paragraph": {
           "name": "about_section_paragraph",
-          "type": "varchar",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": true
         },
