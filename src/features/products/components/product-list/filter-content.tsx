@@ -22,7 +22,7 @@ export function FilterContent({
   onFilterChange,
 }: Props) {
   return (
-    <div className="p-4 md:p-0 space-y-6">
+    <div className="space-y-6">
       {/* Filter Toko */}
       <div>
         <h3 className="text-lg font-semibold mb-4">Toko / Rumah Batik</h3>
@@ -34,9 +34,12 @@ export function FilterContent({
                 id={`filter-house-${house.id}`}
                 checked={checkedHouses.includes(String(house.id))}
                 onChange={() => onFilterChange('houses', String(house.id))}
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 rounded cursor-pointer border-gray-300 text-primary focus:ring-primary"
               />
-              <label htmlFor={`filter-house-${house.id}`} className="ml-3 text-sm text-foreground">
+              <label
+                htmlFor={`filter-house-${house.id}`}
+                className="ml-3 text-sm cursor-pointer text-foreground"
+              >
                 {house.name}
               </label>
             </div>
@@ -54,9 +57,12 @@ export function FilterContent({
                 id={`filter-jb-${jb.id}`}
                 checked={checkedJenisBatiks.includes(String(jb.id))}
                 onChange={() => onFilterChange('jenisBatik', String(jb.id))}
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 rounded cursor-pointer border-gray-300 text-primary focus:ring-primary"
               />
-              <label htmlFor={`filter-jb-${jb.id}`} className="ml-3 text-sm text-foreground">
+              <label
+                htmlFor={`filter-jb-${jb.id}`}
+                className="ml-3 text-sm cursor-pointer text-foreground"
+              >
                 {jb.name}
               </label>
             </div>
@@ -74,9 +80,12 @@ export function FilterContent({
                 id={`filter-jk-${jk.id}`}
                 checked={checkedJenisKains.includes(String(jk.id))}
                 onChange={() => onFilterChange('jenisKain', String(jk.id))}
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 rounded cursor-pointer border-gray-300 text-primary focus:ring-primary"
               />
-              <label htmlFor={`filter-jk-${jk.id}`} className="ml-3 text-sm text-foreground">
+              <label
+                htmlFor={`filter-jk-${jk.id}`}
+                className="ml-3 text-sm cursor-pointer text-foreground"
+              >
                 {jk.name}
               </label>
             </div>

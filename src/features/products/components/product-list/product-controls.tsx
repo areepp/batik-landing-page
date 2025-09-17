@@ -43,15 +43,15 @@ export function ProductControls({ houses = [], jenisBatiks = [], jenisKains = []
     <div className="flex items-center gap-2 md:gap-4">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="sm" className="flex items-center gap-2 relative">
+          <Button variant="outline" className="flex h-full items-center gap-2 relative">
             <ListFilter className="h-4 w-4" /> Filter
             {isFilterActive && (
               <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-primary" />
             )}
           </Button>
         </SheetTrigger>
-        <SheetContent className="overflow-y-auto p-6">
-          <SheetHeader className="text-left mb-6">
+        <SheetContent className="overflow-y-auto pl-6">
+          <SheetHeader className="text-left p-0 pt-6 pb-2">
             <SheetTitle className="text-2xl font-bold">Filter Produk</SheetTitle>
           </SheetHeader>
           <FilterContent
@@ -82,12 +82,11 @@ export function ProductControls({ houses = [], jenisBatiks = [], jenisKains = []
       {isFilterActive && (
         <Button
           variant="ghost"
-          size="sm"
           onClick={handleClearFilters}
-          className="flex items-center gap-1 text-muted-foreground"
+          className="flex h-full items-center gap-1 text-muted-foreground "
         >
           <X className="h-4 w-4" />
-          Bersihkan
+          Hapus Filter
         </Button>
       )}
     </div>
