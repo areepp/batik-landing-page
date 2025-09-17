@@ -1,5 +1,5 @@
 {
-  "id": "b5d692f2-9309-44b4-879f-93404947aed5",
+  "id": "324aa25b-f74a-4b24-8566-45ef3e26e2d7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -487,6 +487,18 @@
           "primaryKey": false,
           "notNull": true
         },
+        "slug": {
+          "name": "slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logo_id": {
+          "name": "logo_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "description": {
           "name": "description",
           "type": "varchar",
@@ -561,6 +573,21 @@
           "method": "btree",
           "with": {}
         },
+        "houses_logo_idx": {
+          "name": "houses_logo_idx",
+          "columns": [
+            {
+              "expression": "logo_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "houses_updated_at_idx": {
           "name": "houses_updated_at_idx",
           "columns": [
@@ -592,7 +619,21 @@
           "with": {}
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "houses_logo_id_media_id_fk": {
+          "name": "houses_logo_id_media_id_fk",
+          "tableFrom": "houses",
+          "tableTo": "media",
+          "columnsFrom": [
+            "logo_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -2884,8 +2925,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.home_page_artisan_section_testimonial_section_testimonials": {
-      "name": "home_page_artisan_section_testimonial_section_testimonials",
+    "public.home_page_testimonial_section_testimonials": {
+      "name": "home_page_testimonial_section_testimonials",
       "schema": "",
       "columns": {
         "_order": {
@@ -2933,8 +2974,8 @@
         }
       },
       "indexes": {
-        "home_page_artisan_section_testimonial_section_testimonials_order_idx": {
-          "name": "home_page_artisan_section_testimonial_section_testimonials_order_idx",
+        "home_page_testimonial_section_testimonials_order_idx": {
+          "name": "home_page_testimonial_section_testimonials_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -2948,8 +2989,8 @@
           "method": "btree",
           "with": {}
         },
-        "home_page_artisan_section_testimonial_section_testimonials_parent_id_idx": {
-          "name": "home_page_artisan_section_testimonial_section_testimonials_parent_id_idx",
+        "home_page_testimonial_section_testimonials_parent_id_idx": {
+          "name": "home_page_testimonial_section_testimonials_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -2965,9 +3006,9 @@
         }
       },
       "foreignKeys": {
-        "home_page_artisan_section_testimonial_section_testimonials_parent_id_fk": {
-          "name": "home_page_artisan_section_testimonial_section_testimonials_parent_id_fk",
-          "tableFrom": "home_page_artisan_section_testimonial_section_testimonials",
+        "home_page_testimonial_section_testimonials_parent_id_fk": {
+          "name": "home_page_testimonial_section_testimonials_parent_id_fk",
+          "tableFrom": "home_page_testimonial_section_testimonials",
           "tableTo": "home_page",
           "columnsFrom": [
             "_parent_id"
@@ -2999,13 +3040,15 @@
           "name": "hero_section_title",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'Mahakarya Batik Sragen'"
         },
         "hero_section_subtitle": {
           "name": "hero_section_subtitle",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'Setiap goresan canting menceritakan sebuah kisah warisan budaya.'"
         },
         "hero_section_background_video_id": {
           "name": "hero_section_background_video_id",
@@ -3022,7 +3065,7 @@
         },
         "about_section_paragraph": {
           "name": "about_section_paragraph",
-          "type": "varchar",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": true
         },
