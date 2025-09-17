@@ -1,10 +1,10 @@
 import { getPayload, Where } from 'payload'
 import config from '@/payload.config'
 import { ProductCard } from '@/features/products/components/product-list/product-card'
-import { House } from '@/payload-types'
-import { ProductControls } from './product-controls'
+import { House, JenisBatik, JenisKain } from '@/payload-types'
 import { SearchBar } from './search-bar'
 import { PaginationControls } from './products-pagination'
+import { ProductControls } from './product-controls'
 
 type ProductsPageProps = {
   searchParams?: Promise<{
@@ -18,6 +18,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const searchQuery = (await searchParams)?.search as string
   const housesQuery = (await searchParams)?.houses as string
   const sortQuery = (await searchParams)?.sort as string
+  const jenisBatikQuery = (await searchParams)?.jenisBatik as string
+  const jenisKainQuery = (await searchParams)?.jenisKain as string
   const page = Number((await searchParams)?.page) || 1
   const limit = 12
 
@@ -35,6 +37,17 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   if (housesQuery) {
     where.house = {
       in: housesQuery.split(','),
+    }
+  }
+
+  if (jenisBatikQuery) {
+    where.jenisBatik = {
+      in: jenisBatikQuery.split(','),
+    }
+  }
+  if (jenisKainQuery) {
+    where.jenisKain = {
+      in: jenisKainQuery.split(','),
     }
   }
 
@@ -62,6 +75,14 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     collection: 'houses',
     depth: 0,
   })) as { docs: House[] }
+  const { docs: jenisBatiks } = (await payload.find({
+    collection: 'jenis-batik',
+    depth: 0,
+  })) as { docs: JenisBatik[] }
+  const { docs: jenisKains } = (await payload.find({
+    collection: 'jenis-kain',
+    depth: 0,
+  })) as { docs: JenisKain[] }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -77,7 +98,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           <SearchBar />
         </div>
         <div className="flex-shrink-0">
-          <ProductControls houses={houses} />
+          <ProductControls houses={houses} jenisBatiks={jenisBatiks} jenisKains={jenisKains} />
         </div>
       </div>
 
