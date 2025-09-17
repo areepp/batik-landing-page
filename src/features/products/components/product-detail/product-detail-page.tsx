@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import RecomendationProduct from './recomendation-product'
 import { JenisBatik, JenisKain } from '@/payload-types'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -118,6 +119,7 @@ export default async function ProductDetailPage({ params }: Props) {
           )}
         </div>
       </div>
+      <RecomendationProduct currentProduct={product} />
     </div>
   )
 }
