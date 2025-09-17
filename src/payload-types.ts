@@ -164,6 +164,8 @@ export interface User {
 export interface House {
   id: number;
   name: string;
+  slug?: string | null;
+  logo?: (number | null) | Media;
   description?: string | null;
   phoneNumber: string;
   availableBatikTypes: (number | JenisBatik)[];
@@ -182,6 +184,25 @@ export interface House {
   originCity?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * Jenis atau teknik pembuatan batik (misal: Tulis, Cap, Printing).
@@ -206,25 +227,6 @@ export interface JenisKain {
   name: string;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * Produk batik yang akan dijual di situs.
@@ -456,6 +458,8 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface HousesSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
+  logo?: T;
   description?: T;
   phoneNumber?: T;
   availableBatikTypes?: T;

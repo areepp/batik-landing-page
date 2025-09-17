@@ -80,6 +80,9 @@ export function Navbar() {
               <Link href="/products" className={navLinkClasses}>
                 Produk
               </Link>
+              <Link href="/toko" className={navLinkClasses}>
+                Toko
+              </Link>
             </nav>
           </div>
         </div>
@@ -111,6 +114,9 @@ export function Navbar() {
                   </Link>
                   <Link href="/products" className="text-muted-foreground hover:text-foreground/80">
                     Produk
+                  </Link>
+                  <Link href="/toko" className="text-muted-foreground hover:text-foreground/80">
+                    Toko
                   </Link>
                 </nav>
               </SheetContent>

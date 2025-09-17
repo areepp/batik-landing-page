@@ -1,3 +1,4 @@
+import { generateUniqueSlug } from '@/lib/utils'
 import { CollectionConfig } from 'payload'
 
 export const Houses: CollectionConfig = {
@@ -18,6 +19,25 @@ export const Houses: CollectionConfig = {
       required: true,
       unique: true,
     },
+    {
+      name: 'slug',
+      label: 'Slug Rumah',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+      hooks: {
+        beforeValidate: [generateUniqueSlug('houses')],
+      },
+    },
+    {
+      name: 'logo',
+      label: 'Logo Toko',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+
     {
       name: 'description',
       label: 'Deskripsi',
