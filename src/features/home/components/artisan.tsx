@@ -11,47 +11,9 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel'
 import Image from 'next/image'
+import { HomePage } from '@/payload-types'
 
-// Data untuk para pengrajin/toko
-const artisans = [
-  {
-    id: 1,
-    name: 'Ibu Sari Wulandari',
-    specialty: 'Motif Parang & Kawung',
-    image: '/indonesian-batik-artisan-woman-portrait.png',
-    description: 'Ahli dalam motif klasik dengan teknik tulis tradisional.',
-  },
-  {
-    id: 2,
-    name: 'Pak Bambang Sutrisno',
-    specialty: 'Motif Mega Mendung',
-    image: '/indonesian-batik-artisan-man-portrait.png',
-    description: 'Spesialis motif awan dengan gradasi warna yang memukau.',
-  },
-  {
-    id: 3,
-    name: 'Ibu Dewi Kartika',
-    specialty: 'Motif Truntum & Sido Mukti',
-    image: '/indonesian-batik-artisan-woman-working.png',
-    description: 'Kreator motif pernikahan dan upacara adat yang legendaris.',
-  },
-  {
-    id: 4,
-    name: 'Sanggar Batik Cipto',
-    specialty: 'Pewarnaan Alam',
-    image: '/happy-customer-portrait.png',
-    description: 'Fokus pada penggunaan pewarna alami dari tumbuhan lokal.',
-  },
-  {
-    id: 5,
-    name: 'Galeri Batik Wiradesa',
-    specialty: 'Koleksi Modern',
-    image: '/satisfied-customer-woman-portrait.png',
-    description: 'Menggabungkan desain kontemporer dengan teknik batik tradisional.',
-  },
-]
-
-export function ArtisanCarousel() {
+export function ArtisanCarousel({ data }: Readonly<{ data: HomePage['artisanSection'] }>) {
   const [api, setApi] = React.useState<CarouselApi>()
   const intervalRef = React.useRef<NodeJS.Timeout | null>(null)
 
@@ -94,11 +56,8 @@ export function ArtisanCarousel() {
     <section className="bg-muted py-16 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">Temui Para Pengrajin Kami</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Berkenalan dengan para maestro di balik setiap karya indah yang Anda temukan di sini.
-            Geser untuk melihat lebih banyak.
-          </p>
+          <h2 className="text-4xl font-bold text-foreground mb-4">{data.title}</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{data.subtitle}</p>
         </div>
 
         <Carousel
@@ -112,7 +71,7 @@ export function ArtisanCarousel() {
           onMouseLeave={startAutoplay}
         >
           <CarouselContent className="-ml-4">
-            {artisans.map((artisan) => (
+            {data.featuredArtisans.map((artisan) => (
               <CarouselItem key={artisan.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <div className="p-1 h-full">
                   <Card className="overflow-hidden group h-full">

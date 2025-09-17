@@ -1,11 +1,11 @@
 import payload, { SanitizedConfig } from 'payload'
-import path from 'path'
-import dotenv from 'dotenv'
 import { jenisBatikData } from './seed-data/jenis-kain'
 import { jenisKainData } from './seed-data/jenis-batik'
 import { getHousesData } from './seed-data/houses'
 import { getProductsData } from './seed-data/products'
 import { dataManajerToko, seedStoreManagers } from './seed-data/manajer-toko'
+import { getArtisansData } from './seed-data/pengrajin-pilihan'
+import { getTestimonialsData } from './seed-data/testimoni'
 
 // Fungsi pembantu agar proses seeding tidak berulang (DRY)
 const seedCollection = async (slug: string, data: any[]) => {
@@ -110,6 +110,35 @@ export const script = async (config: SanitizedConfig) => {
   } else {
     payload.logger.warn('--- Melewatkan seeding produk karena tidak ada media yang ditemukan. ---')
   }
+
+  // Seed Pengrajin Pilihan
+  const artisans = getArtisansData(mediaIds)
+  const homePageGlobal = await payload.findGlobal({ slug: 'home-page' })
+  await payload.updateGlobal({
+    slug: 'home-page',
+    data: {
+      ...homePageGlobal,
+      artisanSection: {
+        ...(homePageGlobal.artisanSection || {}), // Keep judul/subjudul yang ada
+        featuredArtisans: artisans,
+      },
+    },
+  })
+  payload.logger.info('- Berhasil memperbarui Halaman Beranda dengan data pengrajin unggulan.')
+
+  // Seed Testimonials
+  const testimonials = getTestimonialsData()
+  await payload.updateGlobal({
+    slug: 'home-page',
+    data: {
+      ...homePageGlobal,
+      testimonialSection: {
+        ...(homePageGlobal.testimonialSection || {}),
+        testimonials: testimonials,
+      },
+    },
+  })
+  payload.logger.info('- Berhasil memperbarui Halaman Beranda dengan data testimoni.')
 
   payload.logger.info('\nDatabase seed completed successfully!')
   process.exit(0)

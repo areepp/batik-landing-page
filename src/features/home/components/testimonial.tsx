@@ -1,36 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card'
+import { HomePage } from '@/payload-types'
 
-const testimonials = [
-  {
-    id: 1,
-    name: 'Andi Prasetyo',
-    location: 'Jakarta',
-    rating: 5,
-    comment:
-      'Kualitas batiknya luar biasa! Motifnya detail dan warnanya tahan lama. Sangat puas dengan pembelian saya.',
-    image: '/happy-customer-portrait.png',
-  },
-  {
-    id: 2,
-    name: 'Sinta Maharani',
-    location: 'Surabaya',
-    rating: 5,
-    comment:
-      'Pelayanan sangat memuaskan dan produknya berkualitas tinggi. Akan order lagi untuk koleksi selanjutnya.',
-    image: '/satisfied-customer-woman-portrait.png',
-  },
-  {
-    id: 3,
-    name: 'Rudi Hartono',
-    location: 'Bandung',
-    rating: 5,
-    comment:
-      'Batik asli Sragen memang berbeda! Kualitas premium dengan harga yang sangat reasonable.',
-    image: '/happy-male-customer-portrait.png',
-  },
-]
-
-export function TestimonialSection() {
+export function TestimonialSection({ data }: Readonly<{ data: HomePage['testimonialSection'] }>) {
   return (
     <section className="py-16 px-4 bg-popover">
       <div className="max-w-6xl mx-auto">
@@ -42,12 +13,11 @@ export function TestimonialSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial) => (
+          {data.testimonials.map((testimonial) => (
             <Card key={testimonial.id} className="hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
                   <img
-                    // src={testimonial.image }
                     src={'/portrait-woman.jpg'}
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full mr-4"
