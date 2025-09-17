@@ -14,12 +14,9 @@ export default async function ListIndustryPage() {
   })) as { docs: House[] }
 
   return (
-    <div className="container mx-auto px-6 lg:px-8 py-8">
+    <div className="container max-w-7xl mx-auto px-6 lg:px-8 py-8">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight">Temukan Pengrajin Kami</h1>
-        <p className="mt-4 text-lg text-muted-foreground">
-          Jelajahi dan dukung karya otentik dari para maestro Batik Sragen.
-        </p>
+        <h1 className="text-4xl font-bold tracking-tight">Daftar Pengrajin Batik Desa Pungsari</h1>
       </div>
 
       {houses.length === 0 ? (
