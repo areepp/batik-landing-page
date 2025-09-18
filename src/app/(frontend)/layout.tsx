@@ -4,6 +4,10 @@ import { Toaster } from '@/components/ui/sonner'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { Cormorant_Garamond, Prata } from 'next/font/google'
+import FaqBot from '@/components/chat-bot'
+import { getPayload } from 'payload'
+import config from '@/payload.config'
+import { House } from '@/payload-types'
 
 const cormorantSerif = Cormorant_Garamond({
   variable: '--font-cormorant',
@@ -21,8 +25,15 @@ export const metadata = {
   title: 'Sentra Batik Pungsari',
 }
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
+  const payload = await getPayload({ config })
+
+  const { docs: houses } = (await payload.find({
+    collection: 'houses',
+    limit: 100,
+    depth: 0,
+  })) as { docs: House[] }
 
   return (
     <html lang="en">
@@ -32,6 +43,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <main className="py-16">{children}</main>
         <Toaster />
         <Footer />
+        <FaqBot houses={houses} />
       </body>
     </html>
   )
