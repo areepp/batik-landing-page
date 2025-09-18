@@ -1,3 +1,4 @@
+import { unescapeJsonString } from '@/lib/utils'
 import payload from 'payload'
 
 export const seedStoreManagers = async (houseIdMap: Record<string, number>) => {
@@ -10,7 +11,7 @@ export const seedStoreManagers = async (houseIdMap: Record<string, number>) => {
     return
   }
 
-  const managersData = managersJSON ? JSON.parse(managersJSON) : []
+  const managersData = unescapeJsonString(managersJSON)
 
   for (const manager of managersData) {
     const { toko, email, password } = manager
