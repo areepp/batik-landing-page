@@ -11,28 +11,13 @@ import { cn } from '@/lib/utils'
 function Logo({ isTransparent }: Readonly<{ isTransparent: boolean }>) {
   return (
     <Link href="/" className="flex items-center space-x-2">
-      <div
-        className={cn(
-          'w-8 h-8 rounded-full flex items-center justify-center transition-colors',
-          isTransparent ? 'bg-white/90' : 'bg-primary',
-        )}
-      >
-        <span
-          className={cn(
-            'font-bold text-sm transition-colors',
-            isTransparent ? 'text-primary' : 'text-primary-foreground',
-          )}
-        >
-          B
-        </span>
-      </div>
       <span
         className={cn(
           'text-xl font-bold transition-colors',
           isTransparent ? 'text-white' : 'text-foreground',
         )}
       >
-        Sentra Batik Pungsari
+        SENTRA BATIK PUNGSARI
       </span>
     </Link>
   )
@@ -57,7 +42,7 @@ export function Navbar() {
   const isTransparent = pathname === '/home' && !isScrolled
 
   const navLinkClasses = cn(
-    'text-sm font-medium transition-colors',
+    'text-lg font-medium transition-colors',
     isTransparent ? 'text-white/80 hover:text-white' : 'text-foreground/60 hover:text-foreground',
   )
 
@@ -74,9 +59,6 @@ export function Navbar() {
           <Logo isTransparent={isTransparent} />
           <div className="flex items-center gap-4 lg:gap-6">
             <nav className="flex items-center gap-4 lg:gap-6">
-              <Link href="/home" className={navLinkClasses}>
-                Beranda
-              </Link>
               <Link href="/products" className={navLinkClasses}>
                 Produk
               </Link>
