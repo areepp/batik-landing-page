@@ -6,7 +6,7 @@ export function HeroCarousel({ data }: Readonly<{ data: HomePage['heroSection'] 
   return (
     <section className="w-full h-screen">
       <div className="relative h-screen w-full">
-        {data.backgroundVideo && (
+        {!!data.backgroundVideo && (
           <video
             src={(data.backgroundVideo as Media).url!}
             autoPlay
