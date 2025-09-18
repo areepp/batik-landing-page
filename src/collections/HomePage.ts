@@ -1,10 +1,11 @@
+import { isAdmin } from '@/lib/payload-access-control'
 import { GlobalConfig } from 'payload'
 
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
   label: 'Halaman Utama',
-  access: {
-    read: () => true,
+  admin: {
+    hidden: ({ user }) => !user?.roles.includes('admin'),
   },
   fields: [
     {
