@@ -104,6 +104,9 @@ importers:
       react:
         specifier: 19.1.1
         version: 19.1.1
+      react-chatbotify:
+        specifier: ^2.3.0
+        version: 2.3.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react-dom:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
@@ -4618,6 +4621,12 @@ packages:
 
   quick-format-unescaped@4.0.4:
     resolution: {integrity: sha512-tYC1Q1hgyRuHgloV/YXs2w15unPVh8qfu/qCTfhTYamaw7fyhumKa2yGpdSo87vY32rIclj+4fWYQXUMs9EHvg==}
+
+  react-chatbotify@2.3.0:
+    resolution: {integrity: sha512-6gG+8VJlLU48ziG+GYHyOaHUNSb59GQgcdl9KfD9Y+pVOCDT4AL1/Z2QM8F+sVQCDA71NlKk1tOdo5+TtELNRA==}
+    peerDependencies:
+      react: '>=16.14.0'
+      react-dom: '>=16.14.0'
 
   react-datepicker@7.6.0:
     resolution: {integrity: sha512-9cQH6Z/qa4LrGhzdc3XoHbhrxNcMi9MKjZmYgF/1MNNaJwvdSjv3Xd+jjvrEEbKEf71ZgCA3n7fQbdwd70qCRw==}
@@ -10659,6 +10668,11 @@ snapshots:
   queue-microtask@1.2.3: {}
 
   quick-format-unescaped@4.0.4: {}
+
+  react-chatbotify@2.3.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+    dependencies:
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
 
   react-datepicker@7.6.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:

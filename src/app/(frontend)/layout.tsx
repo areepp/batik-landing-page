@@ -3,6 +3,7 @@ import './globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import FaqBot from '@/components/chat-bot'
 
 export const metadata = {
   description:
@@ -21,6 +22,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <main className="py-16">{children}</main>
         <Toaster />
         <Footer />
+        <FaqBot />
       </body>
     </html>
   )
