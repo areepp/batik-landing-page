@@ -59,7 +59,7 @@ export default async function IndustryDetailPage({ params, searchParams }: Reado
       <TokoHeader house={house} />
 
       <div className="mt-12">
-        <h2 className="text-3xl font-bold tracking-tight mb-8">Koleksi dari {house.name}</h2>
+        <h2 className="text-xl font-bold tracking-tight mb-8">Koleksi dari {house.name}</h2>
         {products.length === 0 ? (
           <div className="text-center py-16 bg-muted rounded-lg">
             <p className="text-muted-foreground">Toko ini belum memiliki produk.</p>

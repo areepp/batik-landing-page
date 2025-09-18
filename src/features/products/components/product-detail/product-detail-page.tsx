@@ -65,11 +65,13 @@ export default async function ProductDetailPage({ params }: Props) {
                 {house?.name}
               </Link>
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight">{product.name}</h1>
-              <p className="text-muted-foreground">{formatPrice(product.price)}</p>
+              <p className="text-muted-foreground text-lg">{formatPrice(product.price)}</p>
             </div>
           </div>
 
-          <div className="mt-4 prose dark:prose-invert max-w-none">{product.description}</div>
+          <div className="mt-4 prose dark:prose-invert max-w-none text-lg">
+            {product.description}
+          </div>
 
           {Object.entries(product.marketplaceLinks as {}).some(([, value]) => value) && (
             <div className="flex flex-row gap-3 flex-wrap">

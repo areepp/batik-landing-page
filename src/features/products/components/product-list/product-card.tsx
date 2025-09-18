@@ -34,7 +34,7 @@ export const ProductCard = ({ product }: Props) => {
       </div>
       <div className="flex flex-col items-start mt-3">
         <h3 className="font-semibold text-lg">{product.name}</h3>
-        <p className="text-muted-foreground text-sm">{formatPrice(product.price)}</p>
+        <p className="text-muted-foreground text-base">{formatPrice(product.price)}</p>
       </div>
     </Link>
   )
