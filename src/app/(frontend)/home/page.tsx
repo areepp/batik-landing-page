@@ -11,6 +11,10 @@ const HomePage = async () => {
 
   const homePageData = await payload.findGlobal({ slug: 'home-page' })
 
+  if (!homePageData) {
+    return <div className="h-screen">Halaman beranda sedang dikonfigurasi...</div>
+  }
+
   return (
     <div className="min-h-screen -mt-16">
       <main>
