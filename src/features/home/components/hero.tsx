@@ -3,12 +3,14 @@ import { HomePage, Media } from '@/payload-types'
 import Link from 'next/link'
 
 export function HeroCarousel({ data }: Readonly<{ data: HomePage['heroSection'] }>) {
+  const backgroundVideo = data.backgroundVideo as Media | null
+
   return (
     <section className="w-full h-screen">
       <div className="relative h-screen w-full">
-        {!!(data.backgroundVideo as Media).url && (
+        {backgroundVideo?.url && (
           <video
-            src={(data.backgroundVideo as Media).url!}
+            src={backgroundVideo.url}
             autoPlay
             loop
             muted
