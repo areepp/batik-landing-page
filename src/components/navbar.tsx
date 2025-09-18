@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 
 function Logo({ isTransparent }: Readonly<{ isTransparent: boolean }>) {
   return (
-    <Link href="/" className="flex items-center space-x-2">
+    <Link href="/home" className="flex items-center space-x-2">
       <span
         className={cn(
           'text-xl font-bold transition-colors',
