@@ -27,7 +27,7 @@ export function TokoHeader({ house }: Props) {
     {
       href: house.socialMedia?.tiktokUrl,
       icon: <Image src="/tiktok.png" alt="TikTok" width={67} height={16} />,
-      label: 'TikTok',
+      // label: 'TikTok',
     },
   ]
 
@@ -128,7 +128,7 @@ export function TokoHeader({ house }: Props) {
                         <Button variant="outline" className="w-full" size="lg">
                           {link.icon}
                           {link?.label && (
-                            <span className="ml-2 text-sm font-medium">{link?.label}</span>
+                            <span className="ml-.5 text-sm font-medium">{link?.label}</span>
                           )}
                         </Button>
                       </a>

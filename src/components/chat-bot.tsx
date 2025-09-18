@@ -207,6 +207,7 @@ Mana yang Anda minati?`,
               },
             }}
             flow={flow}
+            themes={{ id: 'minimal_midnight', version: '0.1.0' }}
           />
         </Suspense>
       )}
