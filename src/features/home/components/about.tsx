@@ -2,6 +2,8 @@ import { RichText } from '@/components/rich-text'
 import { HomePage, Media } from '@/payload-types'
 
 export function About({ data }: Readonly<{ data: HomePage['aboutSection'] }>) {
+  const aboutImage = data.image as Media | null
+
   return (
     <section className="py-16 px-4 bg-muted">
       <div className="max-w-6xl mx-auto">
@@ -21,11 +23,13 @@ export function About({ data }: Readonly<{ data: HomePage['aboutSection'] }>) {
             </div>
           </div>
           <div className="relative">
-            <img
-              src={(data.image as Media).url!}
-              alt="Pengrajin Batik"
-              className="rounded-lg shadow-lg w-full"
-            />
+            {aboutImage?.url && (
+              <img
+                src={aboutImage.url}
+                alt="Pengrajin Batik"
+                className="rounded-lg shadow-lg w-full"
+              />
+            )}
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary rounded-full opacity-20"></div>
             <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary rounded-full opacity-20"></div>
           </div>
