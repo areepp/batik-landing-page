@@ -7,7 +7,7 @@ export const getHousesData = (ids: CategoryIds) => [
   {
     name: 'Batik Welasasih',
     description: 'Pengrajin yang berfokus pada batik tulis berkualitas tinggi.',
-    phoneNumber: '6281337779388',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Tulis']],
     availableFabricTypes: [ids.kain['Sutra Tulis'], ids.kain['Katun'], ids.kain['Sutra Baron']],
     socialMedia: {
@@ -17,7 +17,7 @@ export const getHousesData = (ids: CategoryIds) => [
   {
     name: 'Batik Cahaya Sari',
     description: 'Pengrajin skala besar dengan berbagai jenis batik, dikelola oleh Mbak Zahra.',
-    phoneNumber: '6281228406142',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [
       ids.batik['Batik Tulis'],
       ids.batik['Batik Semi Tulis'],
@@ -33,7 +33,7 @@ export const getHousesData = (ids: CategoryIds) => [
   {
     name: 'Batik Tresno Kuncoro',
     description: 'Pengrajin yang berfokus pada penjualan grosir batik printing dan cap.',
-    phoneNumber: '6281326030565',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing'], ids.batik['Batik Cap']],
     availableFabricTypes: [ids.kain['Katun']],
     socialMedia: {
@@ -44,7 +44,7 @@ export const getHousesData = (ids: CategoryIds) => [
   {
     name: 'Batik Nurhasida',
     description: 'Pengrajin dengan 100 karyawan, aktif di media sosial terutama TikTok.',
-    phoneNumber: '6282143695808',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [
       ids.batik['Batik Tulis'],
       ids.batik['Batik Cap'],
@@ -63,7 +63,7 @@ export const getHousesData = (ids: CategoryIds) => [
     name: 'Batik Dewi Andini',
     description:
       'Memiliki beberapa cabang penjualan, dilanjutkan oleh anaknya dengan brand Bianca Batik.',
-    phoneNumber: '6281221641772',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing']],
     availableFabricTypes: [ids.kain['Katun'], ids.kain['Dolby']],
     socialMedia: {
@@ -78,7 +78,7 @@ export const getHousesData = (ids: CategoryIds) => [
     name: 'Batik Batarakresna',
     description:
       'Fokus pada pesanan lokal karena permintaan yang tinggi, media sosial kurang aktif.',
-    phoneNumber: '6282325085528',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing']],
     availableFabricTypes: [ids.kain['Katun'], ids.kain['Dolby']],
     socialMedia: {
@@ -91,7 +91,7 @@ export const getHousesData = (ids: CategoryIds) => [
   {
     name: 'Batik Lestari',
     description: 'Menjual batik printing dan tulis, mengandalkan jaringan bisnis dan saudara.',
-    phoneNumber: '6282243708175',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing'], ids.batik['Batik Tulis']],
     availableFabricTypes: [ids.kain['Katun']],
     socialMedia: {
@@ -102,7 +102,7 @@ export const getHousesData = (ids: CategoryIds) => [
     name: 'Batik Sri Mulyani',
     description:
       'Bisnis dilanjutkan oleh anaknya dengan brand Batik Bella, aktif di berbagai marketplace.',
-    phoneNumber: '6281228903003',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing']],
     availableFabricTypes: [ids.kain['Katun']],
     socialMedia: {
@@ -117,7 +117,7 @@ export const getHousesData = (ids: CategoryIds) => [
     name: 'Batik Widowati',
     description:
       'Dilanjutkan oleh anaknya dengan brand Putra Widowati, fokus pada penjualan offline dan TikTok.',
-    phoneNumber: '6282136691122',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing']],
     availableFabricTypes: [ids.kain['Katun'], ids.kain['Dolby']],
     socialMedia: {
@@ -128,7 +128,7 @@ export const getHousesData = (ids: CategoryIds) => [
   {
     name: 'Batik Vivi',
     description: 'Memasarkan produk melalui Instagram namun posting konten belum terjadwal.',
-    phoneNumber: '6281215313354',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing']],
     availableFabricTypes: [ids.kain['Katun']],
     socialMedia: {
@@ -139,7 +139,7 @@ export const getHousesData = (ids: CategoryIds) => [
     name: 'Batik Sea',
     description:
       'Memiliki jaringan marketplace dan media sosial yang besar dengan penjualan online yang sudah berjalan baik.',
-    phoneNumber: '6285743146838',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing']],
     availableFabricTypes: [ids.kain['Katun'], ids.kain['Dolby']],
     socialMedia: {
@@ -154,7 +154,7 @@ export const getHousesData = (ids: CategoryIds) => [
     name: 'Batik Murni Asih',
     description:
       'Salah satu toko batik besar dan maju di Desa Pungsari, hadir di berbagai marketplace besar.',
-    phoneNumber: '6281329566726',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [
       ids.batik['Batik Printing'],
       ids.batik['Batik Tulis'],
@@ -174,7 +174,7 @@ export const getHousesData = (ids: CategoryIds) => [
     name: 'Batik Asha',
     description:
       'Aktif di Instagram dan TikTok, namun deskripsi produk di marketplace kurang detail.',
-    phoneNumber: '6281267477000',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing'], ids.batik['Batik Tulis']],
     availableFabricTypes: [ids.kain['Katun'], ids.kain['Dolby']],
     socialMedia: {
@@ -189,7 +189,7 @@ export const getHousesData = (ids: CategoryIds) => [
     name: 'Batik Miyayi',
     description:
       'Sangat rajin melakukan promosi di Instagram dan TikTok, namun deskripsi produk kurang detail.',
-    phoneNumber: '6282220057153',
+    phoneNumber: '6281234567890',
     availableBatikTypes: [ids.batik['Batik Printing']],
     availableFabricTypes: [ids.kain['Katun'], ids.kain['Sutra']],
     socialMedia: {

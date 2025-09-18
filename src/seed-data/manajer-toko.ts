@@ -50,72 +50,72 @@ export const seedStoreManagers = async (
 export const dataManajerToko = [
   {
     toko: 'Batik Welasasih',
-    email: 'batikwelasasih@batikpungsari.com',
+    email: 'batikwelasasih@sentrabatikpungsari.com',
     password: 'WelasasihBatik8341',
   },
   {
     toko: 'Batik Cahaya Sari',
-    email: 'batikcahayasari@batikpungsari.com',
+    email: 'batikcahayasari@sentrabatikpungsari.com',
     password: 'SariCahaya2957',
   },
   {
     toko: 'Batik Tresno Kuncoro',
-    email: 'batiktresnokuncoro@batikpungsari.com',
+    email: 'batiktresnokuncoro@sentrabatikpungsari.com',
     password: 'KuncoroTresno6482',
   },
   {
     toko: 'Batik Nurhasida',
-    email: 'batiknurhasida@batikpungsari.com',
+    email: 'batiknurhasida@sentrabatikpungsari.com',
     password: 'BatikNurhasida4175',
   },
   {
     toko: 'Batik Dewi Andini',
-    email: 'batikdewiandini@batikpungsari.com',
+    email: 'batikdewiandini@sentrabatikpungsari.com',
     password: 'AndiniDewi9023',
   },
   {
     toko: 'Batik Batarakresna',
-    email: 'batikbatarakresna@batikpungsari.com',
+    email: 'batikbatarakresna@sentrabatikpungsari.com',
     password: 'BatarakresnaBatik5811',
   },
   {
     toko: 'Batik Lestari',
-    email: 'batiklestari@batikpungsari.com',
+    email: 'batiklestari@sentrabatikpungsari.com',
     password: 'LestariBatik3498',
   },
   {
     toko: 'Batik Sri Mulyani',
-    email: 'batiksrimulyani@batikpungsari.com',
+    email: 'batiksrimulyani@sentrabatikpungsari.com',
     password: 'MulyaniSri7652',
   },
   {
     toko: 'Batik Widowati',
-    email: 'batikwidowati@batikpungsari.com',
+    email: 'batikwidowati@sentrabatikpungsari.com',
     password: 'WidowatiBatik2387',
   },
   {
     toko: 'Batik Vivi',
-    email: 'batikvivi@batikpungsari.com',
+    email: 'batikvivi@sentrabatikpungsari.com',
     password: 'ViviBatik6543',
   },
   {
     toko: 'Batik Sea',
-    email: 'batiksea@batikpungsari.com',
+    email: 'batiksea@sentrabatikpungsari.com',
     password: 'SeaBatik8891',
   },
   {
     toko: 'Batik Murni Asih',
-    email: 'batikmurniasih@batikpungsari.com',
+    email: 'batikmurniasih@sentrabatikpungsari.com',
     password: 'AsihMurni4732',
   },
   {
     toko: 'Batik Asha',
-    email: 'batikasha@batikpungsari.com',
+    email: 'batikasha@sentrabatikpungsari.com',
     password: 'AshaBatik1290',
   },
   {
     toko: 'Batik Miyayi',
-    email: 'batikmiyayi@batikpungsari.com',
+    email: 'batikmiyayi@sentrabatikpungsari.com',
     password: 'MiyayiBatik7854',
   },
 ]
