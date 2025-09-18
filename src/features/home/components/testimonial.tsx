@@ -6,7 +6,7 @@ export function TestimonialSection({ data }: Readonly<{ data: HomePage['testimon
     <section className="py-16 px-4 bg-popover">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">Kata Mereka</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-4">Kata Mereka</h2>
           <p className="text-xl text-muted-foreground">
             Testimoni dari pelanggan yang puas dengan produk kami
           </p>
@@ -23,7 +23,7 @@ export function TestimonialSection({ data }: Readonly<{ data: HomePage['testimon
                     className="w-12 h-12 rounded-full mr-4"
                   />
                   <div>
-                    <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+                    <h4 className="font-semibold text-foreground text-lg">{testimonial.name}</h4>
                     <p className="text-sm text-muted-foreground">{testimonial.location}</p>
                   </div>
                 </div>
@@ -31,7 +31,7 @@ export function TestimonialSection({ data }: Readonly<{ data: HomePage['testimon
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <svg
                       key={i}
-                      className="w-5 h-5 text-secondary fill-current"
+                      className="w-5 h-5 text-secondary fill-green-500"
                       viewBox="0 0 20 20"
                     >
                       <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />

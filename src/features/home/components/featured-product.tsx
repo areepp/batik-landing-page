@@ -44,10 +44,10 @@ export default async function ProductCarousel() {
     <section className="py-32 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Produk Teratas</h2>
+          <h2 className="text-3xl font-bold tracking-tight">Produk Teratas</h2>
           <Link
             href={'/products'}
-            className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors hover:underline"
+            className="font-semibold text-primary hover:text-primary/80 transition-colors hover:underline"
           >
             Lihat Semua &rarr;
           </Link>

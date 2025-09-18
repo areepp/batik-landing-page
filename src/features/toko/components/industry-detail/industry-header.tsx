@@ -62,7 +62,7 @@ export function TokoHeader({ house }: Props) {
                 </div>
               )}
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{house.name}</h1>
+            <h1 className="text-3xl font-bold tracking-tight">{house.name}</h1>
             <Button size="lg" className="w-full bg-green-600 hover:bg-green-500">
               <MessageCircle className="mr-3 h-5 w-5" />
               Hubungi melalui WhatsApp
@@ -72,7 +72,7 @@ export function TokoHeader({ house }: Props) {
           {/* Deskripsi & Spesialisasi */}
           <div className="flex flex-col">
             {house.description && (
-              <p className="text-muted-foreground text-pretty">{house.description}</p>
+              <p className="text-muted-foreground text-pretty text-lg">{house.description}</p>
             )}
 
             {batikTypes.length > 0 && (
