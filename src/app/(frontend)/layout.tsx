@@ -8,6 +8,7 @@ import FaqBot from '@/components/chat-bot'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { House } from '@/payload-types'
+import Providers from './providers'
 
 const cormorantSerif = Cormorant_Garamond({
   variable: '--font-cormorant',
@@ -39,11 +40,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en">
       <head />
       <body className={`${cormorantSerif.variable} ${prataSerif.variable} antialiased`}>
-        <Navbar />
-        <main className="py-16">{children}</main>
-        <Toaster />
-        <Footer />
-        <FaqBot houses={houses} />
+        <Providers>
+          <Navbar />
+          <main className="py-16">{children}</main>
+          <Footer />
+          <FaqBot houses={houses} />
+        </Providers>
       </body>
     </html>
   )
