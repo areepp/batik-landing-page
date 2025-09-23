@@ -7,7 +7,6 @@ export const Orders: CollectionConfig = {
   admin: {
     useAsTitle: 'orderNumber',
     description: 'A collection to store customer orders.',
-    hidden: true,
   },
   access: {
     read: isHouseOwner || isCustomer,

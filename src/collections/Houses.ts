@@ -108,7 +108,6 @@ export const Houses: CollectionConfig = {
       defaultValue: '62640',
       admin: {
         readOnly: true,
-        hidden: true,
         description:
           'Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah asal.',
       },
