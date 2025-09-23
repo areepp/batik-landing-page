@@ -4,7 +4,7 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig, Plugin } from 'payload'
+import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
@@ -21,27 +21,6 @@ import { HomePage } from './collections/HomePage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
-const plugins: Plugin[] = [payloadCloudPlugin()]
-
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(
-    s3Storage({
-      collections: {
-        media: true,
-      },
-      config: {
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.S3_SECRET || '',
-        },
-        region: process.env.S3_REGION || 'auto',
-        endpoint: process.env.S3_ENDPOINT || '',
-      },
-      bucket: process.env.S3_BUCKET || '',
-    }),
-  )
-}
 
 export default buildConfig({
   admin: {
@@ -69,6 +48,22 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins,
+  plugins: [
+    payloadCloudPlugin(),
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET || '',
+        },
+        region: 'auto',
+        endpoint: process.env.S3_ENDPOINT || '',
+      },
+      bucket: process.env.S3_BUCKET || '',
+    }),
+  ],
   endpoints: [midtransWebhook],
 })
