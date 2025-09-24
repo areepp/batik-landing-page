@@ -1,50 +1,55 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Product } from '@/payload-types'
-import { Check, ShoppingCart } from 'lucide-react'
-import { useCartStore } from '@/store/cart-store'
+import { Check, Loader2, ShoppingCart } from 'lucide-react'
 import { useUser } from '@/hooks/use-user'
-import { toast } from 'sonner'
 import { LoginDialog } from './login-dialog'
+import { useAddItemToCart, useGetCart } from '../../api/cart-queries'
+import Link from 'next/link'
 
 export function AddToCartButton({ product }: Readonly<{ product: Product }>) {
-  const { data } = useUser()
+  const { data: userData, isPending: isUserLoading } = useUser()
+  const { data: cartData, isPending: isCartLoading } = useGetCart()
+  const { mutate, isPending } = useAddItemToCart()
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
-  const addItem = useCartStore((state) => state.addItem)
-  const items = useCartStore((state) => state.items)
 
-  const [isAdded, setIsAdded] = useState(false)
-
-  const itemInCart = items.some((item) => item.product.id === product.id)
+  const isItemInCart = cartData?.items?.some((item) => (item.product as Product)?.id === product.id)
 
   const handleAddToCart = () => {
-    if (!data) {
+    if (!userData) {
       setIsLoginDialogOpen(true)
     } else {
-      addItem(product)
-      toast.success(`${product.name} telah ditambahkan ke keranjang.`)
-      setIsAdded(true)
-      setTimeout(() => setIsAdded(false), 2000)
+      mutate(product.id)
     }
   }
 
-  useEffect(() => {
-    if (itemInCart) {
-      setIsAdded(true)
-      const timer = setTimeout(() => setIsAdded(false), 10000)
-      return () => clearTimeout(timer)
-    }
-  }, [itemInCart, items])
+  if (isUserLoading || isCartLoading) {
+    return (
+      <Button size="lg" className="w-full" disabled>
+        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+        Memuat...
+      </Button>
+    )
+  }
+
+  if (isItemInCart) {
+    return (
+      <Button asChild size="lg" className="w-full" variant="secondary">
+        <Link href="/keranjang">
+          <Check className="mr-2 h-5 w-5" />
+          Lihat Keranjang
+        </Link>
+      </Button>
+    )
+  }
 
   return (
     <>
-      <Button onClick={handleAddToCart} disabled={isAdded}>
-        {isAdded ? (
-          <>
-            <Check className="mr-2 h-5 w-5" /> Added!
-          </>
+      <Button onClick={handleAddToCart} disabled={isPending}>
+        {isPending ? (
+          'Menambahkan ke keranjang...'
         ) : (
           <>
             <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart

@@ -57,3 +57,14 @@ export const isCustomer: Access = ({ req: { user } }) => {
   }
   return false
 }
+
+export const isOwner: Access = ({ req: { user } }) => {
+  if (!user) {
+    return false
+  }
+  return {
+    user: {
+      equals: user.id,
+    },
+  }
+}

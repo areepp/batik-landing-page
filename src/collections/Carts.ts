@@ -1,3 +1,4 @@
+import { isOwner } from '@/lib/payload-access-control'
 import type { CollectionConfig } from 'payload'
 
 export const Carts: CollectionConfig = {
@@ -8,17 +9,10 @@ export const Carts: CollectionConfig = {
     hidden: true,
   },
   access: {
-    read: ({ req: { user } }) => {
-      if (!user) return false
-      return {
-        user: {
-          equals: user.id,
-        },
-      }
-    },
     create: ({ req: { user } }) => !!user,
-    update: ({ req: { user } }) => !!user,
-    delete: () => false, // Carts should not be deletable by users
+    read: isOwner,
+    update: isOwner,
+    delete: isOwner,
   },
   fields: [
     {
