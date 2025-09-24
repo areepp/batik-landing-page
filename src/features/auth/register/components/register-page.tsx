@@ -21,13 +21,13 @@ export default function RegisterPage() {
   const onSubmit = async (values: SchemaRegister) => {
     register(values, {
       onSuccess: () => {
-        router.replace('/home')
+        router.replace('/login')
       },
     })
   }
 
   return (
-    <div className="container flex items-center justify-center mx-auto py-12">
+    <div className="container flex items-center justify-center mx-auto pt-20 px-5">
       <RegisterForm form={form} onSubmit={onSubmit} isPending={isPending} />
     </div>
   )

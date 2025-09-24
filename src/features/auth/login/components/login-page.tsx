@@ -27,7 +27,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="container flex items-center justify-center mx-auto py-12">
+    <div className="container flex items-center justify-center mx-auto pt-20 px-5">
       <LoginForm form={form} onSubmit={onSubmit} isPending={isPending} />
     </div>
   )

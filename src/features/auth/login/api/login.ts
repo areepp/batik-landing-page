@@ -28,7 +28,8 @@ export const login = async (values: SchemaLogin) => {
     throw new Error(errorData.errors?.[0]?.message || 'Email atau password salah.')
   }
 
-  return response.json()
+  const data = await response.json()
+  return data.user
 }
 
 export const useLogin = ({
@@ -41,10 +42,10 @@ export const useLogin = ({
 
   return useMutation({
     mutationFn: login,
-    onSuccess: (user, ...args) => {
-      queryClient.setQueryData(['auth-user'], user)
+    onSuccess: (data, ...args) => {
+      queryClient.setQueryData(['auth-user'], data)
       toast.success('Login Berhasil!')
-      onSuccess?.(user, ...args)
+      onSuccess?.(data, ...args)
     },
     onError: (error, ...args) => {
       toast.error(error.message)
