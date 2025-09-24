@@ -22,7 +22,7 @@ type IRegisterProps = {
 
 const RegisterForm = ({ form, onSubmit, isPending }: IRegisterProps) => {
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl">Buat Akun Baru</CardTitle>
         <CardDescription>Masukkan email dan password Anda untuk mendaftar.</CardDescription>
