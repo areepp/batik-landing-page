@@ -7,6 +7,7 @@ import { Menu } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { UserProfileDropdown } from './user-profile-dropdown'
 
 function Logo({ isTransparent }: Readonly<{ isTransparent: boolean }>) {
   return (
@@ -65,6 +66,7 @@ export function Navbar() {
               <Link href="/toko" className={navLinkClasses}>
                 Toko
               </Link>
+              <UserProfileDropdown />
             </nav>
           </div>
         </div>
@@ -72,6 +74,7 @@ export function Navbar() {
         {/* Mobile Navbar */}
         <div className="md:hidden flex w-full items-center justify-between gap-4">
           <Logo isTransparent={isTransparent} />
+          <UserProfileDropdown />
           <div>
             <Sheet>
               <SheetTrigger asChild>
