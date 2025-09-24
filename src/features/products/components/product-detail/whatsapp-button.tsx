@@ -29,7 +29,7 @@ export function WhatsappButton({ product }: Readonly<Props>) {
   const whatsappUrl = `https://wa.me/${cleanedPhoneNumber}?text=${encodeURIComponent(message)}`
 
   return (
-    <Button asChild className="w-full">
+    <Button asChild className="w-full" variant="outline">
       <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
         <MessageCircle className="mr-2 h-4 w-4" />
         Tanyakan tentang produk ini

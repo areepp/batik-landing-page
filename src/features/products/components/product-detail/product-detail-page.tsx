@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
 import { WhatsappButton } from './whatsapp-button'
+import { AddToCartButton } from './add-to-cart-button'
 
 type Props = {
   params: Promise<{
@@ -110,7 +111,10 @@ export default async function ProductDetailPage({ params }: Props) {
             </div>
           )}
 
-          <WhatsappButton product={product} />
+          <div className="flex flex-col gap-3">
+            <WhatsappButton product={product} />
+            <AddToCartButton product={product} />
+          </div>
 
           {product.details && product.details.length > 0 && (
             <div className="mt-6">
