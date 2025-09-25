@@ -11,28 +11,15 @@ import {
 import { Button } from '@/components/ui/button'
 import { UserCircle } from 'lucide-react'
 import Link from 'next/link'
-import { User } from '@/payload-types'
 import { useQuery } from '@tanstack/react-query'
 import { useLogout } from '@/features/auth/logout/api/logout'
 import LoadingSpinner from './loading-spinner'
-
-const fetchUser = async (): Promise<User | null> => {
-  try {
-    const response = await fetch('/api/users/me')
-    if (!response.ok) {
-      return null
-    }
-    const { user } = await response.json()
-    return user
-  } catch (error) {
-    return null
-  }
-}
+import { getUser } from '@/features/auth/user/api/get-user'
 
 export function UserProfileDropdown() {
   const { data: user, isLoading } = useQuery({
     queryKey: ['auth-user'],
-    queryFn: fetchUser,
+    queryFn: getUser,
     staleTime: Infinity,
   })
 
