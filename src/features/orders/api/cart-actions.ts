@@ -5,7 +5,6 @@ import config from '@/payload.config'
 import { getPayload } from 'payload'
 import { Cart, Product } from '@/payload-types'
 import { revalidateTag } from 'next/cache'
-import { FormState } from '@/lib/types'
 
 const getUser = async () => {
   const headers = await getHeaders()
@@ -74,5 +73,68 @@ export async function addItemToCart(productId: number) {
       },
     })
   }
+  revalidateTag('cart')
+}
+
+export async function updateItemQuantity({
+  productId,
+  quantity,
+}: {
+  productId: number
+  quantity: number
+}) {
+  const user = await getUser()
+  if (!user) throw new Error('You must be logged in to update items.')
+
+  const payload = await getPayload({ config })
+  const { docs: carts } = await payload.find({
+    collection: 'carts',
+    where: { user: { equals: user.id } },
+  })
+
+  const [cart] = carts
+  if (!cart) return
+
+  const itemIndex =
+    cart.items?.findIndex((item) => (item.product as Product).id === productId) ?? -1
+
+  if (itemIndex > -1) {
+    const newItems = [...(cart.items || [])]
+    if (quantity > 0) {
+      newItems[itemIndex].quantity = quantity
+    } else {
+      // If quantity is 0 or less, remove the item
+      newItems.splice(itemIndex, 1)
+    }
+
+    await payload.update({
+      collection: 'carts',
+      id: cart.id,
+      data: { items: newItems },
+    })
+    revalidateTag('cart')
+  }
+}
+
+export async function removeItem(productId: number) {
+  const user = await getUser()
+  if (!user) throw new Error('You must be logged in to remove items.')
+
+  const payload = await getPayload({ config })
+  const { docs: carts } = await payload.find({
+    collection: 'carts',
+    where: { user: { equals: user.id } },
+  })
+
+  const [cart] = carts
+  if (!cart) return
+
+  const newItems = cart.items?.filter((item) => (item.product as Product).id !== productId) || []
+
+  await payload.update({
+    collection: 'carts',
+    id: cart.id,
+    data: { items: newItems },
+  })
   revalidateTag('cart')
 }

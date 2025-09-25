@@ -6,7 +6,7 @@ import { Product } from '@/payload-types'
 import { Check, Loader2, ShoppingCart } from 'lucide-react'
 import { useUser } from '@/hooks/use-user'
 import { LoginDialog } from './login-dialog'
-import { useAddItemToCart, useGetCart } from '../../api/cart-queries'
+import { useAddItemToCart, useGetCart } from '@/features/orders/api/cart-queries'
 import Link from 'next/link'
 
 export function AddToCartButton({ product }: Readonly<{ product: Product }>) {
