@@ -68,7 +68,7 @@ const LoginForm = ({ form, onSubmit, isPending }: ILoginProps) => {
         </Form>
         <div className="mt-4 text-center text-sm">
           Belum punya akun?{' '}
-          <Link href="/register" className="underline">
+          <Link href="/daftar" className="underline">
             Daftar
           </Link>
         </div>

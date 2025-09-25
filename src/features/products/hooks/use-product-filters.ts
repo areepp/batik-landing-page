@@ -37,14 +37,14 @@ export function useProductFilters() {
       newParams.delete(paramName)
     }
     newParams.set('page', '1')
-    router.push(`/products?${newParams.toString()}`)
+    router.push(`/produk?${newParams.toString()}`)
   }
 
   const handleSortChange = (value: string) => {
     const newParams = new URLSearchParams(searchParams.toString())
     newParams.set('sort', value)
     newParams.set('page', '1')
-    router.push(`/products?${newParams.toString()}`)
+    router.push(`/produk?${newParams.toString()}`)
   }
 
   const handleClearFilters = () => {
@@ -53,7 +53,7 @@ export function useProductFilters() {
     newParams.delete('jenisBatik')
     newParams.delete('jenisKain')
     newParams.set('page', '1')
-    router.push(`/products?${newParams.toString()}`)
+    router.push(`/produk?${newParams.toString()}`)
   }
 
   return {

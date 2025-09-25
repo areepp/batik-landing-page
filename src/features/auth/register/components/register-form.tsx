@@ -68,7 +68,7 @@ const RegisterForm = ({ form, onSubmit, isPending }: IRegisterProps) => {
         </Form>
         <div className="mt-4 text-center text-sm">
           Sudah punya akun?{' '}
-          <Link href="/login" className="underline">
+          <Link href="/masuk" className="underline">
             Masuk
           </Link>
         </div>

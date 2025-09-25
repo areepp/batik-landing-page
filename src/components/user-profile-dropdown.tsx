@@ -74,7 +74,7 @@ export function UserProfileDropdown() {
             disabled={isLoggingOut}
             className="cursor-pointer bg-red-500 hover:bg-red-800 text-white"
           >
-            {isLoggingOut ? 'Keluar...' : 'Logout'}
+            {isLoggingOut ? 'Keluar...' : 'Keluar'}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -83,7 +83,7 @@ export function UserProfileDropdown() {
 
   return (
     <Button asChild size="sm">
-      <Link href="/login">Masuk</Link>
+      <Link href="/masuk">Masuk</Link>
     </Button>
   )
 }

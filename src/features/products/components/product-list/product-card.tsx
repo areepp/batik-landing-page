@@ -15,7 +15,7 @@ export const ProductCard = ({ product }: Props) => {
     typeof firstImage === 'object' && firstImage !== null ? firstImage.alt : 'Product image'
 
   return (
-    <Link href={`/products/${product.slug}`} className="group">
+    <Link href={`/produk/${product.slug}`} className="group">
       <div className="aspect-3/4 bg-[#fff4f4] p-8">
         {imageUrl ? (
           <div className="relative w-full h-full">

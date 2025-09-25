@@ -21,7 +21,7 @@ export default function LoginPage() {
   const onSubmit = async (values: SchemaLogin) => {
     register(values, {
       onSuccess: () => {
-        router.replace('/home')
+        router.replace('/beranda')
       },
     })
   }

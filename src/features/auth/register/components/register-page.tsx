@@ -21,7 +21,7 @@ export default function RegisterPage() {
   const onSubmit = async (values: SchemaRegister) => {
     register(values, {
       onSuccess: () => {
-        router.replace('/login')
+        router.replace('/masuk')
       },
     })
   }
