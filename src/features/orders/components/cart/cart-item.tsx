@@ -28,7 +28,7 @@ export const CartItem = ({ item }: { item: TCartItem }) => {
           )}
         </div>
         <div className="flex flex-col gap-1">
-          <Link href={`/products/${item.product.slug}`} className="font-semibold hover:underline">
+          <Link href={`/produk/${item.product.slug}`} className="font-semibold hover:underline">
             {item.product.name}
           </Link>
           <p className="text-sm text-muted-foreground">{formatPrice(item.product.price)}</p>
