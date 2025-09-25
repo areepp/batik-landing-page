@@ -1,4 +1,5 @@
 import { User } from '@/payload-types'
+import { useQuery } from '@tanstack/react-query'
 
 export const getUser = async (): Promise<User | null> => {
   try {
@@ -12,3 +13,10 @@ export const getUser = async (): Promise<User | null> => {
     return null
   }
 }
+
+export const useGetUser = () =>
+  useQuery({
+    queryKey: ['auth-user'],
+    queryFn: getUser,
+    staleTime: Infinity,
+  })

@@ -11,18 +11,12 @@ import {
 import { Button } from '@/components/ui/button'
 import { UserCircle } from 'lucide-react'
 import Link from 'next/link'
-import { useQuery } from '@tanstack/react-query'
 import { useLogout } from '@/features/auth/logout/api/logout'
 import LoadingSpinner from './loading-spinner'
-import { getUser } from '@/features/auth/user/api/get-user'
+import { useGetUser } from '@/features/auth/user/api/get-user'
 
 export function UserProfileDropdown() {
-  const { data: user, isLoading } = useQuery({
-    queryKey: ['auth-user'],
-    queryFn: getUser,
-    staleTime: Infinity,
-  })
-
+  const { data: user, isLoading } = useGetUser()
   const { mutate: logout, isPending: isLoggingOut } = useLogout()
 
   if (isLoading) {
