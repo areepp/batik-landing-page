@@ -1,4 +1,4 @@
-import { MutationConfig, QueryConfig } from '@/lib/tanstack-query'
+import { MutationConfig, QueryConfig } from '@/lib/react-query'
 import { addItemToCart, getCart, removeItem, updateItemQuantity } from './cart-actions'
 import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'

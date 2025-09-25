@@ -1,5 +1,6 @@
+import { QueryConfig } from '@/lib/react-query'
 import { User } from '@/payload-types'
-import { useQuery } from '@tanstack/react-query'
+import { queryOptions, useQuery } from '@tanstack/react-query'
 
 export const getUser = async (): Promise<User | null> => {
   try {
@@ -10,13 +11,19 @@ export const getUser = async (): Promise<User | null> => {
     const { user } = await response.json()
     return user
   } catch (error) {
+    console.error('Failed to fetch user:', error)
     return null
   }
 }
 
-export const useGetUser = () =>
-  useQuery({
+const getUserQueryOptions = () =>
+  queryOptions({
     queryKey: ['auth-user'],
     queryFn: getUser,
-    staleTime: Infinity,
   })
+
+export const useGetUser = ({
+  queryConfig,
+}: {
+  queryConfig?: QueryConfig<typeof getUserQueryOptions>
+} = {}) => useQuery({ ...getUserQueryOptions(), staleTime: Infinity, ...queryConfig })

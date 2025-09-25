@@ -4,13 +4,13 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Product } from '@/payload-types'
 import { Check, Loader2, ShoppingCart } from 'lucide-react'
-import { useUser } from '@/hooks/use-user'
 import { LoginDialog } from './login-dialog'
 import { useAddItemToCart, useGetCart } from '@/features/orders/cart/api/cart-queries'
 import Link from 'next/link'
+import { useGetUser } from '@/features/auth/user/api/get-user'
 
 export function AddToCartButton({ product }: Readonly<{ product: Product }>) {
-  const { data: userData, isPending: isUserLoading } = useUser()
+  const { data: userData, isPending: isUserLoading } = useGetUser()
   const { data: cartData, isPending: isCartLoading } = useGetCart()
   const { mutate, isPending } = useAddItemToCart()
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
