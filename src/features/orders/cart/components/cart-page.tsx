@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { formatPrice } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { CartItem } from './cart-item'
-import { useGetCart } from '../../api/cart-queries'
+import { useGetCart } from '../api/cart-queries'
 import { Product } from '@/payload-types'
 import { Loader2 } from 'lucide-react'
 

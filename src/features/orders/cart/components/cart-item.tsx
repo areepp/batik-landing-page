@@ -6,7 +6,7 @@ import { Cart, Media, Product } from '@/payload-types'
 import { Minus, Plus, X } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { useRemoveItem, useUpdateItemQuantity } from '../../api/cart-queries'
+import { useRemoveItem, useUpdateItemQuantity } from '../api/cart-queries'
 
 export const CartItem = ({ item }: { item: NonNullable<Cart['items']>[number] }) => {
   const { mutate: updateQuantity, isPending: isUpdatingQuantity } = useUpdateItemQuantity()

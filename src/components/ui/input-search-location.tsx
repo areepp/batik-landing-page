@@ -12,7 +12,7 @@ import {
   CommandList,
 } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { searchDestinations, Location } from '@/features/orders/api/search-destination'
+import { searchDestinations, Location } from '@/features/orders/checkout/api/search-destination'
 import { useDebounce } from '@/hooks/use-debounce'
 import { useEffect, useState } from 'react'
 

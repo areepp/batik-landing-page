@@ -1,3 +1,3 @@
-import CartPage from '@/features/orders/components/cart/cart-page'
+import CartPage from '@/features/orders/cart/components/cart-page'
 
 export default CartPage
