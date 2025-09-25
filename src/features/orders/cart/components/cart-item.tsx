@@ -28,7 +28,7 @@ export const CartItem = ({ item }: { item: NonNullable<Cart['items']>[number] })
           )}
         </div>
         <div className="flex flex-col gap-1">
-          <Link href={`/products/${product.slug}`} className="font-semibold hover:underline">
+          <Link href={`/produk/${product.slug}`} className="font-semibold hover:underline">
             {product.name}
           </Link>
           <p className="text-sm text-muted-foreground">{formatPrice(product.price)}</p>

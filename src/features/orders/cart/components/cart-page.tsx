@@ -32,7 +32,7 @@ export default function CartPage() {
           Sepertinya Anda belum menambahkan produk apapun.
         </p>
         <Button asChild className="mt-6">
-          <Link href="/products">Lanjutkan Belanja</Link>
+          <Link href="/produk">Lanjutkan Belanja</Link>
         </Button>
       </main>
     )
