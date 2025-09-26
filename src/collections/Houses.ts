@@ -104,12 +104,12 @@ export const Houses: CollectionConfig = {
       name: 'originCity',
       label: 'ID Kota Asal Pengiriman',
       type: 'text',
-      required: false,
+      required: true,
       defaultValue: '62640',
       admin: {
         readOnly: true,
         description:
-          'Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah asal.',
+          'Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah jika produk tidak dikirim dari desa pungsari.',
       },
     },
   ],

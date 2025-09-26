@@ -16,4 +16,5 @@ export const orderSchema = z.object({
       cost: z.number(),
     })
     .nullable(),
+  proof_file: z.file(),
 })

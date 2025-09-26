@@ -68,7 +68,7 @@ export default function CartPage() {
             </div>
           </div>
           <Button size="lg" className="w-full mt-6" asChild>
-            <Link href="/checkout">Lanjutkan ke Checkout</Link>
+            <Link href="/pembayaran">Lanjutkan ke Checkout</Link>
           </Button>
         </div>
       </div>

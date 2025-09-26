@@ -11,7 +11,7 @@ export const Orders: CollectionConfig = {
   access: {
     read: isHouseOwner || isCustomer,
     update: isHouseOwner,
-    delete: isHouseOwner,
+    delete: () => false,
     create: () => true,
   },
   fields: [
@@ -42,6 +42,73 @@ export const Orders: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
       required: false,
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: 'customerEmail',
+      label: 'Email Pelanggan',
+      type: 'email',
+      required: true,
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: 'subtotal',
+      label: 'Subtotal',
+      type: 'number',
+      required: true,
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: 'total',
+      label: 'Total Pesanan',
+      type: 'number',
+      required: true,
+      admin: {
+        readOnly: true,
+      },
+    },
+    {
+      name: 'status',
+      label: 'Status Pesanan',
+      type: 'select',
+      defaultValue: 'pending',
+      options: [
+        { label: 'Menunggu Konfirmasi', value: 'pending' },
+        { label: 'Sedang Diproses', value: 'processing' },
+        { label: 'Dikirim', value: 'shipped' },
+        { label: 'Selesai', value: 'completed' },
+        { label: 'Dibatalkan', value: 'cancelled' },
+      ],
+      required: true,
+    },
+    {
+      name: 'proof_of_payment',
+      label: 'Bukti Pembayaran',
+      type: 'upload',
+      relationTo: 'payment-proofs',
+      admin: {
+        readOnly: true,
+      },
+      access: {
+        read: ({ req: { user } }) => {
+          // If a user has permission to read the parent Order document,
+          // they should also have permission to read this field.
+          return Boolean(user)
+        },
+        update: ({ req: { user }, doc }) => {
+          if (!user || !doc) return false
+          // This check ensures ONLY the customer associated with this specific order
+          // can upload or change the proof of payment.
+          const customerId = typeof doc.user === 'object' ? doc.user.id : doc.user
+          return user.id === customerId
+        },
+      },
     },
     {
       name: 'house',
@@ -87,17 +154,15 @@ export const Orders: CollectionConfig = {
         ],
       },
     },
-    {
-      name: 'customerEmail',
-      label: 'Email Pelanggan (Tamu)',
-      type: 'email',
-      required: true,
-    },
+
     {
       name: 'items',
       label: 'Barang Pesanan',
       type: 'array',
       required: true,
+      admin: {
+        readOnly: true,
+      },
       fields: [
         {
           name: 'product',
@@ -124,15 +189,7 @@ export const Orders: CollectionConfig = {
         },
       ],
     },
-    {
-      name: 'subtotal',
-      label: 'Subtotal',
-      type: 'number',
-      required: true,
-      admin: {
-        readOnly: true,
-      },
-    },
+
     {
       name: 'shippingDetails',
       label: 'Detail Pengiriman',
@@ -155,48 +212,20 @@ export const Orders: CollectionConfig = {
         readOnly: true,
       },
     },
-    {
-      name: 'total',
-      label: 'Total Pesanan',
-      type: 'number',
-      required: true,
-      admin: {
-        readOnly: true,
-      },
-    },
-    {
-      name: 'status',
-      label: 'Status Pesanan',
-      type: 'select',
-      defaultValue: 'pending',
-      options: [
-        { label: 'Menunggu Pembayaran', value: 'pending' },
-        { label: 'Dibayar', value: 'paid' },
-        { label: 'Sedang Diproses', value: 'processing' },
-        { label: 'Dikirim', value: 'shipped' },
-        { label: 'Selesai', value: 'completed' },
-        { label: 'Dibatalkan', value: 'cancelled' },
-      ],
-      required: true,
-    },
+
     {
       name: 'shippingAddress',
       label: 'Alamat Pengiriman',
       type: 'group',
+      admin: {
+        readOnly: true,
+      },
       fields: [
         { name: 'recipientName', label: 'Nama Penerima', type: 'text', required: true },
         { name: 'phoneNumber', label: 'Nomor HP', type: 'text', required: true },
         { name: 'fullAddress', label: 'Alamat Lengkap', type: 'textarea', required: true },
         { name: 'postalCode', label: 'Kode Pos', type: 'text', required: true },
       ],
-    },
-    {
-      name: 'paymentTransactionId',
-      label: 'ID Transaksi Pembayaran',
-      type: 'text',
-      admin: {
-        readOnly: true,
-      },
     },
   ],
 }

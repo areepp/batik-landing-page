@@ -1,20 +1,13 @@
 'use server'
 
-import { headers as getHeaders } from 'next/headers'
 import config from '@/payload.config'
 import { getPayload } from 'payload'
 import { Cart, Product } from '@/payload-types'
 import { revalidateTag } from 'next/cache'
-
-const getUser = async () => {
-  const headers = await getHeaders()
-  const payload = await getPayload({ config })
-  const { user } = await payload.auth({ headers })
-  return user
-}
+import { getUserOnServer } from '@/features/auth/user/api/user-actions'
 
 export async function getCart(): Promise<Cart | null> {
-  const user = await getUser()
+  const user = await getUserOnServer()
   if (!user) {
     return null
   }
@@ -34,7 +27,7 @@ export async function getCart(): Promise<Cart | null> {
 }
 
 export async function addItemToCart(productId: number) {
-  const user = await getUser()
+  const user = await getUserOnServer()
   if (!user) throw new Error('You must be logged in to add items.')
 
   const payload = await getPayload({ config })
@@ -83,7 +76,7 @@ export async function updateItemQuantity({
   productId: number
   quantity: number
 }) {
-  const user = await getUser()
+  const user = await getUserOnServer()
   if (!user) throw new Error('You must be logged in to update items.')
 
   const payload = await getPayload({ config })
@@ -117,7 +110,7 @@ export async function updateItemQuantity({
 }
 
 export async function removeItem(productId: number) {
-  const user = await getUser()
+  const user = await getUserOnServer()
   if (!user) throw new Error('You must be logged in to remove items.')
 
   const payload = await getPayload({ config })
