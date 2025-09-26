@@ -18,7 +18,7 @@ import { useCreateOrder } from '../api/create-order-queries'
 import LoadingSpinner from '@/components/loading-spinner'
 import { useGetCart } from '../../cart/api/cart-queries'
 import { formatPrice } from '@/lib/utils'
-import { Product } from '@/payload-types'
+import { House, Product } from '@/payload-types'
 
 type Props = {
   isOpen: boolean
@@ -42,6 +42,8 @@ export function UploadProofDialog({ isOpen, onOpenChange }: Readonly<Props>) {
     ) ?? 0
   const total = subtotal + (form.getValues('shippingOption.cost') ?? 0)
 
+  const house = (cartData?.items?.[0].product as Product).house as House
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -52,8 +54,10 @@ export function UploadProofDialog({ isOpen, onOpenChange }: Readonly<Props>) {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col w-full items-center gap-2 mt-4">
-          <p>BCA - 1234567890</p>
-          <p>a.n. Batik Welasih</p>
+          <p>
+            {house.bankDetails.bankName} - {house.bankDetails.accountNumber}
+          </p>
+          <p>a.n. {house.bankDetails.accountHolderName}</p>
           <p className="text-xl font-bold">{formatPrice(total)}</p>
           <FormField
             name="proof_file"

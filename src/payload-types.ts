@@ -181,6 +181,14 @@ export interface House {
     tokopediaUrl?: string | null;
   };
   /**
+   * Rekening ini akan ditampilkan kepada pelanggan untuk melakukan pembayaran.
+   */
+  bankDetails: {
+    bankName: string;
+    accountNumber: string;
+    accountHolderName: string;
+  };
+  /**
    * Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah jika produk tidak dikirim dari desa pungsari.
    */
   originCity: string;
@@ -500,6 +508,13 @@ export interface HousesSelect<T extends boolean = true> {
     | {
         shopeeUrl?: T;
         tokopediaUrl?: T;
+      };
+  bankDetails?:
+    | T
+    | {
+        bankName?: T;
+        accountNumber?: T;
+        accountHolderName?: T;
       };
   originCity?: T;
   updatedAt?: T;

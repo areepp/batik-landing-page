@@ -101,6 +101,34 @@ export const Houses: CollectionConfig = {
       ],
     },
     {
+      name: 'bankDetails',
+      label: 'Detail Rekening Bank',
+      type: 'group',
+      admin: {
+        description: 'Rekening ini akan ditampilkan kepada pelanggan untuk melakukan pembayaran.',
+      },
+      fields: [
+        {
+          name: 'bankName',
+          label: 'Nama Bank (e.g., BCA, Mandiri)',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'accountNumber',
+          label: 'Nomor Rekening',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'accountHolderName',
+          label: 'Nama Pemilik Rekening',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'originCity',
       label: 'ID Kota Asal Pengiriman',
       type: 'text',
