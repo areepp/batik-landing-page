@@ -39,7 +39,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto max-w-7xl p-8">
       <h1 className="text-xl font-bold tracking-tight mb-8">Keranjang Belanja</h1>
       <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-start">
         <div className="lg:col-span-2">
@@ -59,7 +59,7 @@ export default function CartPage() {
             </div>
             <div className="flex justify-between">
               <span>Pengiriman</span>
-              <span className="text-muted-foreground">Dihitung saat checkout</span>
+              <span className="text-muted-foreground">Dihitung saat pembayaran</span>
             </div>
             <Separator />
             <div className="flex justify-between font-bold text-lg">
@@ -68,7 +68,7 @@ export default function CartPage() {
             </div>
           </div>
           <Button size="lg" className="w-full mt-6" asChild>
-            <Link href="/pembayaran">Lanjutkan ke Checkout</Link>
+            <Link href="/pembayaran">Lanjutkan ke Pembayaran</Link>
           </Button>
         </div>
       </div>

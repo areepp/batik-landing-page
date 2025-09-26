@@ -114,14 +114,14 @@ export default function CheckoutPage() {
 
   if (isPending) {
     return (
-      <div className="container mx-auto flex items-center justify-center w-full min-h-[calc(100vh-8rem)]">
+      <div className="container mx-auto flex items-center justify-center w-full max-w-7xl">
         <LoadingSpinner />
       </div>
     )
   }
 
   return (
-    <div className="mt-12 container mx-auto">
+    <div className="mt-12 container mx-auto max-w-7xl">
       <h1 className="text-3xl font-bold tracking-tight mb-8">Checkout</h1>
       <Form {...form}>
         <form className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">

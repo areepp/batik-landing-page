@@ -25,10 +25,10 @@ export function LoginDialog({ isOpen, onOpenChange }: Readonly<Props>) {
         </DialogHeader>
         <div className="grid grid-cols-2 gap-4 py-4">
           <Button variant="outline" asChild>
-            <Link href="/login">Masuk</Link>
+            <Link href="/masuk">Masuk</Link>
           </Button>
           <Button asChild>
-            <Link href="/register">Buat Akun</Link>
+            <Link href="/daftar">Buat Akun</Link>
           </Button>
         </div>
       </DialogContent>
