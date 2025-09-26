@@ -318,6 +318,7 @@ export interface Order {
   total: number;
   status: 'pending' | 'processing' | 'shipped' | 'completed' | 'cancelled';
   proof_of_payment?: (number | null) | PaymentProof;
+  trackingNumber?: string | null;
   house: number | House;
   items: {
     product?: (number | null) | Product;
@@ -583,6 +584,7 @@ export interface OrdersSelect<T extends boolean = true> {
   total?: T;
   status?: T;
   proof_of_payment?: T;
+  trackingNumber?: T;
   house?: T;
   items?:
     | T
