@@ -4,6 +4,7 @@ import { jenisKainData } from './seed-data/jenis-batik'
 import { getHousesData } from './seed-data/houses'
 import { getProductsData } from './seed-data/products'
 import { seedStoreManagers } from './seed-data/manajer-toko'
+import { jenisProdukData } from './seed-data/jenis-produk'
 // import { getArtisansData } from './seed-data/pengrajin-pilihan'
 // import { getTestimonialsData } from './seed-data/testimoni'
 
@@ -63,10 +64,12 @@ export const script = async (config: SanitizedConfig) => {
   // Seed categories from separate files
   await seedCollection('jenis-batik', jenisBatikData)
   await seedCollection('jenis-kain', jenisKainData)
+  await seedCollection('jenis-produk', jenisProdukData)
 
   // Fetch the created categories to get their IDs for relationships
   const allJenisBatik = await payload.find({ collection: 'jenis-batik', limit: 100 })
   const allJenisKain = await payload.find({ collection: 'jenis-kain', limit: 100 })
+  const allJenisProduk = await payload.find({ collection: 'jenis-produk', limit: 100 })
   const allMedia = await payload.find({ collection: 'media', limit: 100 })
 
   // Create a map of name to ID for easy lookup
@@ -79,6 +82,14 @@ export const script = async (config: SanitizedConfig) => {
   )
 
   const kainIdMap = allJenisKain.docs.reduce(
+    (acc, doc) => {
+      acc[doc.name] = doc.id
+      return acc
+    },
+    {} as Record<string, number>,
+  )
+
+  const produkIdMap = allJenisProduk.docs.reduce(
     (acc, doc) => {
       acc[doc.name] = doc.id
       return acc
@@ -104,6 +115,7 @@ export const script = async (config: SanitizedConfig) => {
       houses: houseIdMap,
       batik: batikIdMap,
       kain: kainIdMap,
+      produk: produkIdMap,
       media: mediaIds,
     })
     await seedProducts(productsData)

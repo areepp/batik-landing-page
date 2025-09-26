@@ -2,6 +2,7 @@ import * as migration_20250917_131649_initial_migration from './20250917_131649_
 import * as migration_20250917_133459_house_logo_slug from './20250917_133459_house_logo_slug';
 import * as migration_20250925_074108_proof_of_payment from './20250925_074108_proof_of_payment';
 import * as migration_20250926_085137_add_bank_details from './20250926_085137_add_bank_details';
+import * as migration_20250926_104124_jenis_produk from './20250926_104124_jenis_produk';
 
 export const migrations = [
   {
@@ -22,6 +23,11 @@ export const migrations = [
   {
     up: migration_20250926_085137_add_bank_details.up,
     down: migration_20250926_085137_add_bank_details.down,
-    name: '20250926_085137_add_bank_details'
+    name: '20250926_085137_add_bank_details',
+  },
+  {
+    up: migration_20250926_104124_jenis_produk.up,
+    down: migration_20250926_104124_jenis_produk.down,
+    name: '20250926_104124_jenis_produk'
   },
 ];
