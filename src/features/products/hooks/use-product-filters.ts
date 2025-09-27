@@ -19,10 +19,17 @@ export function useProductFilters() {
     () => searchParams.get('jenisKain')?.split(',') || [],
     [searchParams],
   )
+  const checkedJenisProduks = React.useMemo(
+    () => searchParams.get('jenisProduk')?.split(',') || [],
+    [searchParams],
+  )
   const currentSort = searchParams.get('sort') || 'createdAt-desc'
 
   const isFilterActive =
-    checkedHouses.length > 0 || checkedJenisBatiks.length > 0 || checkedJenisKains.length > 0
+    checkedHouses.length > 0 ||
+    checkedJenisBatiks.length > 0 ||
+    checkedJenisKains.length > 0 ||
+    checkedJenisProduks.length > 0
 
   const handleFilterChange = (paramName: string, value: string) => {
     const currentValues = searchParams.get(paramName)?.split(',') || []
@@ -52,6 +59,7 @@ export function useProductFilters() {
     newParams.delete('houses')
     newParams.delete('jenisBatik')
     newParams.delete('jenisKain')
+    newParams.delete('jenisProduk')
     newParams.set('page', '1')
     router.push(`/produk?${newParams.toString()}`)
   }
@@ -60,6 +68,7 @@ export function useProductFilters() {
     checkedHouses,
     checkedJenisBatiks,
     checkedJenisKains,
+    checkedJenisProduks,
     currentSort,
     isFilterActive,
     handleFilterChange,
