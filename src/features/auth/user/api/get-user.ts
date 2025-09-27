@@ -3,7 +3,9 @@ import { useQuery } from '@tanstack/react-query'
 
 export const getUser = async (): Promise<User | null> => {
   try {
-    const response = await fetch('/api/users/me')
+    const response = await fetch('/api/users/me', {
+      credentials: 'include',
+    })
     if (!response.ok) {
       return null
     }
