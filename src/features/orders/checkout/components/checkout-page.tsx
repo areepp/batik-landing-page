@@ -37,12 +37,6 @@ export default function CheckoutPage() {
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
   const [isFetchingShipping, setIsFetchingShipping] = useState(false)
 
-  useEffect(() => {
-    if (!cartData?.items) {
-      router.push('/keranjang')
-    }
-  }, [cartData])
-
   const form = useForm<z.infer<typeof orderSchema>>({
     resolver: zodResolver(orderSchema),
     defaultValues: {
@@ -52,6 +46,14 @@ export default function CheckoutPage() {
       email: '',
     },
   })
+
+  useEffect(() => {
+    console.log('cartData', cartData?.items)
+    if (!cartData?.items) {
+      console.log('here')
+      router.push('/keranjang')
+    }
+  }, [cartData])
 
   const handleLocationSelect = async (location: Location | null) => {
     if (!location) {
@@ -118,6 +120,10 @@ export default function CheckoutPage() {
         <LoadingSpinner />
       </div>
     )
+  }
+
+  if (!cartData?.items) {
+    return
   }
 
   return (

@@ -24,9 +24,9 @@ export default function CartPage() {
     )
   }
 
-  if (data?.items && data.items.length === 0) {
+  if (!data?.items || data.items.length === 0) {
     return (
-      <main className="container flex flex-col items-center justify-center min-h-[60vh] text-center">
+      <main className="container flex flex-col items-center justify-center min-h-[60vh] text-center mx-auto max-w-7xl">
         <h1 className="text-3xl font-bold tracking-tight">Keranjang Anda Kosong</h1>
         <p className="mt-4 text-muted-foreground">
           Sepertinya Anda belum menambahkan produk apapun.
