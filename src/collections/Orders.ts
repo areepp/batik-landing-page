@@ -1,4 +1,4 @@
-import { isCustomer, isHouseOwner } from '@/lib/payload-access-control'
+import { isCustomer, isHouseOwner, isHouseOwnerFieldAccess } from '@/lib/payload-access-control'
 import type { CollectionConfig } from 'payload'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -108,6 +108,16 @@ export const Orders: CollectionConfig = {
           const customerId = typeof doc.user === 'object' ? doc.user.id : doc.user
           return user.id === customerId
         },
+      },
+    },
+    {
+      name: 'trackingNumber',
+      label: 'Nomor Resi',
+      type: 'text',
+      access: {
+        read: () => true,
+        create: isHouseOwnerFieldAccess,
+        update: isHouseOwnerFieldAccess,
       },
     },
     {
