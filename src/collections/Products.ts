@@ -143,7 +143,6 @@ export const Products: CollectionConfig = {
       defaultValue: 300,
       admin: {
         position: 'sidebar',
-        hidden: true,
         description:
           'Masukkan berat produk dalam satuan gram. Akan digunakan saat menghitung ongkir.',
       },

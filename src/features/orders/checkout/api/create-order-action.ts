@@ -1,0 +1,85 @@
+'use server'
+
+import { z } from 'zod'
+import { Cart, House, Product } from '@/payload-types'
+import { revalidatePath } from 'next/cache'
+import { orderSchema } from './order.schema'
+import { getUserOnServer } from '@/features/auth/user/api/user-actions'
+import { getPayload } from 'payload'
+import config from '@/payload.config'
+
+export async function createOrder({
+  cartItems,
+  shippingDetails,
+}: {
+  cartItems: Cart['items']
+  shippingDetails: z.infer<typeof orderSchema>
+}) {
+  const user = await getUserOnServer()
+  const payload = await getPayload({ config })
+
+  const validatedOrderDetails = orderSchema.safeParse(shippingDetails)
+  if (!validatedOrderDetails.success) {
+    throw new Error(validatedOrderDetails.error.message)
+  }
+
+  if (!cartItems || cartItems.length === 0) {
+    throw new Error('Keranjang Anda masih kosong.')
+  }
+
+  const file = validatedOrderDetails.data.proof_file
+  const fileBuffer = Buffer.from(await file.arrayBuffer())
+
+  // upload the payment proof file
+  const proofMedia = await payload.create({
+    collection: 'payment-proofs',
+    data: {
+      alt: `Bukti Pembayaran untuk pesanan`,
+    },
+    file: {
+      data: fileBuffer,
+      mimetype: file.type,
+      name: file.name,
+      size: file.size,
+    },
+  })
+
+  const house = (cartItems[0].product as Product).house as House
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + (item.product as Product).price * item.quantity,
+    0,
+  )
+  const total = subtotal + (validatedOrderDetails.data.shippingOption?.cost ?? 0)
+
+  // create the order and link it to the uploaded proof
+  payload.create({
+    collection: 'orders',
+    data: {
+      house: house.id,
+      user: user?.id,
+      customerEmail: validatedOrderDetails.data.email,
+      items: cartItems.map((item) => ({
+        product: (item.product as Product).id,
+        productName: (item.product as Product).name,
+        price: (item.product as Product).price,
+        quantity: item.quantity,
+      })),
+      subtotal,
+      shippingDetails: {
+        cost: validatedOrderDetails.data.shippingOption?.cost ?? 0,
+        service: `${validatedOrderDetails.data.shippingOption?.name} ${validatedOrderDetails.data.shippingOption?.service}`,
+      },
+      total,
+      status: 'pending', // Status is now 'waiting-confirmation'
+      shippingAddress: {
+        recipientName: validatedOrderDetails.data.recipientName,
+        phoneNumber: validatedOrderDetails.data.phoneNumber,
+        fullAddress: validatedOrderDetails.data.fullAddress,
+        postalCode: validatedOrderDetails.data.location.zip_code,
+      },
+      proof_of_payment: proofMedia.id, // Link to the new media
+    },
+  })
+
+  revalidatePath('/orders')
+}
