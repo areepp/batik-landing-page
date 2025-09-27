@@ -9,6 +9,15 @@ export const Users: CollectionConfig = {
     hidden: ({ user }) => !user?.roles.includes('admin'),
   },
   access: {
+    admin: ({ req: { user } }) => {
+      if (!user) {
+        return false
+      }
+      if (user.roles?.includes('admin') || user.roles?.includes('store-admin')) {
+        return true
+      }
+      return false
+    },
     create: () => true,
     read: isAdminOrSelf,
     update: isAdminOrSelf,
