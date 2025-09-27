@@ -13,6 +13,7 @@ type Props = {
 export default function FaqBot({ houses, jenisProduks }: Props) {
   const [userName, setUserName] = useState('')
   const [isLoaded, setIsLoaded] = useState(false)
+  const [selectedJenisProdukId, setSelectedJenisProdukId] = useState(0)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -29,7 +30,6 @@ export default function FaqBot({ houses, jenisProduks }: Props) {
         const name = params.userInput.trim()
         if (name) {
           setUserName(name)
-          // Menggunakan nama tersebut di pesan berikutnya
           await params.injectMessage(`Hai, ${name}! Apakah Anda sedang mencari produk batik?`)
           return 'ask_interest_A2'
         } else {
@@ -60,16 +60,29 @@ export default function FaqBot({ houses, jenisProduks }: Props) {
           (jp) => jp.name.toLowerCase() === params.userInput.toLowerCase(),
         )
         if (selectedJenisProduk) {
+          setSelectedJenisProdukId(selectedJenisProduk.id)
           await params.injectMessage(
-            `Baik, saya akan menampilkan semua produk untuk kategori "${selectedJenisProduk.name}"...`,
+            `Baik, saya akan menunjukkan link untuk semua produk sesuai dengan kategori yang anda pilih "${selectedJenisProduk.name}"...`,
           )
-          await new Promise((resolve) => setTimeout(resolve, 1500))
-          window.location.href = `/produk?jenisProduk=${selectedJenisProduk.id}`
-          return 'anything_else'
+          return 'show_product_link'
         } else {
           await params.injectMessage(
             'Maaf, pilihan tidak valid. Silakan pilih kembali dari daftar.',
           )
+          return 'anything_else'
+        }
+      },
+    },
+    show_product_link: {
+      message: 'Klik tombol di bawah ini untuk melihat koleksi produk:',
+      options: ['Lihat Produk', 'Kembali ke Menu'],
+      path: async (params) => {
+        if (params.userInput === 'Lihat Produk') {
+          if (selectedJenisProdukId) {
+            window.location.href = `/produk?jenisProduk=${selectedJenisProdukId}`
+          }
+          return 'anything_else'
+        } else {
           return 'anything_else'
         }
       },
