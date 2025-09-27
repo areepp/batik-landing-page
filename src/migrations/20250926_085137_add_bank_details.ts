@@ -9,9 +9,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "orders" ALTER COLUMN "status" SET DEFAULT 'pending'::"public"."enum_orders_status";
   ALTER TABLE "orders" ALTER COLUMN "status" SET DATA TYPE "public"."enum_orders_status" USING "status"::"public"."enum_orders_status";
   ALTER TABLE "houses" ALTER COLUMN "origin_city" SET NOT NULL;
-  ALTER TABLE "houses" ADD COLUMN "bank_details_bank_name" varchar NOT NULL;
-  ALTER TABLE "houses" ADD COLUMN "bank_details_account_number" varchar NOT NULL;
-  ALTER TABLE "houses" ADD COLUMN "bank_details_account_holder_name" varchar NOT NULL;`)
+  ALTER TABLE "houses" ADD COLUMN "bank_details_bank_name" varchar SET DEFAULT 'BRI' NOT NULL;
+  ALTER TABLE "houses" ADD COLUMN "bank_details_account_number" varchar SET DEFAULT '00000000' NOT NULL;
+  ALTER TABLE "houses" ADD COLUMN "bank_details_account_holder_name" varchar SET DEFAULT 'kosong' NOT NULL;`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
