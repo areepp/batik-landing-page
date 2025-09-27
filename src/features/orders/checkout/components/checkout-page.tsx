@@ -26,13 +26,13 @@ import { InputSearchLocation } from '@/components/ui/input-search-location'
 import { getShippingCosts, ShippingOption } from '../api/get-shipping-costs'
 import { Location } from '../api/search-destination'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { useGetCart } from '../../cart/api/cart-queries'
 import LoadingSpinner from '@/components/loading-spinner'
 import { UploadProofDialog } from './upload-proof-dialog'
+import { useGetSelectedCartItems } from '../../cart/hooks/use-selected-cart-items'
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { data: cartData, isPending } = useGetCart()
+  const { selectedItems, groupedItems, subtotal, isPending } = useGetSelectedCartItems()
   const [openProofDialog, setOpenProofDialog] = useState(false)
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
   const [isFetchingShipping, setIsFetchingShipping] = useState(false)
@@ -48,12 +48,10 @@ export default function CheckoutPage() {
   })
 
   useEffect(() => {
-    console.log('cartData', cartData?.items)
-    if (!cartData?.items) {
-      console.log('here')
+    if (!selectedItems || selectedItems.length == 0) {
       router.push('/keranjang')
     }
-  }, [cartData])
+  }, [selectedItems])
 
   const handleLocationSelect = async (location: Location | null) => {
     if (!location) {
@@ -66,9 +64,9 @@ export default function CheckoutPage() {
     setIsFetchingShipping(true)
     form.setValue('shippingOption', null)
 
-    const house = (cartData?.items?.[0].product as Product).house as House
+    const house = (selectedItems?.[0].product as Product).house as House
     const totalWeight =
-      cartData?.items?.reduce(
+      selectedItems.reduce(
         (acc, item) => acc + ((item.product as Product).weight || 1) * item.quantity,
         0,
       ) ?? 0
@@ -92,17 +90,12 @@ export default function CheckoutPage() {
     setIsFetchingShipping(false)
   }
 
-  const subtotal =
-    cartData?.items?.reduce(
-      (acc, item) => acc + (item.product as Product).price * item.quantity,
-      0,
-    ) ?? 0
   const shippingCost = form.watch('shippingOption')?.cost ?? 0
 
   async function handleProceedCheckout() {
     const allFields = Object.keys(form.getValues())
 
-    const fieldsToValidate = allFields.filter((fieldName) => fieldName !== 'proof_of_file')
+    const fieldsToValidate = allFields.filter((fieldName) => fieldName !== 'proof_file')
 
     // @ts-expect-error: string[]
     const validated = await form.trigger(fieldsToValidate)
@@ -122,7 +115,7 @@ export default function CheckoutPage() {
     )
   }
 
-  if (!cartData?.items) {
+  if (!selectedItems || selectedItems.length === 0) {
     return
   }
 
@@ -228,7 +221,7 @@ export default function CheckoutPage() {
           <div className="space-y-6">
             <h2 className="text-xl font-semibold">Ringkasan Pesanan</h2>
             <div className="space-y-4">
-              {cartData?.items?.map((item) => {
+              {selectedItems?.map((item) => {
                 const product = item.product as Product
                 const image = product.images?.[0]?.image as Media
                 return (
@@ -243,7 +236,9 @@ export default function CheckoutPage() {
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">{product.name}</p>
-                      <p className="text-sm text-muted-foreground">Jumlah: {item.quantity}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {formatPrice(product.price)} x {item.quantity}
+                      </p>
                     </div>
                     <p className="text-sm">{formatPrice(product.price * item.quantity)}</p>
                   </div>

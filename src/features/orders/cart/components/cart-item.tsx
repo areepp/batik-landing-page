@@ -18,7 +18,7 @@ export const CartItem = ({ item }: { item: NonNullable<Cart['items']>[number] })
   const isMutating = isUpdatingQuantity || isRemovingItem
 
   return (
-    <div className="flex items-start justify-between gap-4 py-6 border-b">
+    <div className="flex items-start justify-between gap-4 py-6 border-0 last:border-b">
       <div className="flex items-center gap-4 flex-1">
         <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
           {image?.url ? (
