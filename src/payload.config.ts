@@ -3,6 +3,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { resendAdapter } from '@payloadcms/email-resend'
 import path from 'path'
 import { buildConfig, Plugin } from 'payload'
 import { fileURLToPath } from 'url'
@@ -82,4 +83,9 @@ export default buildConfig({
   }),
   sharp,
   plugins,
+  email: resendAdapter({
+    defaultFromAddress: 'noreply@notifications.sentrabatikpungsari.com',
+    defaultFromName: 'Website Sentra Batik Pungsari',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
 })

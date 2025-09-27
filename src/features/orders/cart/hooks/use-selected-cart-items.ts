@@ -3,7 +3,7 @@ import { atomWithStorage } from 'jotai/utils'
 import { useGetCart } from '../api/cart-queries'
 import { House, Product, Cart } from '@/payload-types'
 
-const selectedHouseAtom = atomWithStorage<number | null>('selectedHouse', 0)
+const selectedHouseAtom = atomWithStorage<number | null>('selectedHouse', null)
 export const useSelectedHouseAtom = () => useAtom(selectedHouseAtom)
 
 export const useGetSelectedCartItems = () => {
