@@ -7,20 +7,24 @@ import { Separator } from '@/components/ui/separator'
 import { CartItem } from './cart-item'
 import { useGetCart } from '../api/cart-queries'
 import { Product } from '@/payload-types'
-import { Loader2 } from 'lucide-react'
+import { Loader2, TriangleAlert } from 'lucide-react'
 import { useGetSelectedCartItems, useSelectedHouseAtom } from '../hooks/use-selected-cart-items'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { useGetUser } from '@/features/auth/user/api/get-user'
 
 export default function CartPage() {
+  const { data: userData } = useGetUser()
   const { data, isPending } = useGetCart()
   const [selectedHouseId, setSelectedHouseId] = useSelectedHouseAtom()
   const { groupedItems, subtotal, selectedItems } = useGetSelectedCartItems()
   const router = useRouter()
 
   useEffect(() => {
-    const firstHouseId = Object.keys(groupedItems ?? {})[0]
-    setSelectedHouseId(firstHouseId ? Number(firstHouseId) : null)
+    if (!selectedHouseId && groupedItems) {
+      const firstHouseId = Object.keys(groupedItems ?? {})[0]
+      setSelectedHouseId(firstHouseId ? Number(firstHouseId) : null)
+    }
   }, [groupedItems])
 
   if (isPending) {
@@ -47,9 +51,10 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto max-w-7xl p-8">
-      <h1 className="text-xl font-bold tracking-tight mb-8">Keranjang Belanja</h1>
-      <p className="text-muted-foreground mb-8">
-        Anda hanya dapat checkout dari satu toko dalam satu transaksi.
+      <h1 className="text-xl font-bold tracking-tight">Keranjang Belanja</h1>
+      <p className="flex items-center mb-8 mt-3">
+        <TriangleAlert className="w-4 h-4 mr-3" /> Anda hanya dapat checkout dari satu toko dalam
+        satu transaksi.
       </p>
       <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-start">
         <div className="lg:col-span-2 space-y-6">

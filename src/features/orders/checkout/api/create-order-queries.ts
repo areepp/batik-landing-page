@@ -4,7 +4,6 @@ import { createOrder } from './create-order-action'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useRemoveItem } from '../../cart/api/cart-queries'
-import { Product } from '@/payload-types'
 import { useSelectedHouseAtom } from '../../cart/hooks/use-selected-cart-items'
 
 export const useCreateOrder = ({
@@ -14,7 +13,6 @@ export const useCreateOrder = ({
 } = {}) => {
   const [, setSelectedHouseId] = useSelectedHouseAtom()
   const queryClient = useQueryClient()
-  const { mutateAsync: removeItemFromCart } = useRemoveItem()
   const router = useRouter()
 
   const { onSuccess, onError, ...restConfig } = mutationConfig || {}
@@ -22,9 +20,6 @@ export const useCreateOrder = ({
   return useMutation({
     mutationFn: createOrder,
     onSuccess: async (...args) => {
-      await Promise.all(
-        args[1].cartItems?.map((item) => removeItemFromCart((item.product as Product).id)) ?? [],
-      )
       toast.success('Pesanan Anda berhasil dibuat!')
       setSelectedHouseId(null)
       router.push('/keranjang')
