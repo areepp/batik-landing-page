@@ -3,9 +3,14 @@ import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: {
+    singular: 'Pengguna',
+    plural: 'Daftar Pengguna',
+  },
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['email', 'roles', 'createdAt'],
+    description: 'Koleksi untuk semua jenis pengguna, termasuk admin, admin toko, dan pelanggan.',
     hidden: ({ user }) => !user?.roles.includes('admin'),
   },
   access: {
@@ -38,11 +43,11 @@ export const Users: CollectionConfig = {
           value: 'admin',
         },
         {
-          label: 'Customer',
+          label: 'Pelanggan',
           value: 'customer',
         },
         {
-          label: 'Store Admin',
+          label: 'Admin Toko',
           value: 'store-admin',
         },
       ],
@@ -54,7 +59,7 @@ export const Users: CollectionConfig = {
     },
     {
       name: 'house',
-      label: 'Rumah / merk yang Dikelola',
+      label: 'Toko / Rumah Batik yang Dikelola',
       type: 'relationship',
       relationTo: 'houses',
       required: false,

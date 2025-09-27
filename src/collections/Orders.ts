@@ -4,9 +4,13 @@ import { v4 as uuidv4 } from 'uuid'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
+  labels: {
+    singular: 'Pesanan',
+    plural: 'Daftar Pesanan',
+  },
   admin: {
     useAsTitle: 'orderNumber',
-    description: 'A collection to store customer orders.',
+    description: 'Koleksi untuk menyimpan data pesanan pelanggan.',
   },
   access: {
     read: isHouseOwner || isCustomer,
