@@ -1,26 +1,5 @@
 import { isAdmin, isAdminOrSelf } from '@/lib/payload-access-control'
-import type { CollectionConfig, PayloadHandler } from 'payload'
-
-const meHandler: PayloadHandler = async (req) => {
-  if (!req.user) {
-    return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 })
-  }
-
-  const fullUser = await req.payload.findByID({
-    collection: 'users',
-    id: req.user.id,
-    depth: 1,
-  })
-
-  if (!fullUser) {
-    return new Response(JSON.stringify({ message: 'User not found' }), { status: 404 })
-  }
-
-  return new Response(JSON.stringify({ user: fullUser }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  })
-}
+import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -36,13 +15,6 @@ export const Users: CollectionConfig = {
     delete: isAdmin,
   },
   auth: true,
-  endpoints: [
-    {
-      path: '/me',
-      method: 'get',
-      handler: meHandler,
-    },
-  ],
   fields: [
     {
       name: 'roles',
@@ -52,9 +24,18 @@ export const Users: CollectionConfig = {
       defaultValue: ['customer'],
       required: true,
       options: [
-        { label: 'Admin', value: 'admin' },
-        { label: 'Customer', value: 'customer' },
-        { label: 'Store Admin', value: 'store-admin' },
+        {
+          label: 'Admin',
+          value: 'admin',
+        },
+        {
+          label: 'Customer',
+          value: 'customer',
+        },
+        {
+          label: 'Store Admin',
+          value: 'store-admin',
+        },
       ],
       access: {
         create: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
