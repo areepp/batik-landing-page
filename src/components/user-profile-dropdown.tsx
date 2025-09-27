@@ -49,6 +49,11 @@ export function UserProfileDropdown() {
           <DropdownMenuItem asChild>
             <Link href="/orders">Pesanan</Link>
           </DropdownMenuItem>
+          {user.roles?.includes('store-admin') && (
+            <DropdownMenuItem asChild>
+              <Link href="/chat-ai">Chat AI</Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => logout()}

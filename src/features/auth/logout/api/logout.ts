@@ -1,18 +1,14 @@
-'use client'
-
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 const logoutUser = async () => {
-  const response = await fetch('/api/users/logout', {
+  const res = await fetch('/api/users/logout', {
     method: 'POST',
+    credentials: 'include',
   })
 
-  if (!response.ok) {
-    throw new Error('Logout gagal.')
-  }
-
+  if (!res.ok) throw new Error('Logout gagal')
   return true
 }
 
@@ -24,11 +20,10 @@ export const useLogout = () => {
     mutationFn: logoutUser,
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ['auth-user'] })
-      toast.success('Logout Berhasil!')
-      router.refresh()
+      toast.success('Logout berhasil!')
     },
-    onError: (error) => {
-      toast.error(error.message)
+    onError: (err: any) => {
+      toast.error(err.message)
     },
   })
 }
