@@ -2,19 +2,30 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { formatPrice } from '@/lib/utils'
+import { cn, formatPrice } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { CartItem } from './cart-item'
 import { useGetCart } from '../api/cart-queries'
 import { Product } from '@/payload-types'
-import { Loader2 } from 'lucide-react'
+import { Loader2, TriangleAlert } from 'lucide-react'
+import { useGetSelectedCartItems, useSelectedHouseAtom } from '../hooks/use-selected-cart-items'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useGetUser } from '@/features/auth/user/api/get-user'
 
 export default function CartPage() {
+  const { data: userData } = useGetUser()
   const { data, isPending } = useGetCart()
+  const [selectedHouseId, setSelectedHouseId] = useSelectedHouseAtom()
+  const { groupedItems, subtotal, selectedItems } = useGetSelectedCartItems()
+  const router = useRouter()
 
-  const subtotal =
-    data?.items?.reduce((acc, item) => acc + (item.product as Product).price * item.quantity, 0) ??
-    0
+  useEffect(() => {
+    if (!selectedHouseId && groupedItems) {
+      const firstHouseId = Object.keys(groupedItems ?? {})[0]
+      setSelectedHouseId(firstHouseId ? Number(firstHouseId) : null)
+    }
+  }, [groupedItems])
 
   if (isPending) {
     return (
@@ -26,7 +37,7 @@ export default function CartPage() {
 
   if (!data?.items || data.items.length === 0) {
     return (
-      <main className="container flex flex-col items-center justify-center min-h-[60vh] text-center mx-auto max-w-7xl">
+      <div className="container flex flex-col items-center justify-center min-h-[60vh] text-center mx-auto max-w-7xl">
         <h1 className="text-3xl font-bold tracking-tight">Keranjang Anda Kosong</h1>
         <p className="mt-4 text-muted-foreground">
           Sepertinya Anda belum menambahkan produk apapun.
@@ -34,20 +45,44 @@ export default function CartPage() {
         <Button asChild className="mt-6">
           <Link href="/produk">Lanjutkan Belanja</Link>
         </Button>
-      </main>
+      </div>
     )
   }
 
   return (
     <div className="container mx-auto max-w-7xl p-8">
-      <h1 className="text-xl font-bold tracking-tight mb-8">Keranjang Belanja</h1>
+      <h1 className="text-xl font-bold tracking-tight">Keranjang Belanja</h1>
+      <p className="flex items-center mb-8 mt-3">
+        <TriangleAlert className="w-4 h-4 mr-3" /> Anda hanya dapat checkout dari satu toko dalam
+        satu transaksi.
+      </p>
       <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-start">
-        <div className="lg:col-span-2">
-          <div>
-            {data?.items?.map((item) => (
-              <CartItem key={(item.product as Product).id} item={item} />
-            ))}
-          </div>
+        <div className="lg:col-span-2 space-y-6">
+          {Object.values(groupedItems ?? []).map(({ house, items: houseItems }) => (
+            <div
+              key={house.id}
+              className={cn('px-3 pt-3', selectedHouseId === house.id && 'bg-muted')}
+            >
+              <div className="flex items-center gap-4">
+                <input
+                  type="radio"
+                  name="house-selection"
+                  id={`house-${house.id}`}
+                  checked={selectedHouseId === house.id}
+                  onChange={() => setSelectedHouseId(house.id)}
+                  className="h-5 w-5 accent-primary"
+                />
+                <label htmlFor={`house-${house.id}`} className="font-bold text-lg cursor-pointer">
+                  {house.name}
+                </label>
+              </div>
+              <div className="divide-y">
+                {houseItems?.map((item) => (
+                  <CartItem key={(item.product as Product).id} item={item} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="lg:col-span-1 lg:border-l lg:pl-8">
@@ -67,8 +102,13 @@ export default function CartPage() {
               <span>{formatPrice(subtotal)}</span>
             </div>
           </div>
-          <Button size="lg" className="w-full mt-6" asChild>
-            <Link href="/pembayaran">Lanjutkan ke Pembayaran</Link>
+          <Button
+            size="lg"
+            className="w-full mt-6"
+            disabled={!selectedItems || selectedItems.length === 0}
+            onClick={() => router.push('/pembayaran')}
+          >
+            Lanjutkan ke Pembayaran
           </Button>
         </div>
       </div>

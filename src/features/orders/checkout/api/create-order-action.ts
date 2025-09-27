@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 import { Cart, House, Product } from '@/payload-types'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { orderSchema } from './order.schema'
 import { getUserOnServer } from '@/features/auth/user/api/user-actions'
 import { getPayload } from 'payload'
@@ -81,5 +81,28 @@ export async function createOrder({
     },
   })
 
+  const { docs: carts } = await payload.find({
+    collection: 'carts',
+    where: { user: { equals: user?.id } },
+  })
+  const [userCart] = carts
+
+  if (userCart) {
+    const checkedOutProductIds = cartItems.map((item) => (item.product as Product).id)
+
+    const newCartItems = userCart.items?.filter(
+      (item) => !checkedOutProductIds.includes((item.product as Product).id),
+    )
+
+    await payload.update({
+      collection: 'carts',
+      id: userCart.id,
+      data: {
+        items: newCartItems,
+      },
+    })
+  }
+
   revalidatePath('/orders')
+  revalidateTag('cart')
 }

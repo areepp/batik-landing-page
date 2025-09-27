@@ -16,9 +16,9 @@ import { orderSchema } from '../api/order.schema'
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { useCreateOrder } from '../api/create-order-queries'
 import LoadingSpinner from '@/components/loading-spinner'
-import { useGetCart } from '../../cart/api/cart-queries'
 import { formatPrice } from '@/lib/utils'
 import { House, Product } from '@/payload-types'
+import { useGetSelectedCartItems } from '../../cart/hooks/use-selected-cart-items'
 
 type Props = {
   isOpen: boolean
@@ -27,22 +27,26 @@ type Props = {
 
 export function UploadProofDialog({ isOpen, onOpenChange }: Readonly<Props>) {
   const form = useFormContext<z.infer<typeof orderSchema>>()
-  const { data: cartData } = useGetCart()
+  const { selectedItems, subtotal } = useGetSelectedCartItems()
 
   const { mutate, isPending } = useCreateOrder()
 
   const onSubmit = (data: z.infer<typeof orderSchema>) => {
-    mutate({ cartItems: cartData?.items || [], shippingDetails: data })
+    mutate(
+      { cartItems: selectedItems || [], shippingDetails: data },
+      {
+        onSuccess: () => {
+          onOpenChange(false)
+        },
+      },
+    )
   }
 
-  const subtotal =
-    cartData?.items?.reduce(
-      (acc, item) => acc + (item.product as Product).price * item.quantity,
-      0,
-    ) ?? 0
+  if (!selectedItems || selectedItems.length === 0) return
+
   const total = subtotal + (form.getValues('shippingOption.cost') ?? 0)
 
-  const house = (cartData?.items?.[0].product as Product).house as House
+  const house = (selectedItems?.[0].product as Product).house as House
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
