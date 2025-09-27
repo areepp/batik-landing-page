@@ -2,6 +2,7 @@
 
 import { z } from 'zod'
 import { Cart, House, Product } from '@/payload-types'
+import { newOrderEmail } from '../components/order-email-template'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { orderSchema } from './order.schema'
 import { getUserOnServer } from '@/features/auth/user/api/user-actions'
@@ -52,7 +53,7 @@ export async function createOrder({
   const total = subtotal + (validatedOrderDetails.data.shippingOption?.cost ?? 0)
 
   // create the order and link it to the uploaded proof
-  payload.create({
+  const order = await payload.create({
     collection: 'orders',
     data: {
       house: house.id,
@@ -102,6 +103,13 @@ export async function createOrder({
       },
     })
   }
+
+  const orderHtml = await newOrderEmail({ house, order })
+  await payload.sendEmail({
+    to: 'mferdinr@gmail.com',
+    subject: `Pesanan baru diterima: ${order.id}`,
+    html: orderHtml,
+  })
 
   revalidatePath('/orders')
   revalidateTag('cart')

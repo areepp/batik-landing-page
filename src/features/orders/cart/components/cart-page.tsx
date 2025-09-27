@@ -14,7 +14,6 @@ import { useEffect } from 'react'
 import { useGetUser } from '@/features/auth/user/api/get-user'
 
 export default function CartPage() {
-  const { data: userData } = useGetUser()
   const { data, isPending } = useGetCart()
   const [selectedHouseId, setSelectedHouseId] = useSelectedHouseAtom()
   const { groupedItems, subtotal, selectedItems } = useGetSelectedCartItems()
