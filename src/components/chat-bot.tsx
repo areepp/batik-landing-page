@@ -1,15 +1,16 @@
 'use client'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Flow } from 'react-chatbotify'
-import { House } from '@/payload-types'
+import { House, JenisProduk } from '@/payload-types'
 
 const ChatBot = lazy(() => import('react-chatbotify'))
 
 type Props = {
   houses: House[]
+  jenisProduks: JenisProduk[]
 }
 
-export default function FaqBot({ houses }: Props) {
+export default function FaqBot({ houses, jenisProduks }: Props) {
   const [userName, setUserName] = useState('')
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -18,6 +19,7 @@ export default function FaqBot({ houses }: Props) {
   }, [])
 
   const mainOptions = ['Produk Batik', 'Jenis Batik', 'Usaha Batik Pungsari']
+  const productTypeOptions = jenisProduks.map((jp) => jp.name)
 
   const flow: Flow = {
     start: {
@@ -47,8 +49,30 @@ export default function FaqBot({ houses }: Props) {
     },
     ask_product_type_A3: {
       message: 'Baik, Anda tertarik pada produk batik yang seperti apa?',
-      options: ['Kemeja', 'Dress', 'Kain'],
+      options: productTypeOptions,
       path: 'process_product_type_B',
+    },
+    process_product_type_B: {
+      transition: { duration: 0 },
+      chatDisabled: true,
+      path: async (params) => {
+        const selectedJenisProduk = jenisProduks.find(
+          (jp) => jp.name.toLowerCase() === params.userInput.toLowerCase(),
+        )
+        if (selectedJenisProduk) {
+          await params.injectMessage(
+            `Baik, saya akan menampilkan semua produk untuk kategori "${selectedJenisProduk.name}"...`,
+          )
+          await new Promise((resolve) => setTimeout(resolve, 1500))
+          window.location.href = `/produk?jenisProduk=${selectedJenisProduk.id}`
+          return 'anything_else'
+        } else {
+          await params.injectMessage(
+            'Maaf, pilihan tidak valid. Silakan pilih kembali dari daftar.',
+          )
+          return 'anything_else'
+        }
+      },
     },
     not_interested_A4: {
       message: `Sayang sekali Anda tidak tertarik pada produk batik. Batik merupakan karya warisan budaya yang sudah mendunia yang perlu dilestarikan. Batik Pungsari Sragen adalah karya seni warisan leluhur yang lahir dari tangan-tangan terampil masyarakat Desa Pungsari, Plupuh, Sragen. Batik ini tidak hanya sekadar kain, melainkan sebuah narasi visual yang kaya akan makna filosofis dan kearifan lokal. Setiap motif yang terukir adalah cerminan dari alam, budaya, dan nilai-nilai luhur yang dijunjung tinggi oleh masyarakat setempat.. Apakah Anda tertarik untuk mengetahui lebih lanjut tentang batik Pungsari?`,
@@ -65,39 +89,7 @@ export default function FaqBot({ houses }: Props) {
       options: mainOptions,
       path: 'process_main_options',
     },
-    process_product_type_B: {
-      transition: { duration: 0 },
-      chatDisabled: true,
-      path: async (params) => {
-        switch (params.userInput) {
-          case 'Kemeja':
-            await params.injectMessage(
-              'Kemeja batik Pungsari merupakan kemeja yang memiliki ciri khas pada motif dan pewarnaan. Kemeja memiliki kesan formal yang profesional dan menarik. Silahkan kunjungi link berikut untuk melihat katalog kemeja batik pungsari.',
-            )
-            // Di sini Anda bisa menambahkan link
-            // window.open('/products?category=kemeja', '_blank');
-            break
-          case 'Dress':
-            await params.injectMessage(
-              'Dress batik desa Pungsari terdiri dari berbagai model yang indah dan cocok digunakan untuk beragam acara seperti kasual maupun formal. Silahkan kunjungi link berikut untuk melihat katalog dress batik pungsari',
-            )
-            break
-          case 'Kain':
-            await params.injectMessage(
-              `Batik Pungsari dikenal dengan motif klasik dan kontemporer yang harmonis. Motif klasik seperti Batik Sidomukti, Parang, dan Kawung diolah dengan sentuhan modern, menghasilkan karya yang relevan tanpa kehilangan esensinya. Salah satu keunikan utamanya adalah penggunaan pewarna alami yang diekstrak dari tumbuh-tumbuhan seperti kulit kayu mahoni, daun indigo, dan tegeran. Proses pewarnaan alami ini tidak hanya ramah lingkungan, tetapi juga menghasilkan warna-warna yang lembut, otentik, dan tahan lama.
 
-Berikut beberapa jenis kain batik yang terdapat di desa Pungsari:
-1. Batik cap  
-2. Batik tulis
-
-Mana yang Anda minati?`,
-            )
-            return 'ask_kain_type'
-        }
-        await new Promise((resolve) => setTimeout(resolve, 1500))
-        return 'anything_else'
-      },
-    },
     ask_kain_type: {
       message:
         'Berikut beberapa jenis kain batik yang terdapat di desa Pungsari. Mana yang Anda minati?',
@@ -158,6 +150,7 @@ Mana yang Anda minati?`,
           await params.injectMessage(
             `Baik, saya akan alihkan Anda ke halaman ${selectedHouse.name}...`,
           )
+          await new Promise((resolve) => setTimeout(resolve, 1500))
           window.location.href = `/toko/${selectedHouse.slug}`
           return 'anything_else'
         } else {
