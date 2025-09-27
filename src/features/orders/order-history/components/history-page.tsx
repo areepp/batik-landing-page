@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { Order } from '@/payload-types'
-import { HistoryTable } from '@/features/history/components/history-table'
+import { HistoryTable } from '@/features/orders/order-history/components/history-table'
 import { getUserOnServer } from '@/features/auth/user/api/user-actions'
 
 export default async function Historypage() {

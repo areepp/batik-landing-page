@@ -1,3 +1,3 @@
-import OrderDetailPage from '@/features/history/components/detail-pesanan'
+import OrderDetailPage from '@/features/orders/order-history/components/detail-pesanan'
 
 export default OrderDetailPage
