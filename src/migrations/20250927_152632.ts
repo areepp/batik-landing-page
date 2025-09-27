@@ -4,8 +4,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    ALTER TABLE "houses" ALTER COLUMN "bank_details_bank_name" SET DEFAULT 'BRI';
   ALTER TABLE "houses" ALTER COLUMN "bank_details_account_number" SET DEFAULT '00000000';
-  ALTER TABLE "houses" ALTER COLUMN "bank_details_account_holder_name" SET DEFAULT 'kosong';
-  ALTER TABLE "orders" ADD COLUMN "tracking_number" varchar;`)
+  ALTER TABLE "houses" ALTER COLUMN "bank_details_account_holder_name" SET DEFAULT 'kosong';`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
