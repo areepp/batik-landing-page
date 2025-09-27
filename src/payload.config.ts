@@ -18,6 +18,7 @@ import { JenisBatik } from './collections/JenisBatik'
 import { JenisKain } from './collections/JenisKain'
 import { HomePage } from './collections/HomePage'
 import { PaymentProofs } from './collections/PaymentProof'
+import { JenisProduk } from './collections/JenisProduk'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -65,6 +66,7 @@ export default buildConfig({
     Orders,
     JenisBatik,
     JenisKain,
+    JenisProduk,
     PaymentProofs,
   ],
   globals: [HomePage],

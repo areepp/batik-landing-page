@@ -110,6 +110,17 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'jenisProduk',
+      label: 'Jenis Produk',
+      type: 'relationship',
+      relationTo: 'jenis-produk',
+      hasMany: false,
+      required: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'marketplaceLinks',
       label: 'Link Marketplace',
       type: 'group',

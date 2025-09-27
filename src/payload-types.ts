@@ -75,6 +75,7 @@ export interface Config {
     orders: Order;
     'jenis-batik': JenisBatik;
     'jenis-kain': JenisKain;
+    'jenis-produk': JenisProduk;
     'payment-proofs': PaymentProof;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     orders: OrdersSelect<false> | OrdersSelect<true>;
     'jenis-batik': JenisBatikSelect<false> | JenisBatikSelect<true>;
     'jenis-kain': JenisKainSelect<false> | JenisKainSelect<true>;
+    'jenis-produk': JenisProdukSelect<false> | JenisProdukSelect<true>;
     'payment-proofs': PaymentProofsSelect<false> | PaymentProofsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -265,6 +267,7 @@ export interface Product {
     | null;
   jenisBatik: (number | JenisBatik)[];
   jenisKain: (number | JenisKain)[];
+  jenisProduk?: (number | null) | JenisProduk;
   /**
    * (Opsional) Tambahkan link jika produk ini dijual di marketplace
    */
@@ -281,6 +284,18 @@ export interface Product {
     image: number | Media;
     id?: string | null;
   }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Jenis produk batik (misal: Kain, Kemeja, Celana, Tas, dsb).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-produk".
+ */
+export interface JenisProduk {
+  id: number;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -397,6 +412,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'jenis-kain';
         value: number | JenisKain;
+      } | null)
+    | ({
+        relationTo: 'jenis-produk';
+        value: number | JenisProduk;
       } | null)
     | ({
         relationTo: 'payment-proofs';
@@ -539,6 +558,7 @@ export interface ProductsSelect<T extends boolean = true> {
       };
   jenisBatik?: T;
   jenisKain?: T;
+  jenisProduk?: T;
   marketplaceLinks?:
     | T
     | {
@@ -626,6 +646,15 @@ export interface JenisBatikSelect<T extends boolean = true> {
  * via the `definition` "jenis-kain_select".
  */
 export interface JenisKainSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-produk_select".
+ */
+export interface JenisProdukSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
