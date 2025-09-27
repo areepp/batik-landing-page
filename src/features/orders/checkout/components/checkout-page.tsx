@@ -17,34 +17,25 @@ import {
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useSnap } from '@/hooks/use-midtrans-snap'
-import { useCartStore } from '@/store/cart-store'
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
-import { House, Media } from '@/payload-types'
+import { House, Media, Product } from '@/payload-types'
 import { formatPrice } from '@/lib/utils'
 import { orderSchema } from '../api/order.schema'
-import { createMidtransTransaction } from '../api/create-midtrans-transaction'
 import { InputSearchLocation } from '@/components/ui/input-search-location'
 import { getShippingCosts, ShippingOption } from '../api/get-shipping-costs'
 import { Location } from '../api/search-destination'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { useGetCart } from '../../cart/api/cart-queries'
+import LoadingSpinner from '@/components/loading-spinner'
+import { UploadProofDialog } from './upload-proof-dialog'
 
 export default function CheckoutPage() {
-  const { items, clearCart } = useCartStore()
-  const { snapEmbed } = useSnap()
   const router = useRouter()
-  const [isPending, setIsPending] = useState(false)
-  const [transactionToken, setTransactionToken] = useState<string | null>(null)
-
+  const { data: cartData, isPending } = useGetCart()
+  const [openProofDialog, setOpenProofDialog] = useState(false)
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
   const [isFetchingShipping, setIsFetchingShipping] = useState(false)
-
-  useEffect(() => {
-    if (items.length === 0) {
-      router.push('/cart')
-    }
-  }, [items, router])
 
   const form = useForm<z.infer<typeof orderSchema>>({
     resolver: zodResolver(orderSchema),
@@ -55,6 +46,14 @@ export default function CheckoutPage() {
       email: '',
     },
   })
+
+  useEffect(() => {
+    console.log('cartData', cartData?.items)
+    if (!cartData?.items) {
+      console.log('here')
+      router.push('/keranjang')
+    }
+  }, [cartData])
 
   const handleLocationSelect = async (location: Location | null) => {
     if (!location) {
@@ -67,11 +66,12 @@ export default function CheckoutPage() {
     setIsFetchingShipping(true)
     form.setValue('shippingOption', null)
 
-    const house = items[0].product.house as House
-    const totalWeight = items.reduce(
-      (acc, item) => acc + (item.product.weight || 1) * item.quantity,
-      0,
-    )
+    const house = (cartData?.items?.[0].product as Product).house as House
+    const totalWeight =
+      cartData?.items?.reduce(
+        (acc, item) => acc + ((item.product as Product).weight || 1) * item.quantity,
+        0,
+      ) ?? 0
 
     const result = await getShippingCosts({
       origin: Number(house.originCity),
@@ -92,77 +92,45 @@ export default function CheckoutPage() {
     setIsFetchingShipping(false)
   }
 
-  const handlePaymentSuccess = (result: any) => {
-    toast.success('Pembayaran berhasil!')
-    clearCart()
-    // router.push(`/order-confirmation?order_id=${result.order_id}`)
-  }
-
-  const handlePaymentPending = (result: any) => {
-    toast.info('Menunggu pembayaran Anda.')
-    setIsPending(false)
-  }
-
-  const handlePaymentError = (result: any) => {
-    toast.error('Pembayaran gagal.')
-    setIsPending(false)
-  }
-
-  const handleModalClose = () => {
-    toast.warning('Anda menutup pop-up pembayaran.')
-    setIsPending(false)
-  }
-
-  const onSubmit = async (values: z.infer<typeof orderSchema>) => {
-    setIsPending(true)
-
-    // If a token already exists, the user likely closed the modal. Re-open it.
-    if (transactionToken) {
-      snapEmbed(transactionToken, {
-        onSuccess: handlePaymentSuccess,
-        onPending: handlePaymentPending,
-        onError: handlePaymentError,
-        onClose: handleModalClose,
-      })
-      return
-    }
-
-    try {
-      const result = await createMidtransTransaction(items, values)
-
-      if (result.error) {
-        toast.error('Gagal memproses checkout.', { description: result.error })
-        setIsPending(false)
-        return
-      }
-
-      if (result.token) {
-        setTransactionToken(result.token) // Store the token for retries
-        snapEmbed(result.token, {
-          onSuccess: handlePaymentSuccess,
-          onPending: handlePaymentPending,
-          onError: handlePaymentError,
-          onClose: handleModalClose,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      toast.error('Terjadi kesalahan saat memproses checkout.')
-      setIsPending(false)
-    }
-  }
-
-  const subtotal = items.reduce((acc, item) => acc + item.product.price * item.quantity, 0)
+  const subtotal =
+    cartData?.items?.reduce(
+      (acc, item) => acc + (item.product as Product).price * item.quantity,
+      0,
+    ) ?? 0
   const shippingCost = form.watch('shippingOption')?.cost ?? 0
 
+  async function handleProceedCheckout() {
+    const allFields = Object.keys(form.getValues())
+
+    const fieldsToValidate = allFields.filter((fieldName) => fieldName !== 'proof_of_file')
+
+    // @ts-expect-error: string[]
+    const validated = await form.trigger(fieldsToValidate)
+
+    if (validated) {
+      setOpenProofDialog(true)
+    } else {
+      toast.error('Pastikan form terlah terisi semua.')
+    }
+  }
+
+  if (isPending) {
+    return (
+      <div className="container mx-auto flex items-center justify-center w-full max-w-7xl">
+        <LoadingSpinner />
+      </div>
+    )
+  }
+
+  if (!cartData?.items) {
+    return
+  }
+
   return (
-    <main className="mt-12 container mx-auto">
+    <div className="mt-12 container mx-auto max-w-7xl">
       <h1 className="text-3xl font-bold tracking-tight mb-8">Checkout</h1>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start"
-        >
+        <form className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="space-y-6">
             <h2 className="text-xl font-semibold">Alamat Pengiriman</h2>
             <div className="grid gap-4">
@@ -260,23 +228,24 @@ export default function CheckoutPage() {
           <div className="space-y-6">
             <h2 className="text-xl font-semibold">Ringkasan Pesanan</h2>
             <div className="space-y-4">
-              {items.map((item) => {
-                const image = item.product.images?.[0]?.image as Media
+              {cartData?.items?.map((item) => {
+                const product = item.product as Product
+                const image = product.images?.[0]?.image as Media
                 return (
-                  <div key={item.product.id} className="flex items-center gap-4">
+                  <div key={product.id} className="flex items-center gap-4">
                     <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border">
                       <Image
                         src={image?.url || ''}
-                        alt={image?.alt || item.product.name}
+                        alt={image?.alt || product.name}
                         fill
                         className="object-cover"
                       />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium">{item.product.name}</p>
+                      <p className="font-medium">{product.name}</p>
                       <p className="text-sm text-muted-foreground">Jumlah: {item.quantity}</p>
                     </div>
-                    <p className="text-sm">{formatPrice(item.product.price * item.quantity)}</p>
+                    <p className="text-sm">{formatPrice(product.price * item.quantity)}</p>
                   </div>
                 )
               })}
@@ -298,16 +267,13 @@ export default function CheckoutPage() {
                 <span>{formatPrice(subtotal + shippingCost)}</span>
               </div>
             </div>
-            <Button type="submit" size="lg" className="w-full mt-6" disabled={isPending}>
-              {isPending
-                ? transactionToken
-                  ? 'Membuka Pembayaran...'
-                  : 'Memproses...'
-                : 'Bayar Sekarang'}
+            <Button onClick={handleProceedCheckout} size="lg" className="w-full mt-6">
+              Bayar Sekarang
             </Button>
           </div>
         </form>
+        <UploadProofDialog isOpen={openProofDialog} onOpenChange={setOpenProofDialog} />
       </Form>
-    </main>
+    </div>
   )
 }

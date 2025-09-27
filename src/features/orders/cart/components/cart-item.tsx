@@ -2,42 +2,43 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Media } from '@/payload-types'
+import { Cart, Media, Product } from '@/payload-types'
 import { Minus, Plus, X } from 'lucide-react'
-import { useCartStore, type CartItem as TCartItem } from '@/store/cart-store'
 import { formatPrice } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { useRemoveItem, useUpdateItemQuantity } from '../api/cart-queries'
 
-export const CartItem = ({ item }: { item: TCartItem }) => {
-  const { removeItem, increaseQuantity, decreaseQuantity } = useCartStore((state) => state)
-  const image = item.product.images?.[0]?.image as Media
+export const CartItem = ({ item }: { item: NonNullable<Cart['items']>[number] }) => {
+  const { mutate: updateQuantity, isPending: isUpdatingQuantity } = useUpdateItemQuantity()
+  const { mutate: removeItem, isPending: isRemovingItem } = useRemoveItem()
+  const product = item.product as Product
+
+  const image = product.images?.[0]?.image as Media
+
+  const isMutating = isUpdatingQuantity || isRemovingItem
 
   return (
     <div className="flex items-start justify-between gap-4 py-6 border-b">
       <div className="flex items-center gap-4 flex-1">
         <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md">
           {image?.url ? (
-            <Image
-              src={image.url}
-              alt={image.alt || item.product.name}
-              fill
-              className="object-cover"
-            />
+            <Image src={image.url} alt={image.alt || product.name} fill className="object-cover" />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-secondary" />
           )}
         </div>
         <div className="flex flex-col gap-1">
-          <Link href={`/produk/${item.product.slug}`} className="font-semibold hover:underline">
-            {item.product.name}
+          <Link href={`/produk/${product.slug}`} className="font-semibold hover:underline">
+            {product.name}
           </Link>
-          <p className="text-sm text-muted-foreground">{formatPrice(item.product.price)}</p>
+          <p className="text-sm text-muted-foreground">{formatPrice(product.price)}</p>
           <div className="flex items-center border rounded-md w-fit mt-2">
             <Button
               variant="ghost"
               size="icon"
               className="h-6 w-6"
-              onClick={() => decreaseQuantity(item.product.id)}
+              onClick={() => updateQuantity({ productId: product.id, quantity: item.quantity - 1 })}
+              disabled={isMutating}
             >
               <Minus className="h-4 w-4" />
             </Button>
@@ -46,7 +47,8 @@ export const CartItem = ({ item }: { item: TCartItem }) => {
               variant="ghost"
               size="icon"
               className="h-6 w-6"
-              onClick={() => increaseQuantity(item.product.id)}
+              onClick={() => updateQuantity({ productId: product.id, quantity: item.quantity + 1 })}
+              disabled={isMutating}
             >
               <Plus className="h-4 w-4" />
             </Button>
@@ -55,12 +57,12 @@ export const CartItem = ({ item }: { item: TCartItem }) => {
       </div>
 
       <div className="flex flex-col items-end justify-between self-stretch">
-        <p className="font-semibold">{formatPrice(item.product.price * item.quantity)}</p>
+        <p className="font-semibold">{formatPrice(product.price * item.quantity)}</p>
         <Button
           variant="ghost"
           size="icon"
           className="h-8 w-8 text-muted-foreground"
-          onClick={() => removeItem(item.product.id)}
+          onClick={() => removeItem(product.id)}
         >
           <X className="h-4 w-4" />
           <span className="sr-only">Remove item</span>

@@ -101,16 +101,43 @@ export const Houses: CollectionConfig = {
       ],
     },
     {
+      name: 'bankDetails',
+      label: 'Detail Rekening Bank',
+      type: 'group',
+      admin: {
+        description: 'Rekening ini akan ditampilkan kepada pelanggan untuk melakukan pembayaran.',
+      },
+      fields: [
+        {
+          name: 'bankName',
+          label: 'Nama Bank (e.g., BCA, Mandiri)',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'accountNumber',
+          label: 'Nomor Rekening',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'accountHolderName',
+          label: 'Nama Pemilik Rekening',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'originCity',
       label: 'ID Kota Asal Pengiriman',
       type: 'text',
-      required: false,
+      required: true,
       defaultValue: '62640',
       admin: {
         readOnly: true,
-        hidden: true,
         description:
-          'Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah asal.',
+          'Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah jika produk tidak dikirim dari desa pungsari.',
       },
     },
   ],

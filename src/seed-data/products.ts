@@ -1,10 +1,9 @@
-import { House, JenisBatik, JenisKain, Media } from '../payload-types'
-
 // Tipe untuk mempermudah passing data antar fungsi
 type Ids = {
   houses: Record<string, number>
   batik: Record<string, number>
   kain: Record<string, number>
+  produk: Record<string, number>
   media: number[]
 }
 
@@ -28,6 +27,7 @@ export const getProductsData = (ids: Ids) => [
     ],
     jenisBatik: [ids.batik['Batik Tulis']],
     jenisKain: [ids.kain['Sutra Tulis']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -39,6 +39,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Bahan: Katun Primisima' }, { detailItem: 'Ukuran: 2.5m x 1.15m' }],
     jenisBatik: [ids.batik['Batik Tulis']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -51,6 +52,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Bahan: Katun Halus' }, { detailItem: 'Jahitan: Rapi' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -62,6 +64,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Model: Lengan Panjang' }, { detailItem: 'Warna: Biru Dongker' }],
     jenisBatik: [ids.batik['Batik Cap']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -74,6 +77,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Bahan: Katun' }, { detailItem: 'Pewarnaan: Sintetis' }],
     jenisBatik: [ids.batik['Batik Cap']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -84,6 +88,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Ukuran: M, L, XL' }, { detailItem: 'Kerah: Point Collar' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -97,6 +102,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Panjang: Selutut' }, { detailItem: 'Resleting: Belakang' }],
     jenisBatik: [ids.batik['Batik Tulis']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -107,6 +113,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Saku: Satu di dada kiri' }, { detailItem: 'Bahan: Katun Premium' }],
     jenisBatik: [ids.batik['Batik Cap']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -120,6 +127,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Model: Kimono' }, { detailItem: 'Ukuran: All Size' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Dolby']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -143,6 +151,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Ukuran: 2.4m x 1.15m' }, { detailItem: 'Rekomendasi: Seragam' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -153,6 +162,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Panjang: Menutupi pinggul' }, { detailItem: 'Warna: Marun' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Dolby']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -166,6 +176,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Pewarna: Alami' }, { detailItem: 'Motif: Sida Luhur' }],
     jenisBatik: [ids.batik['Batik Tulis']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -176,6 +187,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Model: Slim Fit' }, { detailItem: 'Warna: Hitam Putih' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -188,6 +200,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Bahan: Katun Rayon' }, { detailItem: 'Ukuran: M - XXL' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -199,6 +212,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Acara: Kondangan, Lamaran' }, { detailItem: 'Harga untuk sepasang' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -211,6 +225,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Lapisan: Furing' }, { detailItem: 'Kancing: Tersembunyi' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Dolby']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -221,6 +236,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Panjang: 100cm' }, { detailItem: 'Bonus: Ring gesper' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -233,6 +249,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Bahan: Katun' }, { detailItem: 'Tidak mudah luntur' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -243,6 +260,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Model: Reguler' }, { detailItem: 'Warna: Coklat' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -256,6 +274,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Ukuran: All Size fit to L' }, { detailItem: 'Tanpa Kancing' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Dolby']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -266,6 +285,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Ukuran: Jumbo' }, { detailItem: 'Kancing: Depan (Busui Friendly)' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -278,6 +298,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Pewarna: Sintetis' }, { detailItem: 'Ukuran: 2.5m x 1.15m' }],
     jenisBatik: [ids.batik['Batik Tulis']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -288,6 +309,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Lapisan: Furing Tricot' }, { detailItem: 'Warna: Hijau Botol' }],
     jenisBatik: [ids.batik['Batik Cap']],
     jenisKain: [ids.kain['Dolby']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -303,6 +325,7 @@ export const getProductsData = (ids: Ids) => [
     ],
     jenisBatik: [ids.batik['Batik Tulis']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -313,6 +336,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Lebar Kain: 115cm' }, { detailItem: 'Harga per 2.4 meter' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Dolby']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 
@@ -325,6 +349,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Bahan: Sutra Sintetis' }, { detailItem: 'Sensasi: Dingin dan jatuh' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Sutra']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
   {
@@ -335,6 +360,7 @@ export const getProductsData = (ids: Ids) => [
     details: [{ detailItem: 'Model: Peplum' }, { detailItem: 'Ukuran: S - XL' }],
     jenisBatik: [ids.batik['Batik Printing']],
     jenisKain: [ids.kain['Katun']],
+    jenisProduk: ids.produk['Kain'],
     images: getRandomItems(ids.media, 3).map((id) => ({ image: id })),
   },
 ]

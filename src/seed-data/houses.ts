@@ -13,6 +13,11 @@ export const getHousesData = (ids: CategoryIds) => [
     socialMedia: {
       instagramUrl: 'https://www.instagram.com/adhiba_batik_tulis/',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Cahaya Sari',
@@ -29,6 +34,11 @@ export const getHousesData = (ids: CategoryIds) => [
       instagramUrl: 'https://www.instagram.com/batikcahayasari/',
       tiktokUrl: 'https://www.tiktok.com/@batikcahayasari?lang=id-ID',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Tresno Kuncoro',
@@ -39,6 +49,11 @@ export const getHousesData = (ids: CategoryIds) => [
     socialMedia: {
       instagramUrl: 'https://www.instagram.com/batik_tresnoasih_solo/',
       tiktokUrl: 'https://www.tiktok.com/@triasihsolo?lang=id-ID',
+    },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
     },
   },
   {
@@ -58,6 +73,11 @@ export const getHousesData = (ids: CategoryIds) => [
     marketplaces: {
       shopeeUrl: 'https://shopee.co.id/batiknurhasida',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Dewi Andini',
@@ -73,6 +93,11 @@ export const getHousesData = (ids: CategoryIds) => [
     marketplaces: {
       shopeeUrl: 'https://shopee.co.id/biancabatik',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Batarakresna',
@@ -87,6 +112,11 @@ export const getHousesData = (ids: CategoryIds) => [
     marketplaces: {
       tokopediaUrl: 'https://www.tokopedia.com/batikbatarakresnapusat',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Lestari',
@@ -96,6 +126,11 @@ export const getHousesData = (ids: CategoryIds) => [
     availableFabricTypes: [ids.kain['Katun']],
     socialMedia: {
       instagramUrl: 'https://www.instagram.com/batiklestari4595/',
+    },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
     },
   },
   {
@@ -112,6 +147,11 @@ export const getHousesData = (ids: CategoryIds) => [
     marketplaces: {
       shopeeUrl: 'https://shopee.co.id/bellabatikid',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Widowati',
@@ -124,6 +164,11 @@ export const getHousesData = (ids: CategoryIds) => [
       instagramUrl: 'https://www.instagram.com/putrawidowati/',
       tiktokUrl: 'https://www.tiktok.com/@putrawidowati',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Vivi',
@@ -133,6 +178,11 @@ export const getHousesData = (ids: CategoryIds) => [
     availableFabricTypes: [ids.kain['Katun']],
     socialMedia: {
       instagramUrl: 'https://www.instagram.com/batik1854/',
+    },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
     },
   },
   {
@@ -148,6 +198,11 @@ export const getHousesData = (ids: CategoryIds) => [
     },
     marketplaces: {
       shopeeUrl: 'https://shopee.co.id/batikwahs',
+    },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
     },
   },
   {
@@ -169,6 +224,11 @@ export const getHousesData = (ids: CategoryIds) => [
       shopeeUrl: 'https://shopee.co.id/batikmurniasih',
       tokopediaUrl: 'https://www.tokopedia.com/batikmurniasih',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Asha',
@@ -184,6 +244,11 @@ export const getHousesData = (ids: CategoryIds) => [
     marketplaces: {
       shopeeUrl: 'https://shopee.co.id/batik_asha.sragen',
     },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
+    },
   },
   {
     name: 'Batik Miyayi',
@@ -198,6 +263,11 @@ export const getHousesData = (ids: CategoryIds) => [
     },
     marketplaces: {
       shopeeUrl: 'https://shopee.co.id/miyayibatik',
+    },
+    bankDetails: {
+      bankName: 'BRI',
+      accountNumber: '00000000',
+      accountHolderName: 'kosong',
     },
   },
 ]

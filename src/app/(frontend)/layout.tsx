@@ -42,7 +42,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body className={`${cormorantSerif.variable} ${prataSerif.variable} antialiased`}>
         <Providers>
           <Navbar />
-          <main className="py-16">{children}</main>
+          <main className="py-16 min-h-[calc(100vh-8rem)]">{children}</main>
           <Footer />
           <FaqBot houses={houses} />
         </Providers>
