@@ -12,9 +12,9 @@ import { cn } from '@/lib/utils'
 import { getUserOnServer } from '@/features/auth/user/api/user-actions'
 
 type OrderDetailPageProps = {
-  params: {
+  params: Promise<{
     orderId: string
-  }
+  }>
 }
 
 const statusStyles: { [key: string]: string } = {
@@ -32,8 +32,8 @@ const statusLabels: { [key: string]: string } = {
   cancelled: 'Dibatalkan',
 }
 
-export default async function OrderDetailPage({ params }: OrderDetailPageProps) {
-  const { orderId } = params
+export default async function OrderDetailPage({ params }: Readonly<OrderDetailPageProps>) {
+  const { orderId } = await params
   const payload = await getPayload({ config })
   const user = await getUserOnServer()
 
