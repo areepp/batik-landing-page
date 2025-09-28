@@ -1,4 +1,5 @@
 import { generateUniqueSlug } from '@/lib/utils'
+import { revalidatePath } from 'next/cache'
 import { CollectionConfig } from 'payload'
 
 export const Houses: CollectionConfig = {
@@ -14,6 +15,14 @@ export const Houses: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        revalidatePath('/toko')
+        revalidatePath(`/toko/${doc.slug}`)
+      },
+    ],
   },
   fields: [
     {
