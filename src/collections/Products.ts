@@ -5,7 +5,7 @@ import type { CollectionConfig } from 'payload'
 export const Products: CollectionConfig = {
   slug: 'products',
   labels: {
-    singular: 'Produks',
+    singular: 'Produk',
     plural: 'Daftar Produk',
   },
   admin: {
