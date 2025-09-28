@@ -28,18 +28,15 @@ export function UserProfileDropdown({ isTransparent }: Readonly<{ isTransparent?
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className={cn('relative flex items-center gap-2')}>
-            <UserCircle
-              className={cn(isTransparent && 'hover:text-foreground text-white', 'h-5 w-5')}
-            />
-            <span
-              className={cn(
-                isTransparent && 'hover:text-foreground text-white',
-                'hidden sm:inline',
-              )}
-            >
-              Profil
-            </span>
+          <Button
+            variant="outline"
+            className={cn(
+              'relative flex items-center gap-2',
+              isTransparent && 'text-white border-white hover:bg-white hover:text-primary',
+            )}
+          >
+            <UserCircle />
+            <span className={cn('hidden sm:inline')}>Profil</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>

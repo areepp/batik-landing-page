@@ -53,7 +53,7 @@ export const Users: CollectionConfig = {
       ],
       access: {
         create: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
-        read: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
+        read: () => true,
         update: ({ req }) => Boolean(req.user?.roles?.includes('admin')),
       },
     },
