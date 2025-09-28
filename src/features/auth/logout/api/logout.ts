@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 const logoutUser = async () => {
@@ -13,7 +12,6 @@ const logoutUser = async () => {
 }
 
 export const useLogout = () => {
-  const router = useRouter()
   const queryClient = useQueryClient()
 
   return useMutation({

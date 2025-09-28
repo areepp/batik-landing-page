@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { MutationConfig } from '@/lib/react-query'
 
 export const schemaRegister = z.object({
-  email: z.string().email({ message: 'Alamat email tidak valid.' }),
+  email: z.email({ message: 'Alamat email tidak valid.' }),
   password: z.string().min(8, { message: 'Password harus minimal 8 karakter.' }),
 })
 

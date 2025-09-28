@@ -1,4 +1,3 @@
-import { isAdmin } from '@/lib/payload-access-control'
 import { GlobalConfig } from 'payload'
 
 export const HomePage: GlobalConfig = {

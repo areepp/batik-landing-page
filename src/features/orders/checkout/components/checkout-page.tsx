@@ -32,7 +32,7 @@ import { useGetSelectedCartItems } from '../../cart/hooks/use-selected-cart-item
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { selectedItems, groupedItems, subtotal, isPending } = useGetSelectedCartItems()
+  const { selectedItems, subtotal, isPending } = useGetSelectedCartItems()
   const [openProofDialog, setOpenProofDialog] = useState(false)
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
   const [isFetchingShipping, setIsFetchingShipping] = useState(false)

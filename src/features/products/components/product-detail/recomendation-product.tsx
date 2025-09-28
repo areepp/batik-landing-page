@@ -1,14 +1,13 @@
 import { House, JenisBatik, JenisKain, Product } from '@/payload-types'
 import { getPayload, Where } from 'payload'
 import config from '@/payload.config'
-import Link from 'next/link'
 import { ProductCarouselClient } from '@/features/home/components/product-carousel-client'
 
 type IProps = {
   currentProduct: Product
 }
 
-export default async function RecomendationProduct({ currentProduct }: IProps) {
+export default async function RecomendationProduct({ currentProduct }: Readonly<IProps>) {
   if (!currentProduct) {
     return null
   }

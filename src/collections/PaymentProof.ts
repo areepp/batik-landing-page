@@ -40,5 +40,13 @@ export const PaymentProofs: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'prefix',
+      type: 'text',
+      admin: {
+        readOnly: true,
+        hidden: true,
+      },
+    },
   ],
 }

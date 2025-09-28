@@ -5,7 +5,6 @@ import {
   Heading,
   Hr,
   Html,
-  Img,
   Preview,
   Section,
   Text,
@@ -55,13 +54,13 @@ export const OrderEmailTemplate = ({ order, house }: Props) => {
           <Hr style={hr} />
 
           <Text style={detailsRow}>
-            <strong>Subtotal:</strong> {formatPrice(order.subtotal!)}
+            <strong>Subtotal:</strong> {formatPrice(order.subtotal)}
           </Text>
           <Text style={detailsRow}>
-            <strong>Pengiriman:</strong> {formatPrice(order.shippingDetails?.cost!)}
+            <strong>Pengiriman:</strong> {formatPrice(order.shippingDetails?.cost)}
           </Text>
           <Text style={{ ...detailsRow, ...totalRow }}>
-            <strong>Total:</strong> {formatPrice(order.total!)}
+            <strong>Total:</strong> {formatPrice(order.total)}
           </Text>
 
           <Hr style={hr} />

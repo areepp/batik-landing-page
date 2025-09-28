@@ -11,7 +11,6 @@ import { Loader2, TriangleAlert } from 'lucide-react'
 import { useGetSelectedCartItems, useSelectedHouseAtom } from '../hooks/use-selected-cart-items'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { useGetUser } from '@/features/auth/user/api/get-user'
 
 export default function CartPage() {
   const { data, isPending } = useGetCart()
