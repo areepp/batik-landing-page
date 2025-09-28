@@ -16,6 +16,14 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'prefix',
+      type: 'text',
+      // admin: {
+      //   readOnly: true,
+      //   hidden: true,
+      // },
+    },
   ],
   upload: true,
 }

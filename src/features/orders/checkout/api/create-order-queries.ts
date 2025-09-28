@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createOrder } from './create-order-action'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { useRemoveItem } from '../../cart/api/cart-queries'
 import { useSelectedHouseAtom } from '../../cart/hooks/use-selected-cart-items'
 
 export const useCreateOrder = ({

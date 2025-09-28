@@ -1,4 +1,5 @@
 import { generateUniqueSlug } from '@/lib/utils'
+import { revalidatePath } from 'next/cache'
 import { CollectionConfig } from 'payload'
 
 export const Houses: CollectionConfig = {
@@ -14,6 +15,14 @@ export const Houses: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        revalidatePath('/toko')
+        revalidatePath(`/toko/${doc.slug}`)
+      },
+    ],
   },
   fields: [
     {
@@ -117,18 +126,21 @@ export const Houses: CollectionConfig = {
           label: 'Nama Bank (e.g., BCA, Mandiri)',
           type: 'text',
           required: true,
+          defaultValue: 'BRI',
         },
         {
           name: 'accountNumber',
           label: 'Nomor Rekening',
           type: 'text',
           required: true,
+          defaultValue: '00000000',
         },
         {
           name: 'accountHolderName',
           label: 'Nama Pemilik Rekening',
           type: 'text',
           required: true,
+          defaultValue: 'kosong',
         },
       ],
     },

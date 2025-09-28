@@ -30,7 +30,12 @@ if (process.env.NODE_ENV === 'production') {
   plugins.push(
     s3Storage({
       collections: {
-        media: true,
+        media: {
+          prefix: `${process.env.S3_SUB_DIRECTORY ?? 'sentrabatik-pungsari'}/media`,
+        },
+        'payment-proofs': {
+          prefix: `${process.env.S3_SUB_DIRECTORY ?? 'sentrabatik-pungsari'}/payment-proofs`,
+        },
       },
       config: {
         credentials: {

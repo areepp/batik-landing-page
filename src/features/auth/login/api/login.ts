@@ -1,11 +1,10 @@
 import { MutationConfig } from '@/lib/react-query'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import z from 'zod'
 
 export const schemaLogin = z.object({
-  email: z.string().email({ message: 'Alamat email tidak valid.' }),
+  email: z.email({ message: 'Alamat email tidak valid.' }),
   password: z.string().min(1, { message: 'Password tidak boleh kosong.' }),
 })
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import './globals.css'
-import { Toaster } from '@/components/ui/sonner'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { Cormorant_Garamond, Prata } from 'next/font/google'
