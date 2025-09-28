@@ -6,6 +6,7 @@ import * as migration_20250926_095011_order_tracking_number from './20250926_095
 import * as migration_20250926_104124_jenis_produk from './20250926_104124_jenis_produk';
 import * as migration_20250927_152632 from './20250927_152632';
 import * as migration_20250928_034236_add_prefix_to_media from './20250928_034236_add_prefix_to_media';
+import * as migration_20250928_134812_email_manajer_di_house from './20250928_134812_email_manajer_di_house';
 
 export const migrations = [
   {
@@ -46,6 +47,11 @@ export const migrations = [
   {
     up: migration_20250928_034236_add_prefix_to_media.up,
     down: migration_20250928_034236_add_prefix_to_media.down,
-    name: '20250928_034236_add_prefix_to_media'
+    name: '20250928_034236_add_prefix_to_media',
+  },
+  {
+    up: migration_20250928_134812_email_manajer_di_house.up,
+    down: migration_20250928_134812_email_manajer_di_house.down,
+    name: '20250928_134812_email_manajer_di_house'
   },
 ];

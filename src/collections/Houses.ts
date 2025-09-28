@@ -64,6 +64,16 @@ export const Houses: CollectionConfig = {
       required: true,
     },
     {
+      name: 'emailPengelola',
+      label: 'Email Manajer Toko',
+      type: 'email',
+      required: true,
+      defaultValue: 'example@example.com',
+      admin: {
+        description: 'Email ini akan digunakan untuk menerima notifikasi pesanan baru.',
+      },
+    },
+    {
       name: 'availableBatikTypes',
       label: 'Jenis Batik yang Dijual',
       type: 'relationship',

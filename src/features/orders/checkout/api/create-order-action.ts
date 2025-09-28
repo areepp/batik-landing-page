@@ -106,7 +106,7 @@ export async function createOrder({
 
   const orderHtml = await newOrderEmail({ house, order })
   await payload.sendEmail({
-    to: 'mferdinr@gmail.com',
+    to: house.emailPengelola,
     subject: `Pesanan baru diterima: ${order.id}`,
     html: orderHtml,
   })

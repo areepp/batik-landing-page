@@ -174,6 +174,10 @@ export interface House {
   logo?: (number | null) | Media;
   description?: string | null;
   phoneNumber: string;
+  /**
+   * Email ini akan digunakan untuk menerima notifikasi pesanan baru.
+   */
+  emailPengelola: string;
   availableBatikTypes: (number | JenisBatik)[];
   availableFabricTypes: (number | JenisKain)[];
   socialMedia?: {
@@ -520,6 +524,7 @@ export interface HousesSelect<T extends boolean = true> {
   logo?: T;
   description?: T;
   phoneNumber?: T;
+  emailPengelola?: T;
   availableBatikTypes?: T;
   availableFabricTypes?: T;
   socialMedia?:
