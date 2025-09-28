@@ -134,6 +134,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Koleksi untuk semua jenis pengguna, termasuk admin, admin toko, dan pelanggan.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -301,7 +303,7 @@ export interface JenisProduk {
   createdAt: string;
 }
 /**
- * Users' shopping carts.
+ * Keranjang belanja milik setiap pelanggan.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "carts".
@@ -320,7 +322,7 @@ export interface Cart {
   createdAt: string;
 }
 /**
- * A collection to store customer orders.
+ * Koleksi untuk menyimpan data pesanan pelanggan.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "orders".

@@ -14,8 +14,9 @@ import Link from 'next/link'
 import { useLogout } from '@/features/auth/logout/api/logout'
 import LoadingSpinner from './loading-spinner'
 import { useGetUser } from '@/features/auth/user/api/get-user'
+import { cn } from '@/lib/utils'
 
-export function UserProfileDropdown() {
+export function UserProfileDropdown({ isTransparent }: Readonly<{ isTransparent?: boolean }>) {
   const { data: user, isLoading } = useGetUser()
   const { mutate: logout, isPending: isLoggingOut } = useLogout()
 
@@ -27,12 +28,18 @@ export function UserProfileDropdown() {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant={'ghost'}
-            className="text-white border-1 border-white relative flex items-center gap-2"
-          >
-            <UserCircle className="h-5 w-5" />
-            <span className="hidden sm:inline">Profil</span>
+          <Button variant="outline" className={cn('relative flex items-center gap-2')}>
+            <UserCircle
+              className={cn(isTransparent && 'hover:text-foreground text-white', 'h-5 w-5')}
+            />
+            <span
+              className={cn(
+                isTransparent && 'hover:text-foreground text-white',
+                'hidden sm:inline',
+              )}
+            >
+              Profil
+            </span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
@@ -44,10 +51,10 @@ export function UserProfileDropdown() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href="/account">Akun Saya</Link>
+            <Link href="/keranjang">Keranjang</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/orders">Pesanan</Link>
+            <Link href="/pesanan">Pesanan</Link>
           </DropdownMenuItem>
           {user.roles?.includes('store-admin') && (
             <DropdownMenuItem asChild>
@@ -68,7 +75,12 @@ export function UserProfileDropdown() {
   }
 
   return (
-    <Button asChild size="sm">
+    <Button
+      asChild
+      size="sm"
+      variant={isTransparent ? 'outline' : 'default'}
+      className={cn(isTransparent && 'hover:text-foreground')}
+    >
       <Link href="/masuk">Masuk</Link>
     </Button>
   )

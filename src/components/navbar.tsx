@@ -66,7 +66,7 @@ export function Navbar() {
               <Link href="/toko" className={navLinkClasses}>
                 Toko
               </Link>
-              <UserProfileDropdown />
+              <UserProfileDropdown isTransparent={isTransparent} />
             </nav>
           </div>
         </div>
