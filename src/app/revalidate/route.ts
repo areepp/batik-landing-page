@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 
 // This endpoint receives revalidation requests from the Payload webhook
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get('secret')
   const path = request.nextUrl.searchParams.get('path')
 

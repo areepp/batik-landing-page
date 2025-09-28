@@ -10,6 +10,7 @@ export const revalidate = async (args: {
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/revalidate?secret=${
         process.env.REVALIDATION_SECRET
       }&path=${revalidatePath || '/'}`,
+      { method: 'POST' },
     )
     if (!res.ok) {
       console.error('Error revalidating:', await res.text())

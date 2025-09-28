@@ -10,7 +10,7 @@ export const HomePage: GlobalConfig = {
   hooks: {
     afterChange: [
       () => {
-        revalidate({ path: '/beranda' }) // Ganti '/beranda' jika URL Anda berbeda
+        revalidate({ path: '/beranda' })
       },
     ],
   },
