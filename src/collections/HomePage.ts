@@ -1,3 +1,4 @@
+import { revalidate } from '@/lib/revalidate'
 import { GlobalConfig } from 'payload'
 
 export const HomePage: GlobalConfig = {
@@ -5,6 +6,13 @@ export const HomePage: GlobalConfig = {
   label: 'Halaman Utama',
   admin: {
     hidden: ({ user }) => !user?.roles.includes('admin'),
+  },
+  hooks: {
+    afterChange: [
+      () => {
+        revalidate({ path: '/beranda' }) // Ganti '/beranda' jika URL Anda berbeda
+      },
+    ],
   },
   fields: [
     {
