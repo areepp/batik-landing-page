@@ -4,6 +4,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Products: CollectionConfig = {
   slug: 'products',
+  labels: {
+    singular: 'Produk',
+    plural: 'Daftar Produk',
+  },
   admin: {
     useAsTitle: 'name',
     description: 'Produk batik yang akan dijual di situs.',

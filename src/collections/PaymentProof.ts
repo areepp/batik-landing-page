@@ -2,6 +2,10 @@ import { CollectionConfig } from 'payload'
 
 export const PaymentProofs: CollectionConfig = {
   slug: 'payment-proofs',
+  labels: {
+    singular: 'Bukti Pembayaran',
+    plural: 'Bukti Pembayaran',
+  },
   admin: {
     hidden: true,
   },
@@ -32,7 +36,7 @@ export const PaymentProofs: CollectionConfig = {
   fields: [
     {
       name: 'alt',
-      label: 'Teks Alt',
+      label: 'Teks Alternatif (Alt Text)',
       type: 'text',
       required: true,
     },

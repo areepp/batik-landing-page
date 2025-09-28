@@ -3,6 +3,10 @@ import { CollectionConfig } from 'payload'
 
 export const Houses: CollectionConfig = {
   slug: 'houses',
+  labels: {
+    singular: 'Toko / Pengerajin',
+    plural: 'Daftar Toko / Pengerajin',
+  },
   admin: {
     useAsTitle: 'name',
     description: 'Rumah adalah lini merek atau nama toko.',
