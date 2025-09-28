@@ -79,7 +79,7 @@ export function UserProfileDropdown({ isTransparent }: Readonly<{ isTransparent?
       asChild
       size="sm"
       variant={isTransparent ? 'outline' : 'default'}
-      className={cn(isTransparent && 'hover:text-foreground')}
+      className={cn(isTransparent && 'text-white hover:text-foreground')}
     >
       <Link href="/masuk">Masuk</Link>
     </Button>
