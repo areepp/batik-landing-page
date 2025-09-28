@@ -1,28 +1,27 @@
+import { isOwner } from '@/lib/payload-access-control'
 import type { CollectionConfig } from 'payload'
 
 export const Carts: CollectionConfig = {
   slug: 'carts',
+  labels: {
+    singular: 'Keranjang',
+    plural: 'Keranjang',
+  },
   admin: {
     useAsTitle: 'user',
-    description: "Users' shopping carts.",
+    description: 'Keranjang belanja milik setiap pelanggan.',
     hidden: true,
   },
   access: {
-    read: ({ req: { user } }) => {
-      if (!user) return false
-      return {
-        user: {
-          equals: user.id,
-        },
-      }
-    },
     create: ({ req: { user } }) => !!user,
-    update: ({ req: { user } }) => !!user,
-    delete: () => false, // Carts should not be deletable by users
+    read: isOwner,
+    update: isOwner,
+    delete: isOwner,
   },
   fields: [
     {
       name: 'user',
+      label: 'Pengguna',
       type: 'relationship',
       relationTo: 'users',
       required: true,
@@ -31,17 +30,19 @@ export const Carts: CollectionConfig = {
     },
     {
       name: 'items',
-      label: 'Cart Items',
+      label: 'Isi Keranjang',
       type: 'array',
       fields: [
         {
           name: 'product',
+          label: 'Produk',
           type: 'relationship',
           relationTo: 'products',
           required: true,
         },
         {
           name: 'quantity',
+          label: 'Jumlah',
           type: 'number',
           min: 1,
           required: true,

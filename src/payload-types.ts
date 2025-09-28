@@ -75,6 +75,8 @@ export interface Config {
     orders: Order;
     'jenis-batik': JenisBatik;
     'jenis-kain': JenisKain;
+    'jenis-produk': JenisProduk;
+    'payment-proofs': PaymentProof;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,6 +91,8 @@ export interface Config {
     orders: OrdersSelect<false> | OrdersSelect<true>;
     'jenis-batik': JenisBatikSelect<false> | JenisBatikSelect<true>;
     'jenis-kain': JenisKainSelect<false> | JenisKainSelect<true>;
+    'jenis-produk': JenisProdukSelect<false> | JenisProdukSelect<true>;
+    'payment-proofs': PaymentProofsSelect<false> | PaymentProofsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -130,6 +134,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Koleksi untuk semua jenis pengguna, termasuk admin, admin toko, dan pelanggan.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -179,9 +185,17 @@ export interface House {
     tokopediaUrl?: string | null;
   };
   /**
-   * Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah asal.
+   * Rekening ini akan ditampilkan kepada pelanggan untuk melakukan pembayaran.
    */
-  originCity?: string | null;
+  bankDetails: {
+    bankName: string;
+    accountNumber: string;
+    accountHolderName: string;
+  };
+  /**
+   * Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah jika produk tidak dikirim dari desa pungsari.
+   */
+  originCity: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -192,6 +206,7 @@ export interface House {
 export interface Media {
   id: number;
   alt: string;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -255,6 +270,7 @@ export interface Product {
     | null;
   jenisBatik: (number | JenisBatik)[];
   jenisKain: (number | JenisKain)[];
+  jenisProduk?: (number | null) | JenisProduk;
   /**
    * (Opsional) Tambahkan link jika produk ini dijual di marketplace
    */
@@ -275,7 +291,19 @@ export interface Product {
   createdAt: string;
 }
 /**
- * Users' shopping carts.
+ * Jenis produk batik (misal: Kain, Kemeja, Celana, Tas, dsb).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-produk".
+ */
+export interface JenisProduk {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Keranjang belanja milik setiap pelanggan.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "carts".
@@ -294,7 +322,7 @@ export interface Cart {
   createdAt: string;
 }
 /**
- * A collection to store customer orders.
+ * Koleksi untuk menyimpan data pesanan pelanggan.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "orders".
@@ -303,8 +331,13 @@ export interface Order {
   id: number;
   orderNumber?: string | null;
   user?: (number | null) | User;
-  house: number | House;
   customerEmail: string;
+  subtotal: number;
+  total: number;
+  status: 'pending' | 'processing' | 'shipped' | 'completed' | 'cancelled';
+  proof_of_payment?: (number | null) | PaymentProof;
+  trackingNumber?: string | null;
+  house: number | House;
   items: {
     product?: (number | null) | Product;
     productName: string;
@@ -312,22 +345,38 @@ export interface Order {
     quantity: number;
     id?: string | null;
   }[];
-  subtotal: number;
   shippingDetails: {
     service: string;
     cost: number;
   };
-  total: number;
-  status: 'pending' | 'paid' | 'processing' | 'shipped' | 'completed' | 'cancelled';
   shippingAddress: {
     recipientName: string;
     phoneNumber: string;
     fullAddress: string;
     postalCode: string;
   };
-  paymentTransactionId?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-proofs".
+ */
+export interface PaymentProof {
+  id: number;
+  alt: string;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -367,6 +416,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'jenis-kain';
         value: number | JenisKain;
+      } | null)
+    | ({
+        relationTo: 'jenis-produk';
+        value: number | JenisProduk;
+      } | null)
+    | ({
+        relationTo: 'payment-proofs';
+        value: number | PaymentProof;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -440,6 +497,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -476,6 +534,13 @@ export interface HousesSelect<T extends boolean = true> {
         shopeeUrl?: T;
         tokopediaUrl?: T;
       };
+  bankDetails?:
+    | T
+    | {
+        bankName?: T;
+        accountNumber?: T;
+        accountHolderName?: T;
+      };
   originCity?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -498,6 +563,7 @@ export interface ProductsSelect<T extends boolean = true> {
       };
   jenisBatik?: T;
   jenisKain?: T;
+  jenisProduk?: T;
   marketplaceLinks?:
     | T
     | {
@@ -538,8 +604,13 @@ export interface CartsSelect<T extends boolean = true> {
 export interface OrdersSelect<T extends boolean = true> {
   orderNumber?: T;
   user?: T;
-  house?: T;
   customerEmail?: T;
+  subtotal?: T;
+  total?: T;
+  status?: T;
+  proof_of_payment?: T;
+  trackingNumber?: T;
+  house?: T;
   items?:
     | T
     | {
@@ -549,15 +620,12 @@ export interface OrdersSelect<T extends boolean = true> {
         quantity?: T;
         id?: T;
       };
-  subtotal?: T;
   shippingDetails?:
     | T
     | {
         service?: T;
         cost?: T;
       };
-  total?: T;
-  status?: T;
   shippingAddress?:
     | T
     | {
@@ -566,7 +634,6 @@ export interface OrdersSelect<T extends boolean = true> {
         fullAddress?: T;
         postalCode?: T;
       };
-  paymentTransactionId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -587,6 +654,34 @@ export interface JenisKainSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jenis-produk_select".
+ */
+export interface JenisProdukSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-proofs_select".
+ */
+export interface PaymentProofsSelect<T extends boolean = true> {
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

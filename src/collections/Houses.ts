@@ -1,8 +1,13 @@
 import { generateUniqueSlug } from '@/lib/utils'
+import { revalidatePath } from 'next/cache'
 import { CollectionConfig } from 'payload'
 
 export const Houses: CollectionConfig = {
   slug: 'houses',
+  labels: {
+    singular: 'Toko / Pengerajin',
+    plural: 'Daftar Toko / Pengerajin',
+  },
   admin: {
     useAsTitle: 'name',
     description: 'Rumah adalah lini merek atau nama toko.',
@@ -10,6 +15,14 @@ export const Houses: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        revalidatePath('/toko')
+        revalidatePath(`/toko/${doc.slug}`)
+      },
+    ],
   },
   fields: [
     {
@@ -101,16 +114,46 @@ export const Houses: CollectionConfig = {
       ],
     },
     {
+      name: 'bankDetails',
+      label: 'Detail Rekening Bank',
+      type: 'group',
+      admin: {
+        description: 'Rekening ini akan ditampilkan kepada pelanggan untuk melakukan pembayaran.',
+      },
+      fields: [
+        {
+          name: 'bankName',
+          label: 'Nama Bank (e.g., BCA, Mandiri)',
+          type: 'text',
+          required: true,
+          defaultValue: 'BRI',
+        },
+        {
+          name: 'accountNumber',
+          label: 'Nomor Rekening',
+          type: 'text',
+          required: true,
+          defaultValue: '00000000',
+        },
+        {
+          name: 'accountHolderName',
+          label: 'Nama Pemilik Rekening',
+          type: 'text',
+          required: true,
+          defaultValue: 'kosong',
+        },
+      ],
+    },
+    {
       name: 'originCity',
       label: 'ID Kota Asal Pengiriman',
       type: 'text',
-      required: false,
+      required: true,
       defaultValue: '62640',
       admin: {
         readOnly: true,
-        hidden: true,
         description:
-          'Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah asal.',
+          'Dapatkan ID Kota dari dokumentasi RajaOngkir. Contact Developer untuk mendapatkan ID daerah jika produk tidak dikirim dari desa pungsari.',
       },
     },
   ],

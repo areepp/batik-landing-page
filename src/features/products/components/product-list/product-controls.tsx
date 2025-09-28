@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { House, JenisBatik, JenisKain } from '@/payload-types'
+import { House, JenisBatik, JenisKain, JenisProduk } from '@/payload-types'
 import { ListFilter, X } from 'lucide-react'
 import * as React from 'react'
 import { FilterContent } from './filter-content'
@@ -25,13 +25,20 @@ type Props = {
   houses?: House[]
   jenisBatiks?: JenisBatik[]
   jenisKains?: JenisKain[]
+  jenisProduks?: JenisProduk[]
 }
 
-export function ProductControls({ houses = [], jenisBatiks = [], jenisKains = [] }: Props) {
+export function ProductControls({
+  houses = [],
+  jenisBatiks = [],
+  jenisKains = [],
+  jenisProduks = [],
+}: Props) {
   const {
     checkedHouses,
     checkedJenisBatiks,
     checkedJenisKains,
+    checkedJenisProduks,
     currentSort,
     isFilterActive,
     handleFilterChange,
@@ -58,9 +65,11 @@ export function ProductControls({ houses = [], jenisBatiks = [], jenisKains = []
             houses={houses}
             jenisBatiks={jenisBatiks}
             jenisKains={jenisKains}
+            jenisProduks={jenisProduks}
             checkedHouses={checkedHouses}
             checkedJenisBatiks={checkedJenisBatiks}
             checkedJenisKains={checkedJenisKains}
+            checkedJenisProduks={checkedJenisProduks}
             onFilterChange={handleFilterChange}
           />
         </SheetContent>

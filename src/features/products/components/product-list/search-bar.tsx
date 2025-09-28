@@ -28,7 +28,7 @@ export function SearchBar() {
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
 
   useEffect(() => {
-    if (pathname != '/products') {
+    if (pathname != '/produk') {
       return
     }
 
@@ -48,7 +48,7 @@ export function SearchBar() {
     const search = current.toString()
     const query = search ? `?${search}` : ''
 
-    router.replace(`/products${query}`)
+    router.replace(`/produk${query}`)
   }, [debouncedSearchTerm, router, searchParams])
 
   return (

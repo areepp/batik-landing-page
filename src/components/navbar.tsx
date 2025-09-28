@@ -7,10 +7,11 @@ import { Menu } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { UserProfileDropdown } from './user-profile-dropdown'
 
 function Logo({ isTransparent }: Readonly<{ isTransparent: boolean }>) {
   return (
-    <Link href="/home" className="flex items-center space-x-2">
+    <Link href="/beranda" className="flex items-center space-x-2">
       <span
         className={cn(
           'text-xl font-bold transition-colors',
@@ -39,7 +40,7 @@ export function Navbar() {
     }
   }, [])
 
-  const isTransparent = pathname === '/home' && !isScrolled
+  const isTransparent = pathname === '/beranda' && !isScrolled
 
   const navLinkClasses = cn(
     'text-lg font-medium transition-colors',
@@ -59,12 +60,13 @@ export function Navbar() {
           <Logo isTransparent={isTransparent} />
           <div className="flex items-center gap-4 lg:gap-6">
             <nav className="flex items-center gap-4 lg:gap-6">
-              <Link href="/products" className={navLinkClasses}>
+              <Link href="/produk" className={navLinkClasses}>
                 Produk
               </Link>
               <Link href="/toko" className={navLinkClasses}>
                 Toko
               </Link>
+              <UserProfileDropdown isTransparent={isTransparent} />
             </nav>
           </div>
         </div>
@@ -72,6 +74,7 @@ export function Navbar() {
         {/* Mobile Navbar */}
         <div className="md:hidden flex w-full items-center justify-between gap-4">
           <Logo isTransparent={isTransparent} />
+          <UserProfileDropdown />
           <div>
             <Sheet>
               <SheetTrigger asChild>
@@ -91,10 +94,10 @@ export function Navbar() {
                   </SheetTitle>
                 </SheetHeader>
                 <nav className="grid gap-6 text-lg font-medium pl-10">
-                  <Link href="/home" className="hover:text-foreground/80">
+                  <Link href="/beranda" className="hover:text-foreground/80">
                     Beranda
                   </Link>
-                  <Link href="/products" className="text-muted-foreground hover:text-foreground/80">
+                  <Link href="/produk" className="text-muted-foreground hover:text-foreground/80">
                     Produk
                   </Link>
                   <Link href="/toko" className="text-muted-foreground hover:text-foreground/80">

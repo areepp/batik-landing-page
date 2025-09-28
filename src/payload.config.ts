@@ -3,6 +3,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { resendAdapter } from '@payloadcms/email-resend'
 import path from 'path'
 import { buildConfig, Plugin } from 'payload'
 import { fileURLToPath } from 'url'
@@ -14,10 +15,11 @@ import { Carts } from './collections/Carts'
 import { Houses } from './collections/Houses'
 import { Products } from './collections/Products'
 import { Orders } from './collections/Orders'
-import { midtransWebhook } from './features/orders/api/update-order-status-webhook'
 import { JenisBatik } from './collections/JenisBatik'
 import { JenisKain } from './collections/JenisKain'
 import { HomePage } from './collections/HomePage'
+import { PaymentProofs } from './collections/PaymentProof'
+import { JenisProduk } from './collections/JenisProduk'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +30,12 @@ if (process.env.NODE_ENV === 'production') {
   plugins.push(
     s3Storage({
       collections: {
-        media: true,
+        media: {
+          prefix: `${process.env.S3_SUB_DIRECTORY ?? 'sentrabatik-pungsari'}/media`,
+        },
+        'payment-proofs': {
+          prefix: `${process.env.S3_SUB_DIRECTORY ?? 'sentrabatik-pungsari'}/payment-proofs`,
+        },
       },
       config: {
         credentials: {
@@ -56,7 +63,18 @@ export default buildConfig({
       key: 'seed',
     },
   ],
-  collections: [Users, Media, Houses, Products, Carts, Orders, JenisBatik, JenisKain],
+  collections: [
+    Users,
+    Media,
+    Houses,
+    Products,
+    Carts,
+    Orders,
+    JenisBatik,
+    JenisKain,
+    JenisProduk,
+    PaymentProofs,
+  ],
   globals: [HomePage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -70,5 +88,9 @@ export default buildConfig({
   }),
   sharp,
   plugins,
-  endpoints: [midtransWebhook],
+  email: resendAdapter({
+    defaultFromAddress: 'noreply@notifications.sentrabatikpungsari.com',
+    defaultFromName: 'Website Sentra Batik Pungsari',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
 })

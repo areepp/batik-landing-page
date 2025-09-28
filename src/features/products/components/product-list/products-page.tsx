@@ -1,7 +1,7 @@
 import { getPayload, Where } from 'payload'
 import config from '@/payload.config'
 import { ProductCard } from '@/features/products/components/product-list/product-card'
-import { House, JenisBatik, JenisKain } from '@/payload-types'
+import { House, JenisBatik, JenisKain, JenisProduk } from '@/payload-types'
 import { SearchBar } from './search-bar'
 import { PaginationControls } from './products-pagination'
 import { ProductControls } from './product-controls'
@@ -20,6 +20,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const sortQuery = (await searchParams)?.sort as string
   const jenisBatikQuery = (await searchParams)?.jenisBatik as string
   const jenisKainQuery = (await searchParams)?.jenisKain as string
+  const jenisProdukQuery = (await searchParams)?.jenisProduk as string
   const page = Number((await searchParams)?.page) || 1
   const limit = 12
 
@@ -48,6 +49,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   if (jenisKainQuery) {
     where.jenisKain = {
       in: jenisKainQuery.split(','),
+    }
+  }
+  if (jenisProdukQuery) {
+    where.jenisProduk = {
+      in: jenisProdukQuery.split(','),
     }
   }
 
@@ -83,6 +89,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     collection: 'jenis-kain',
     depth: 0,
   })) as { docs: JenisKain[] }
+  const { docs: jenisProduks } = (await payload.find({
+    collection: 'jenis-produk',
+    depth: 0,
+  })) as { docs: JenisProduk[] }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -98,7 +108,12 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           <SearchBar />
         </div>
         <div className="flex-shrink-0">
-          <ProductControls houses={houses} jenisBatiks={jenisBatiks} jenisKains={jenisKains} />
+          <ProductControls
+            houses={houses}
+            jenisBatiks={jenisBatiks}
+            jenisKains={jenisKains}
+            jenisProduks={jenisProduks}
+          />
         </div>
       </div>
 

@@ -1,38 +1,62 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Product } from '@/payload-types'
-import { Check, ShoppingCart } from 'lucide-react'
-import { useCartStore } from '@/store/cart-store'
+import { Check, Loader2, ShoppingCart } from 'lucide-react'
+import { LoginDialog } from './login-dialog'
+import { useAddItemToCart, useGetCart } from '@/features/orders/cart/api/cart-queries'
+import Link from 'next/link'
+import { useGetUser } from '@/features/auth/user/api/get-user'
 
 export function AddToCartButton({ product }: Readonly<{ product: Product }>) {
-  const addItem = useCartStore((state) => state.addItem)
-  const items = useCartStore((state) => state.items)
+  const { data: userData, isPending: isUserLoading } = useGetUser()
+  const { data: cartData, isPending: isCartLoading } = useGetCart()
+  const { mutate, isPending } = useAddItemToCart()
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false)
 
-  const [isAdded, setIsAdded] = useState(false)
+  const isItemInCart = cartData?.items?.some((item) => (item.product as Product)?.id === product.id)
 
-  const itemInCart = items.some((item) => item.product.id === product.id)
-
-  useEffect(() => {
-    if (itemInCart) {
-      setIsAdded(true)
-      const timer = setTimeout(() => setIsAdded(false), 10000)
-      return () => clearTimeout(timer)
+  const handleAddToCart = () => {
+    if (!userData) {
+      setIsLoginDialogOpen(true)
+    } else {
+      mutate(product.id)
     }
-  }, [itemInCart, items])
+  }
+
+  if (isUserLoading || isCartLoading) {
+    return (
+      <Button size="lg" className="w-full" disabled>
+        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+        Memuat...
+      </Button>
+    )
+  }
+
+  if (isItemInCart) {
+    return (
+      <Button asChild size="lg" className="w-full" variant="secondary">
+        <Link href="/keranjang">
+          <Check className="mr-2 h-5 w-5" />
+          Lihat Keranjang
+        </Link>
+      </Button>
+    )
+  }
 
   return (
-    <Button onClick={() => addItem(product)} disabled={isAdded}>
-      {isAdded ? (
-        <>
-          <Check className="mr-2 h-5 w-5" /> Added!
-        </>
-      ) : (
-        <>
-          <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
-        </>
-      )}
-    </Button>
+    <>
+      <Button onClick={handleAddToCart} disabled={isPending}>
+        {isPending ? (
+          'Menambahkan ke keranjang...'
+        ) : (
+          <>
+            <ShoppingCart className="mr-2 h-5 w-5" /> Tambahkan ke Keranjang
+          </>
+        )}
+      </Button>
+      <LoginDialog isOpen={isLoginDialogOpen} onOpenChange={setIsLoginDialogOpen} />
+    </>
   )
 }

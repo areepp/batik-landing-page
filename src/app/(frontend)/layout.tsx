@@ -1,13 +1,13 @@
 import React from 'react'
 import './globals.css'
-import { Toaster } from '@/components/ui/sonner'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { Cormorant_Garamond, Prata } from 'next/font/google'
 import FaqBot from '@/components/chat-bot'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { House } from '@/payload-types'
+import { House, JenisProduk } from '@/payload-types'
+import Providers from './providers'
 
 const cormorantSerif = Cormorant_Garamond({
   variable: '--font-cormorant',
@@ -35,15 +35,22 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     depth: 0,
   })) as { docs: House[] }
 
+  const { docs: jenisProduks } = (await payload.find({
+    collection: 'jenis-produk',
+    limit: 100,
+    depth: 0,
+  })) as { docs: JenisProduk[] }
+
   return (
     <html lang="en">
       <head />
       <body className={`${cormorantSerif.variable} ${prataSerif.variable} antialiased`}>
-        <Navbar />
-        <main className="py-16">{children}</main>
-        <Toaster />
-        <Footer />
-        <FaqBot houses={houses} />
+        <Providers>
+          <Navbar />
+          <main className="py-16 min-h-[calc(100vh-8rem)]">{children}</main>
+          <Footer />
+          <FaqBot houses={houses} jenisProduks={jenisProduks} />
+        </Providers>
       </body>
     </html>
   )

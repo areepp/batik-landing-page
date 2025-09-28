@@ -1,14 +1,16 @@
 'use client'
 
-import { House, JenisBatik, JenisKain } from '@/payload-types'
+import { House, JenisBatik, JenisKain, JenisProduk } from '@/payload-types'
 
 type Props = {
   houses: House[]
   jenisBatiks: JenisBatik[]
   jenisKains: JenisKain[]
+  jenisProduks: JenisProduk[]
   checkedHouses: string[]
   checkedJenisBatiks: string[]
   checkedJenisKains: string[]
+  checkedJenisProduks: string[]
   onFilterChange: (paramName: string, value: string) => void
 }
 
@@ -16,13 +18,15 @@ export function FilterContent({
   houses,
   jenisBatiks,
   jenisKains,
+  jenisProduks,
   checkedHouses,
   checkedJenisBatiks,
   checkedJenisKains,
+  checkedJenisProduks,
   onFilterChange,
 }: Props) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mb-8">
       {/* Filter Toko */}
       <div>
         <h3 className="text-lg font-semibold mb-4">Toko / Rumah Batik</h3>
@@ -87,6 +91,29 @@ export function FilterContent({
                 className="ml-3 text-sm cursor-pointer text-foreground"
               >
                 {jk.name}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/*  Filter Jenis Produk */}
+      <div>
+        <h3 className="text-lg font-semibold mb-4">Jenis Produk</h3>
+        <div className="space-y-2">
+          {jenisProduks.map((jp) => (
+            <div key={jp.id} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`filter-jp-${jp.id}`}
+                checked={checkedJenisProduks.includes(String(jp.id))}
+                onChange={() => onFilterChange('jenisProduk', String(jp.id))}
+                className="h-4 w-4 rounded cursor-pointer border-gray-300 text-primary focus:ring-primary"
+              />
+              <label
+                htmlFor={`filter-jp-${jp.id}`}
+                className="ml-3 text-sm cursor-pointer text-foreground"
+              >
+                {jp.name}
               </label>
             </div>
           ))}

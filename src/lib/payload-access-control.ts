@@ -1,4 +1,4 @@
-import type { Access } from 'payload'
+import type { Access, FieldAccess } from 'payload'
 
 export const isAdmin: Access = ({ req: { user } }) => {
   return Boolean(user?.roles?.includes('admin'))
@@ -35,6 +35,25 @@ export const isHouseOwner: Access = ({ req: { user } }) => {
   return false
 }
 
+export const isHouseOwnerFieldAccess: FieldAccess = ({ req: { user }, doc }) => {
+  // If there's no user or no document, deny access.
+  if (!user || !doc) {
+    return false
+  }
+
+  // Check if the user is a store-admin and their house matches the document's house.
+  if (user.roles?.includes('store-admin') && user.house) {
+    const userHouseId = typeof user.house === 'object' ? user.house.id : user.house
+    const docHouseId = typeof doc.house === 'object' ? doc.house.id : doc.house
+
+    if (userHouseId === docHouseId) {
+      return true
+    }
+  }
+
+  return false
+}
+
 export const isHouseOwnerOrPublic: Access = ({ req: { user } }) => {
   if (user?.house && user?.roles?.includes('store-admin')) {
     return {
@@ -56,4 +75,15 @@ export const isCustomer: Access = ({ req: { user } }) => {
     }
   }
   return false
+}
+
+export const isOwner: Access = ({ req: { user } }) => {
+  if (!user) {
+    return false
+  }
+  return {
+    user: {
+      equals: user.id,
+    },
+  }
 }

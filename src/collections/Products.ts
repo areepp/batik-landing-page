@@ -4,6 +4,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Products: CollectionConfig = {
   slug: 'products',
+  labels: {
+    singular: 'Produk',
+    plural: 'Daftar Produk',
+  },
   admin: {
     useAsTitle: 'name',
     description: 'Produk batik yang akan dijual di situs.',
@@ -110,6 +114,17 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'jenisProduk',
+      label: 'Jenis Produk',
+      type: 'relationship',
+      relationTo: 'jenis-produk',
+      hasMany: false,
+      required: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'marketplaceLinks',
       label: 'Link Marketplace',
       type: 'group',
@@ -143,7 +158,6 @@ export const Products: CollectionConfig = {
       defaultValue: 300,
       admin: {
         position: 'sidebar',
-        hidden: true,
         description:
           'Masukkan berat produk dalam satuan gram. Akan digunakan saat menghitung ongkir.',
       },

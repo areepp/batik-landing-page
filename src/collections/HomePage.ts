@@ -1,4 +1,4 @@
-import { isAdmin } from '@/lib/payload-access-control'
+import { revalidatePath } from 'next/cache'
 import { GlobalConfig } from 'payload'
 
 export const HomePage: GlobalConfig = {
@@ -6,6 +6,13 @@ export const HomePage: GlobalConfig = {
   label: 'Halaman Utama',
   admin: {
     hidden: ({ user }) => !user?.roles.includes('admin'),
+  },
+  hooks: {
+    afterChange: [
+      () => {
+        revalidatePath('/beranda')
+      },
+    ],
   },
   fields: [
     {
