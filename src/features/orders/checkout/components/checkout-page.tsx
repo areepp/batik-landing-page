@@ -29,9 +29,11 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import LoadingSpinner from '@/components/loading-spinner'
 import { UploadProofDialog } from './upload-proof-dialog'
 import { useGetSelectedCartItems } from '../../cart/hooks/use-selected-cart-items'
+import { useGetUser } from '@/features/auth/user/api/get-user'
 
 export default function CheckoutPage() {
   const router = useRouter()
+  const { data: userData } = useGetUser()
   const { selectedItems, subtotal, isPending } = useGetSelectedCartItems()
   const [openProofDialog, setOpenProofDialog] = useState(false)
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([])
@@ -52,6 +54,10 @@ export default function CheckoutPage() {
       router.push('/keranjang')
     }
   }, [selectedItems])
+
+  useEffect(() => {
+    form.setValue('email', userData?.email ?? '')
+  }, [userData])
 
   const handleLocationSelect = async (location: Location | null) => {
     if (!location) {
