@@ -3,7 +3,7 @@ import { HomePage } from '@/payload-types'
 
 export function TestimonialSection({ data }: Readonly<{ data: HomePage['testimonialSection'] }>) {
   return (
-    <section className="py-16 px-4 bg-popover">
+    <section className="py-16 px-4 bg-popover" id="testimonial">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-4">Kata Mereka</h2>
