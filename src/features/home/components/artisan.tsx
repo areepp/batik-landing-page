@@ -53,7 +53,7 @@ export function ArtisanCarousel({ data }: Readonly<{ data: HomePage['artisanSect
   }, [api, startAutoplay])
 
   return (
-    <section className="bg-muted py-16 px-4">
+    <section className="bg-muted py-16 px-4" id="pengrajin">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-4">{data.title}</h2>
