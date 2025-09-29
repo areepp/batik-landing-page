@@ -1,4 +1,5 @@
 import { generateUniqueSlug } from '@/lib/utils'
+import { isAdmin, isAdminOrAssignedHouseOwner } from '@/lib/payload-access-control'
 import { revalidatePath } from 'next/cache'
 import { CollectionConfig } from 'payload'
 
@@ -11,10 +12,13 @@ export const Houses: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     description: 'Rumah adalah lini merek atau nama toko.',
-    hidden: ({ user }) => !user?.roles.includes('admin'),
+    hidden: Boolean(!isAdminOrAssignedHouseOwner),
   },
   access: {
-    read: () => true,
+    read: isAdminOrAssignedHouseOwner,
+    create: isAdmin,
+    update: isAdminOrAssignedHouseOwner,
+    delete: isAdmin,
   },
   hooks: {
     afterChange: [
