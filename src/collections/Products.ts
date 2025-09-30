@@ -1,7 +1,6 @@
 import { isHouseOwner, isHouseOwnerOrPublic } from '@/lib/payload-access-control'
 import { generateUniqueSlug } from '@/lib/utils'
 import type { CollectionConfig } from 'payload'
-
 export const Products: CollectionConfig = {
   slug: 'products',
   labels: {
@@ -167,6 +166,7 @@ export const Products: CollectionConfig = {
       label: 'Gambar Produk',
       type: 'array',
       minRows: 1,
+      maxRows: 5,
       required: true,
       labels: {
         singular: 'Gambar',
