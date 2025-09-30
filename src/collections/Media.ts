@@ -6,6 +6,9 @@ export const Media: CollectionConfig = {
     singular: 'Media',
     plural: 'Media',
   },
+  admin: {
+    hidden: ({ user }) => !user?.roles?.includes('admin'),
+  },
   access: {
     read: () => true,
   },

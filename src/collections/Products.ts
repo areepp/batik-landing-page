@@ -26,7 +26,7 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'slug',
-      label: 'Slug Produk',
+      label: 'Slug Produk (Akan diisi otomatis saat menyimpan)',
       type: 'text',
       admin: {
         position: 'sidebar',
