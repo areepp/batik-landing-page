@@ -1,10 +1,13 @@
-import type { CollectionConfig } from 'payload'
+import { type CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: {
     singular: 'Media',
     plural: 'Media',
+  },
+  admin: {
+    hidden: ({ user }) => !user?.roles?.includes('admin'),
   },
   access: {
     read: () => true,
@@ -19,11 +22,11 @@ export const Media: CollectionConfig = {
     {
       name: 'prefix',
       type: 'text',
-      // admin: {
-      //   readOnly: true,
-      //   hidden: true,
-      // },
+      admin: {
+        readOnly: true,
+        hidden: true,
+      },
     },
   ],
-  upload: true,
+  upload: { allowRestrictedFileTypes: false, mimeTypes: ['image/*', 'video/mp4'] },
 }

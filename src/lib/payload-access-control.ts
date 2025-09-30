@@ -22,6 +22,21 @@ export const isAdminOrSelf: Access = ({ req: { user } }) => {
   // Deny access if the user is not logged in
   return false
 }
+export const isAdminOrAssignedHouseOwner: Access = ({ req: { user } }) => {
+  if (user?.roles?.includes('admin')) {
+    return true
+  }
+
+  if (user?.roles?.includes('store-admin') && user.house) {
+    return {
+      id: {
+        equals: typeof user.house === 'object' ? user.house.id : user.house,
+      },
+    }
+  }
+
+  return false
+}
 
 export const isHouseOwner: Access = ({ req: { user } }) => {
   if (user?.house) {
