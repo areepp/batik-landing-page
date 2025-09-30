@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export function Footer() {
   return (
     <footer className="bg-sidebar py-8 border-t">
@@ -20,36 +22,36 @@ export function Footer() {
             <h3 className="font-semibold text-sidebar-foreground mb-4">Produk</h3>
             <ul className="space-y-2 md:text-base text-sm">
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/produk?page=1&jenisProduk=1"
                   className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
                 >
-                  Sepatu Batik
-                </a>
+                  Kain Batik
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
-                >
-                  Tas Batik
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
+                <Link
+                  href="/produk?page=1&jenisProduk=2"
                   className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
                 >
                   Kemeja Batik
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/produk?page=1&jenisProduk=3"
                   className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
                 >
-                  Aksesoris
-                </a>
+                  Dress Batik
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/produk?page=1&jenisProduk=5"
+                  className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
+                >
+                  Tas Batik
+                </Link>
               </li>
             </ul>
           </div>
@@ -58,28 +60,36 @@ export function Footer() {
             <h3 className="font-semibold text-sidebar-foreground mb-4">Website</h3>
             <ul className="space-y-2 md:text-base text-sm">
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/beranda#tentang-kami"
                   className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
                 >
                   Tentang Kami
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/beranda#pengrajin"
                   className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
                 >
                   Pengrajin
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/beranda#produk-teratas"
                   className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
                 >
                   Produk Teratas
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/beranda#testimonial"
+                  className="text-sidebar-foreground/80 hover:text-sidebar-foreground transition-colors"
+                >
+                  Testimoni
+                </Link>
               </li>
             </ul>
           </div>

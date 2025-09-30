@@ -14,7 +14,7 @@ function Logo({ isTransparent }: Readonly<{ isTransparent: boolean }>) {
     <Link href="/beranda" className="flex items-center space-x-2">
       <span
         className={cn(
-          'text-xl font-bold transition-colors',
+          'md:text-xl text-lg font-bold transition-colors w-5/6',
           isTransparent ? 'text-white' : 'text-foreground',
         )}
       >
@@ -26,6 +26,7 @@ function Logo({ isTransparent }: Readonly<{ isTransparent: boolean }>) {
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isSheetOpen, setIsSheetOpen] = useState(false) // State untuk kontrol Sheet
   const pathname = usePathname()
 
   useEffect(() => {
@@ -40,12 +41,20 @@ export function Navbar() {
     }
   }, [])
 
+  useEffect(() => {
+    setIsSheetOpen(false)
+  }, [pathname])
+
   const isTransparent = pathname === '/beranda' && !isScrolled
 
   const navLinkClasses = cn(
     'text-lg font-medium transition-colors',
     isTransparent ? 'text-white/80 hover:text-white' : 'text-foreground/60 hover:text-foreground',
   )
+
+  const handleLinkClick = () => {
+    setIsSheetOpen(false)
+  }
 
   return (
     <header
@@ -76,7 +85,7 @@ export function Navbar() {
           <Logo isTransparent={isTransparent} />
           <UserProfileDropdown />
           <div>
-            <Sheet>
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu
@@ -94,13 +103,25 @@ export function Navbar() {
                   </SheetTitle>
                 </SheetHeader>
                 <nav className="grid gap-6 text-lg font-medium pl-10">
-                  <Link href="/beranda" className="hover:text-foreground/80">
+                  <Link
+                    href="/beranda"
+                    className="hover:text-foreground/80"
+                    onClick={handleLinkClick}
+                  >
                     Beranda
                   </Link>
-                  <Link href="/produk" className="text-muted-foreground hover:text-foreground/80">
+                  <Link
+                    href="/produk"
+                    className="text-muted-foreground hover:text-foreground/80"
+                    onClick={handleLinkClick}
+                  >
                     Produk
                   </Link>
-                  <Link href="/toko" className="text-muted-foreground hover:text-foreground/80">
+                  <Link
+                    href="/toko"
+                    className="text-muted-foreground hover:text-foreground/80"
+                    onClick={handleLinkClick}
+                  >
                     Toko
                   </Link>
                 </nav>
