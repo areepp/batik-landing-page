@@ -1,67 +1,140 @@
-# Payload Blank Template
+# Sentra Batik Pungsari - Project Documentation
 
-This template comes configured with the bare minimum to get started on anything you need.
+## 1. Introduction
 
-## Quick start
+This document provides a comprehensive overview of the Sentra Batik Pungsari e-commerce platform.
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+The platform is built on a headless architecture, using Payload CMS for backend management and Next.js for the frontend.
 
-## Quick Start - local setup
+## 2. Core Technologies
 
-To spin up this template locally, follow these steps:
+- **Frontend**: Next.js (App Router), React, TypeScript
+- **Backend & CMS**: Payload CMS (v3)
+- **Database**: PostgreSQL
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **State Management**: TanStack Query (React Query) for server state, Zustand for client state
+- **Deployment**: Coolify on a Hostinger VPS
+- **Media Storage**: Cloudflare R2 (for production)
+- **Email**: Resend
 
-### Clone
+## 3. Running the Project (Development)
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+Follow these steps to set up and run the project on your local machine.
 
-### Development
+### Prerequisites
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URI` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+- Node.js (v18 or later)
+- pnpm
+- Docker (for running the database)
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+### Step-by-step Guide
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+**Clone the Repository:**
 
-#### Docker (Optional)
+```bash
+git clone <your-repository-url>
+cd <project-directory>
+```
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+**Create Environment File:**
 
-To do so, follow these steps:
+Duplicate the `.env.example` file and rename it to `.env`. Fill in the required variables for your local setup. The `DATABASE_URI` should point to localhost.
 
-- Modify the `MONGODB_URI` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URI` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+**Start the Database:**
 
-## How it works
+Run the following command to start the PostgreSQL database container in the background.
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+```bash
+docker compose up
+```
 
-### Collections
+**Install Dependencies:**
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+```bash
+pnpm install
+```
 
-- #### Users (Authentication)
+**Run the Development Server:**
 
-  Users are auth-enabled collections that have access to the admin panel.
+This command starts both the Next.js frontend and the Payload CMS backend.
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+```bash
+pnpm dev
+```
 
-- #### Media
+- The website will be available at `http://localhost:3000`
+- The Payload admin panel will be at `http://localhost:3000/admin`
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+**Database Migration**
 
-### Docker
+To prepare the tables for the database, run the migrate script.
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+```bash
+pnpm seed
+```
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+**Seed the Database**
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+To populate your local database with sample data (artisans, products, etc.), run the seed script.
 
-## Questions
+```bash
+pnpm seed
+```
 
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+## 4. Payload CMS Overview
+
+Payload is the headless CMS that powers the entire backend, from content management to e-commerce logic.
+
+### User Roles
+
+The system has three main user roles with different permissions:
+
+- **Admin (Super Admin)**: Has full access to the entire system. Can manage all houses, products, orders, and users.
+- **Store Admin**: A user assigned to manage a specific "House" (store). They can only manage products and view orders belonging to their own house.
+- **Customer**: A regular user who can create an account, manage their profile, and view their order history.
+
+### Collections & Globals
+
+- **Users**: Stores all user accounts (Admins, Store Admins, Customers)
+- **Houses**: Represents the artisan stores. Each house has its own manager, bank details, and product catalog
+- **Products**: The main collection for all Batik products. Each product is linked to a House
+- **Orders**: Stores all customer orders. Implements a manual payment flow
+- **Media**: A library for all uploaded images and videos (product photos, hero videos)
+- **PaymentProofs**: A separate, hidden collection for storing customer payment receipts
+- **Jenis Batik, Jenis Kain, Jenis Produk**: Category collections used for filtering and organizing products
+- **HomePage (Global)**: A single entry to manage the content of the main homepage sections (Hero, About, etc.)
+
+## 5. E-commerce Flow
+
+The platform uses a manual payment workflow and is designed as a multi-store marketplace.
+
+### Multi-Store Logic
+
+- A customer can add products from multiple "Houses" to their cart
+- On the cart page, they must choose one House to check out from at a time
+- The checkout process will only include items from the selected House
+
+### Manual Payment Flow
+
+1. **Checkout**: The customer fills out their shipping details and selects a shipping option
+2. **Upload Proof**: A dialog appears, prompting the user to upload proof of payment (e.g., a screenshot of their bank transfer)
+3. **Order Creation**: Upon successful upload, a new order is created in the database with a status of `waiting-confirmation`
+4. **Admin Notification**: An email is automatically sent to the respective Store Admin to notify them of the new order
+5. **Confirmation**: The Store Admin logs in, verifies the payment proof, and updates the order status to `processing`
+
+## 6. Deployment (Production on Coolify)
+
+The project is configured for a CI/CD workflow using two separate environments on Coolify.
+
+### Environments
+
+- **Development/Staging**: Uses a separate database and sandbox API keys. Accessible at `dev.sentrabatikpungsari.com`
+- **Production**: Deploys automatically on every push to the `main` branch. Uses the live database and production API keys. Accessible at the main domain
+
+### Running Scripts on Production
+
+To run scripts like `migrate` or `seed` on a deployed application:
+
+1. Open the Coolify dashboard and navigate to your application
+2. Open the "Remote Shell" or "Terminal"
+3. Run the desired command (e.g., `pnpm payload migrate`)
