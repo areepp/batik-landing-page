@@ -14,7 +14,7 @@ function Logo({ isTransparent }: Readonly<{ isTransparent: boolean }>) {
     <Link href="/beranda" className="flex items-center space-x-2">
       <span
         className={cn(
-          'md:text-xl text-lg font-bold transition-colors w-5/6',
+          'md:text-xl text-lg font-bold transition-colors',
           isTransparent ? 'text-white' : 'text-foreground',
         )}
       >

@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { HomePage } from '@/payload-types'
+import Image from 'next/image'
 
 export function TestimonialSection({ data }: Readonly<{ data: HomePage['testimonialSection'] }>) {
   return (
@@ -15,13 +16,8 @@ export function TestimonialSection({ data }: Readonly<{ data: HomePage['testimon
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {data.testimonials.map((testimonial) => (
             <Card key={testimonial.id} className="hover:shadow-lg transition-shadow duration-300">
-              <CardContent className="p-6">
+              <CardContent>
                 <div className="flex items-center mb-4">
-                  <img
-                    src={'/portrait-woman.jpg'}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full mr-4"
-                  />
                   <div>
                     <h4 className="font-semibold text-foreground text-lg">{testimonial.name}</h4>
                     <p className="text-sm text-muted-foreground">{testimonial.location}</p>

@@ -78,7 +78,6 @@ export function ArtisanCarousel({ data }: Readonly<{ data: HomePage['artisanSect
                     <CardContent className="flex flex-col items-center text-center p-6 h-full">
                       <div className="w-32 h-32 relative mb-4 rounded-full overflow-hidden border-4 border-background shadow-md shrink-0">
                         <Image
-                          // src={artisan.image  }
                           src={'/toko-batik.jpg'}
                           alt={artisan.name}
                           fill

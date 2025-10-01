@@ -1,5 +1,6 @@
 import { RichText } from '@/components/rich-text'
 import { HomePage, Media } from '@/payload-types'
+import Image from 'next/image'
 
 export function About({ data }: Readonly<{ data: HomePage['aboutSection'] }>) {
   const aboutImage = data.image as Media | null
@@ -22,12 +23,13 @@ export function About({ data }: Readonly<{ data: HomePage['aboutSection'] }>) {
               </div>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative w-full aspect-[80/53]">
             {aboutImage?.url && (
-              <img
+              <Image
                 src={aboutImage.url}
                 alt="Pengrajin Batik"
-                className="rounded-lg shadow-lg w-full"
+                className="rounded-lg shadow-lg object-cover"
+                layout="fill"
               />
             )}
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary rounded-full opacity-20"></div>
